@@ -4,10 +4,6 @@
 # URL : https://github.com/oopss/oopss-infra
 # Copyright 2013 Oopss.org <team@oopss.org>
 
-base:
-    '*':
-        - utils.vim
-        - utils.git
-        - utils.screen
-        - utils.cron-apt
+cron-apt:
+    pkg.installed
 
