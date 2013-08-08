@@ -9,7 +9,7 @@ git:
 
 /etc/gitconfig:
     file.managed:
-        - source: salt://utils/git/gitconfig
+        - source: salt://git/gitconfig
         - mode: 644
         - user: root
         - group: root

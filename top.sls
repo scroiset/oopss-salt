@@ -7,7 +7,7 @@
 base:
     '*':
         - utils.vim
-        - utils.git
+        - git
         - utils.screen
         - utils.cron-apt
 
