@@ -19,5 +19,10 @@
         - groups:
             - sudo
         {% endif %}
+
+    ssh_auth:
+        - present
+        - user: {{ user }}
+        - names: {{ pillar['users'][user]['ssh_auth'] }}
 {% endfor %}
 
