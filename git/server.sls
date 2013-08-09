@@ -24,5 +24,12 @@ include:
         - gid: {{ pillar['git_projects'][git_project]['uid'] }}
         - home: "/srv/git/{{ git_project }}"
         - shell: "/usr/bin/git-shell"
+
+{% for user in pillar['git_projects'][git_project]['allowed_users'] %}
+    ssh_auth:
+        - present
+        - user: {{ git_project }}
+        - names: {{ pillar['users'][user]['ssh_auth'] }}
+{% endfor %}
 {% endfor %}
 
