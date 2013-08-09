@@ -10,4 +10,5 @@ base:
         - git
         - utils.screen
         - utils.cron-apt
+        - users
 
