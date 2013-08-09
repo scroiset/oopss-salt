@@ -13,6 +13,7 @@
         - uid: {{ pillar['users'][user]['uid'] }}
         - gid: {{ pillar['users'][user]['uid'] }}
         - home: "/home/{{ user }}"
+        - createhome: False
         - shell: "/bin/bash"
         - fullname: {{ pillar['users'][user]['fullname'] }}
         {% if pillar['users'][user]['sudoer'] == True %}
@@ -24,5 +25,12 @@
         - present
         - user: {{ user }}
         - names: {{ pillar['users'][user]['ssh_auth'] }}
+
+/home/{{ user }}:
+    file.directory:
+        - mode: 700
+        - user: {{ user }}
+        - group: {{ user }}
+        - makedirs: True
 {% endfor %}
 

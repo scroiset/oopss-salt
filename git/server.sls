@@ -23,6 +23,7 @@ include:
         - uid: {{ pillar['git_projects'][git_project]['uid'] }}
         - gid: {{ pillar['git_projects'][git_project]['uid'] }}
         - home: "/srv/git/{{ git_project }}"
+        - createhome: False
         - shell: "/usr/bin/git-shell"
 
 {% for user in pillar['git_projects'][git_project]['allowed_users'] %}
@@ -31,5 +32,12 @@ include:
         - user: {{ git_project }}
         - names: {{ pillar['users'][user]['ssh_auth'] }}
 {% endfor %}
+
+/srv/git/{{ git_project }}:
+    file.directory:
+        - mode: 700
+        - user: {{ git_project }}
+        - group: {{ git_project }}
+        - makedirs: True
 {% endfor %}
 
