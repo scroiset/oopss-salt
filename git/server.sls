@@ -39,5 +39,11 @@ include:
         - user: {{ git_project }}
         - group: {{ git_project }}
         - makedirs: True
+
+{% for repo in pillar['git_projects'][git_project]['repos'] %}
+/srv/git/{{ git_project }}/{{ repo }}.git:
+    git.present:
+        - runas: {{ git_project }}
+{% endfor %}
 {% endfor %}
 
