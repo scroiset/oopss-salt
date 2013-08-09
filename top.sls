@@ -9,6 +9,6 @@ base:
         - utils.vim
         - git
         - utils.screen
-        - utils.cron-apt
+        - sysutils.cron-apt
         - users
 
