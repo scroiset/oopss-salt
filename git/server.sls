@@ -14,15 +14,15 @@ include:
         - group: root
         - makedirs: True
 
-{% for user in pillar['git_projects'] %}
-{{ user }}:
+{% for git_project in pillar['git_projects'] %}
+{{ git_project }}:
     group.present:
-        - gid: {{ pillar['git_projects'][user]['uid'] }}
+        - gid: {{ pillar['git_projects'][git_project]['uid'] }}
 
     user.present:
-        - uid: {{ pillar['git_projects'][user]['uid'] }}
-        - gid: {{ pillar['git_projects'][user]['uid'] }}
-        - home: "/srv/git/{{ user }}"
+        - uid: {{ pillar['git_projects'][git_project]['uid'] }}
+        - gid: {{ pillar['git_projects'][git_project]['uid'] }}
+        - home: "/srv/git/{{ git_project }}"
         - shell: "/usr/bin/git-shell"
 {% endfor %}
 
