@@ -25,12 +25,16 @@ include:
         - home: "/srv/git/{{ git_project }}"
         - createhome: False
         - shell: "/usr/bin/git-shell"
+        - require:
+            - group: {{ git_project }}
 
 {% for user in pillar['git_projects'][git_project]['allowed_users'] %}
     ssh_auth:
         - present
         - user: {{ git_project }}
         - names: {{ pillar['users'][user]['ssh_auth'] }}
+        - require:
+            - file: /srv/git/{{ git_project }}
 {% endfor %}
 
 /srv/git/{{ git_project }}:
@@ -39,11 +43,15 @@ include:
         - user: {{ git_project }}
         - group: {{ git_project }}
         - makedirs: True
+        - require:
+            - user: {{ git_project }}
 
 {% for repo in pillar['git_projects'][git_project]['repos'] %}
 /srv/git/{{ git_project }}/{{ repo }}.git:
     git.present:
         - runas: {{ git_project }}
+        - require:
+            - file: /srv/git/{{ git_project }}
 {% endfor %}
 {% endfor %}
 

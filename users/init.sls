@@ -20,11 +20,15 @@
         - groups:
             - sudo
         {% endif %}
+        - require:
+            - group: {{ user }}
 
     ssh_auth:
         - present
         - user: {{ user }}
         - names: {{ pillar['users'][user]['ssh_auth'] }}
+        - require:
+            - file: /home/{{ user }}
 
 /home/{{ user }}:
     file.directory:
@@ -32,5 +36,7 @@
         - user: {{ user }}
         - group: {{ user }}
         - makedirs: True
+        - require:
+            - user: {{ user }}
 {% endfor %}
 
