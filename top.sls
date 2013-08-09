@@ -10,5 +10,5 @@ base:
         - scm.git
         - utils.screen
         - sysutils.cron-apt
-        - users
+        - sysutils.users
 
