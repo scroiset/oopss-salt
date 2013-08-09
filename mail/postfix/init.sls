@@ -4,12 +4,6 @@
 # URL : https://github.com/oopss/oopss-infra
 # Copyright 2013 Oopss.org <team@oopss.org>
 
-base:
-    '*':
-        - utils.vim
-        - scm.git
-        - utils.screen
-        - sysutils.cron-apt
-        - sysutils.users
-        - mail.postfix
+postfix:
+    pkg.installed
 
