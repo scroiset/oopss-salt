@@ -12,4 +12,5 @@ base:
         - sysutils.cron-apt
         - sysutils.users
         - mail.postfix
+        - sysutils.rsyslog
 
