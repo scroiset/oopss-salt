@@ -7,6 +7,7 @@
 nginx:
     pkg:
         - installed
+
     service:
         - running
         - require:
