@@ -5,5 +5,11 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 
 postfix:
-    pkg.installed
+    pkg:
+        - installed
+
+    service:
+        - running
+        - require:
+            - pkg: postfix
 
