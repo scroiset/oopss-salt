@@ -13,4 +13,5 @@ base:
         - sysutils.users
         - mail.postfix
         - sysutils.rsyslog
+        - net.ssh.server
 
