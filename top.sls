@@ -11,6 +11,7 @@ base:
         - scm.git
         - sysutils.cron-apt
         - sysutils.rsyslog
+        - sysutils.sudo
         - sysutils.users
         - utils.screen
         - utils.vim
