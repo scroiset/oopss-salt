@@ -50,8 +50,9 @@ include:
 
 # Generate SSH key if ssh_keygen is defined for this user
 {% if pillar['git_projects'][git_project]['ssh_keygen'] is defined %}
-ssh-keygen -N "" -f $HOME/.ssh/id_rsa:
+ssh_keygen_{{ git_project }}:
     cmd.run:
+        - name: ssh-keygen -N "" -f $HOME/.ssh/id_rsa
         - user: {{ git_project }}
         - unless: test -f $HOME/.ssh/id_rsa
         - require:
