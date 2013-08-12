@@ -10,6 +10,7 @@ base:
         - net.ssh.server
         - scm.git
         - sysutils.cron-apt
+        - sysutils.locales
         - sysutils.rsyslog
         - sysutils.sudo
         - sysutils.users
