@@ -48,6 +48,16 @@ include:
         - require:
             - user: {{ git_project }}
 
+# Generate SSH key if ssh_keygen is defined for this user
+{% if pillar['git_projects'][git_project]['ssh_keygen'] is defined %}
+ssh-keygen -N "" -f $HOME/.ssh/id_rsa:
+    cmd.run:
+        - user: {{ git_project }}
+        - unless: test -f $HOME/.ssh/id_rsa
+        - require:
+            - file: /srv/git/{{ git_project }}
+{% endif %}
+
 {% for repo in pillar['git_projects'][git_project]['repos'] %}
 /srv/git/{{ git_project }}/{{ repo }}.git:
     git.present:
