@@ -29,3 +29,12 @@ postfix:
     file.managed:
         - contents: {{ grains['fqdn'] }}
 
+/etc/aliases:
+    file.append:
+        - text: "root: {{ pillar['admin_mail'] }}"
+
+newaliases:
+    cmd.wait:
+        - watch:
+            - file: /etc/aliases
+
