@@ -6,6 +6,7 @@
 
 base:
     '*':
+        - irc.ii
         - mail.postfix
         - net.ssh.server
         - scm.git
