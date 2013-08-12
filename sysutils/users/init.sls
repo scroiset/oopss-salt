@@ -16,7 +16,9 @@
         - createhome: False
         - shell: "/bin/bash"
         - fullname: {{ pillar['users'][user]['fullname'] }}
-        {% if pillar['users'][user]['sudoer'] == True %}
+        {% if pillar['users'][user]['password'] is defined %}
+        - password: {{ pillar['users'][user]['password'] }}
+        {% endif %}
         - groups:
             - sudo
         {% endif %}
