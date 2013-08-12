@@ -15,6 +15,7 @@ base:
         - sysutils.rsyslog
         - sysutils.sudo
         - sysutils.users
+        - utils.bash
         - utils.screen
         - utils.vim
 
