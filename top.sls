@@ -6,12 +6,12 @@
 
 base:
     '*':
-        - utils.vim
-        - scm.git
-        - utils.screen
-        - sysutils.cron-apt
-        - sysutils.users
         - mail.postfix
-        - sysutils.rsyslog
         - net.ssh.server
+        - scm.git
+        - sysutils.cron-apt
+        - sysutils.rsyslog
+        - sysutils.users
+        - utils.screen
+        - utils.vim
 
