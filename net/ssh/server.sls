@@ -25,6 +25,7 @@ ssh:
         - mode: 644
         - user: root
         - group: root
+        - template: jinja
         - require:
             - pkg: openssh-server
 

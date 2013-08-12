@@ -30,7 +30,7 @@ LogLevel INFO
 
 # Authentication:
 LoginGraceTime 120
-PermitRootLogin yes
+PermitRootLogin without-password
 StrictModes yes
 
 RSAAuthentication yes
@@ -54,7 +54,7 @@ PermitEmptyPasswords no
 ChallengeResponseAuthentication no
 
 # Change to no to disable tunnelled clear text passwords
-#PasswordAuthentication yes
+PasswordAuthentication no
 
 # Kerberos options
 #KerberosAuthentication no
@@ -91,4 +91,11 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
+
+AllowGroups sshusers
+
+{% for ipaddr in pillar['privilegied_ipaddr'] %}
+Match Address {{ ipaddr }}
+    PasswordAuthentication yes
+{% endfor %}
 

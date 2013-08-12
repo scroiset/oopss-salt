@@ -25,6 +25,8 @@ include:
         - home: "/srv/git/{{ git_project }}"
         - createhome: False
         - shell: "/usr/bin/git-shell"
+        - groups:
+            - sshusers
         - require:
             - group: {{ git_project }}
 

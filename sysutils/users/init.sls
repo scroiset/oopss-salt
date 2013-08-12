@@ -4,6 +4,10 @@
 # URL : https://github.com/oopss/oopss-infra
 # Copyright 2013 Oopss.org <team@oopss.org>
 
+sshusers:
+    group.present:
+        - system: True
+
 {% for user in pillar['users'] %}
 {{ user }}:
     group.present:
@@ -20,6 +24,8 @@
         - password: {{ pillar['users'][user]['password'] }}
         {% endif %}
         - groups:
+            - sshusers
+        {% if pillar['users'][user]['sudoer'] == True %}
             - sudo
         {% endif %}
         - require:
