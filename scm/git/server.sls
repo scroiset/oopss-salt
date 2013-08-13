@@ -14,14 +14,14 @@ include:
         - group: root
         - makedirs: True
 
-{% for git_project in pillar['git_projects'] %}
+{% for git_project, git_projectinfo in pillar['git_projects'].iteritems() %}
 {{ git_project }}:
     group.present:
-        - gid: {{ pillar['git_projects'][git_project]['uid'] }}
+        - gid: {{ git_projectinfo['uid'] }}
 
     user.present:
-        - uid: {{ pillar['git_projects'][git_project]['uid'] }}
-        - gid: {{ pillar['git_projects'][git_project]['uid'] }}
+        - uid: {{ git_projectinfo['uid'] }}
+        - gid: {{ git_projectinfo['uid'] }}
         - home: "/srv/git/{{ git_project }}"
         - createhome: False
         - shell: "/usr/bin/git-shell"
@@ -30,7 +30,7 @@ include:
         - require:
             - group: {{ git_project }}
 
-{% for user in pillar['git_projects'][git_project]['allowed_users'] %}
+{% for user in git_projectinfo['allowed_users'] %}
     ssh_auth:
         - present
         - user: {{ git_project }}
@@ -49,7 +49,7 @@ include:
             - user: {{ git_project }}
 
 # Generate SSH key if ssh_keygen is defined for this user
-{% if pillar['git_projects'][git_project]['ssh_keygen'] is defined %}
+{% if git_projectinfo['ssh_keygen'] is defined %}
 ssh_keygen_{{ git_project }}:
     cmd.run:
         - name: ssh-keygen -N "" -f $HOME/.ssh/id_rsa
@@ -59,7 +59,7 @@ ssh_keygen_{{ git_project }}:
             - file: /srv/git/{{ git_project }}
 {% endif %}
 
-{% for repo in pillar['git_projects'][git_project]['repos'] %}
+{% for repo in git_projectinfo['repos'] %}
 /srv/git/{{ git_project }}/{{ repo }}.git:
     git.present:
         - runas: {{ git_project }}

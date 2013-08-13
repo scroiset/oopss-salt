@@ -8,24 +8,24 @@ sshusers:
     group.present:
         - system: True
 
-{% for user in pillar['users'] %}
+{% for user, userinfo in pillar['users'].iteritems() %}
 {{ user }}:
     group.present:
-        - gid: {{ pillar['users'][user]['uid'] }}
+        - gid: {{ userinfo['uid'] }}
 
     user.present:
-        - uid: {{ pillar['users'][user]['uid'] }}
-        - gid: {{ pillar['users'][user]['uid'] }}
+        - uid: {{ userinfo['uid'] }}
+        - gid: {{ userinfo['uid'] }}
         - home: "/home/{{ user }}"
         - createhome: False
         - shell: "/bin/bash"
-        - fullname: {{ pillar['users'][user]['fullname'] }}
-        {% if pillar['users'][user]['password'] is defined %}
-        - password: {{ pillar['users'][user]['password'] }}
+        - fullname: {{ userinfo['fullname'] }}
+        {% if userinfo['password'] is defined %}
+        - password: {{ userinfo['password'] }}
         {% endif %}
         - groups:
             - sshusers
-        {% if pillar['users'][user]['sudoer'] == True %}
+        {% if userinfo['sudoer'] == True %}
             - sudo
         {% endif %}
         - require:
@@ -34,7 +34,7 @@ sshusers:
     ssh_auth:
         - present
         - user: {{ user }}
-        - names: {{ pillar['users'][user]['ssh_auth'] }}
+        - names: {{ userinfo['ssh_auth'] }}
         - require:
             - file: /home/{{ user }}
 
