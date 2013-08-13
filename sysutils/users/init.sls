@@ -30,6 +30,7 @@ sshusers:
         {% endif %}
         - require:
             - group: {{ user }}
+            - group: sshusers
 
     ssh_auth:
         - present
