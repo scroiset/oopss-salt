@@ -7,7 +7,7 @@
 include:
     - git
 
-/srv/git/:
+{{ pillar['git_root'] }}/:
     file.directory:
         - mode: 755
         - user: root
@@ -22,7 +22,7 @@ include:
     user.present:
         - uid: {{ git_projectinfo['uid'] }}
         - gid: {{ git_projectinfo['uid'] }}
-        - home: "/srv/git/{{ git_project }}"
+        - home: "{{ pillar['git_root'] }}/{{ git_project }}"
         - createhome: False
         - shell: "/usr/bin/git-shell"
         - groups:
@@ -36,10 +36,10 @@ include:
         - user: {{ git_project }}
         - names: {{ pillar['users'][user]['ssh_auth'] }}
         - require:
-            - file: /srv/git/{{ git_project }}
+            - file: {{ pillar['git_root'] }}/{{ git_project }}
 {% endfor %}
 
-/srv/git/{{ git_project }}:
+{{ pillar['git_root'] }}/{{ git_project }}:
     file.directory:
         - mode: 700
         - user: {{ git_project }}
@@ -56,15 +56,15 @@ ssh_keygen_{{ git_project }}:
         - user: {{ git_project }}
         - unless: test -f $HOME/.ssh/id_rsa
         - require:
-            - file: /srv/git/{{ git_project }}
+            - file: {{ pillar['git_root'] }}/{{ git_project }}
 {% endif %}
 
 {% for repo in git_projectinfo['repos'] %}
-/srv/git/{{ git_project }}/{{ repo }}.git:
+{{ pillar['git_root'] }}/{{ git_project }}/{{ repo }}.git:
     git.present:
         - runas: {{ git_project }}
         - require:
-            - file: /srv/git/{{ git_project }}
+            - file: {{ pillar['git_root'] }}/{{ git_project }}
 {% endfor %}
 {% endfor %}
 
