@@ -24,7 +24,7 @@ fi
 # set a fancy prompt (non-color, overwrite the one in /etc/profile)
 red=$(tput setaf 1)
 normal=$(tput sgr0)
-PS1="\[$red\]\u@\h:\w\$\[$normal\] "
+PS1="\[$red\]\u@\h:\w\\\$\[$normal\] "
 
 # enable bash completion in interactive shells
 if ! shopt -oq posix; then
