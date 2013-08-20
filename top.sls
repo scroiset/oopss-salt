@@ -13,6 +13,7 @@ base:
         - sysutils.locales
         - sysutils.rsyslog
         - sysutils.sudo
+        - sysutils.timezone
         - sysutils.users
         - utils.bash
         - utils.screen
