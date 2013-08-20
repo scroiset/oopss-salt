@@ -30,14 +30,18 @@ include:
         - require:
             - group: {{ git_project }}
 
-{% for user in git_projectinfo['allowed_users'] %}
+    # Add keys for authorized users
     ssh_auth:
         - present
         - user: {{ git_project }}
-        - names: {{ pillar['users'][user]['ssh_auth'] }}
+        - names:
+{% for user in git_projectinfo['allowed_users'] %}
+{% for ssh_key in pillar['users'][user]['ssh_auth'] %}
+            - {{ ssh_key }}
+{% endfor %}
+{% endfor %}
         - require:
             - file: {{ pillar['git_root'] }}/{{ git_project }}
-{% endfor %}
 
 {{ pillar['git_root'] }}/{{ git_project }}:
     file.directory:
