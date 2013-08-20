@@ -53,13 +53,14 @@ include:
             - user: {{ git_project }}
 
 # Generate SSH key if ssh_keygen is defined for this user
-{% if git_projectinfo['ssh_keygen'] is defined %}
+{% if git_projectinfo['ssh_keygen'] %}
 ssh_keygen_{{ git_project }}:
     cmd.run:
-        - name: ssh-keygen -N "" -f $HOME/.ssh/id_rsa
+        - name: 'ssh-keygen -N "" -f $HOME/.ssh/id_rsa'
         - user: {{ git_project }}
-        - unless: test -f $HOME/.ssh/id_rsa
+        - unless: 'test -f $HOME/.ssh/id_rsa'
         - require:
+            - user: {{ git_project }}
             - file: {{ pillar['git_root'] }}/{{ git_project }}
 {% endif %}
 
