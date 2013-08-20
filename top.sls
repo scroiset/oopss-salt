@@ -6,7 +6,6 @@
 
 base:
     '*':
-        - irc.ii
         - mail.postfix
         - net.ssh.server
         - scm.git
@@ -18,4 +17,9 @@ base:
         - utils.bash
         - utils.screen
         - utils.vim
+
+    'git':
+        - match: nodegroup
+        - irc.ii
+        - scm.git.server
 
