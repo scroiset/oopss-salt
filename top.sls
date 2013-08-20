@@ -11,6 +11,7 @@ base:
         - scm.git
         - sysutils.cron-apt
         - sysutils.locales
+        - sysutils.nagios
         - sysutils.rsyslog
         - sysutils.sudo
         - sysutils.timezone
