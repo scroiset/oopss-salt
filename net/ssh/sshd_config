@@ -30,7 +30,7 @@ LogLevel INFO
 
 # Authentication:
 LoginGraceTime 120
-PermitRootLogin without-password
+PermitRootLogin forced-commands-only
 StrictModes yes
 
 RSAAuthentication yes
