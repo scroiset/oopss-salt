@@ -30,8 +30,10 @@ postfix:
         - contents: {{ grains['fqdn'] }}
 
 /etc/aliases:
-    file.append:
-        - text: "root: {{ pillar['admin_mail'] }}"
+    file.sed:
+        - before: 'root: .*'
+        - after: 'root: {{ salt['pillar.get']('mail:postfix:admin_mail', 'root') }}'
+        - limit: '^root: '
 
 newaliases:
     cmd.wait:
