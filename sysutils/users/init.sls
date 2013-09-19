@@ -8,6 +8,7 @@ sshusers:
     group.present:
         - system: True
 
+{% if pillar['users'] is defined %}
 {% for user, userinfo in pillar['users'].iteritems() %}
 {{ user }}:
     group.present:
@@ -32,12 +33,14 @@ sshusers:
             - group: {{ user }}
             - group: sshusers
 
+{% if userinfo['ssh_auth'] is defined %}
     ssh_auth:
         - present
         - user: {{ user }}
         - names: {{ userinfo['ssh_auth'] }}
         - require:
             - file: /home/{{ user }}
+{% endif %}
 
 /home/{{ user }}:
     file.directory:
@@ -48,4 +51,5 @@ sshusers:
         - require:
             - user: {{ user }}
 {% endfor %}
+{% endif %}
 
