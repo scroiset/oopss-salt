@@ -5,7 +5,7 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 
 include:
-	- utils.bash
-	- utils.screen
-	- utils.vim
+    - utils.bash
+    - utils.screen
+    - utils.vim
 
