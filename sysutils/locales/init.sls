@@ -14,6 +14,7 @@ locales:
         - mode: 644
         - user: root
         - group: root
+        - backup: minion
 
 # Run locale-gen(8) if /etc/locale.gen changes
 locale-gen:

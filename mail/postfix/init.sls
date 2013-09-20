@@ -24,10 +24,12 @@ postfix:
         - group: root
         - require:
             - pkg: postfix
+        - backup: minion
 
 /etc/mailname:
     file.managed:
         - contents: {{ grains['fqdn'] }}
+        - backup: minion
 
 /etc/aliases:
     file.sed:

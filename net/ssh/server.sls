@@ -28,4 +28,5 @@ ssh:
         - template: jinja
         - require:
             - pkg: openssh-server
+        - backup: minion
 

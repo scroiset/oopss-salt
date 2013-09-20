@@ -13,4 +13,5 @@ git:
         - mode: 644
         - user: root
         - group: root
+        - backup: minion
 
