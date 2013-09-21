@@ -7,7 +7,7 @@
 misc_packages:
     pkg.installed:
         - names:
-        - wget
-        - curl
-        - sysstat
+            - wget
+            - curl
+            - sysstat
 
