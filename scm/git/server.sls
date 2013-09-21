@@ -29,6 +29,7 @@ include:
             - sshusers
         - require:
             - group: {{ git_project }}
+            - group: sshusers
 
     # Add keys for authorized users
     ssh_auth:

@@ -36,6 +36,8 @@ postfix:
         - before: 'root: .*'
         - after: 'root: {{ salt['pillar.get']('mail:postfix:admin_mail', 'root') }}'
         - limit: '^root: '
+        - require:
+            - pkg: postfix
 
 newaliases:
     cmd.wait:

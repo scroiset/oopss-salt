@@ -15,6 +15,8 @@ locales:
         - user: root
         - group: root
         - backup: minion
+        - require:
+            - pkg: locales
 
 # Run locale-gen(8) if /etc/locale.gen changes
 locale-gen:
