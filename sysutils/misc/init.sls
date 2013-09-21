@@ -5,9 +5,9 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 
 misc_packages:
-	pkg.installed:
-		- names:
-			- wget
-			- curl
-			- sysstat
+    pkg.installed:
+        - names:
+        - wget
+        - curl
+        - sysstat
 
