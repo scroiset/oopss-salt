@@ -15,6 +15,7 @@ nagios:
     user.present:
         - require:
             - pkg: nagios-plugins
+            - group: sshusers
         - groups:
             - sshusers
 
