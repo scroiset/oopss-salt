@@ -21,3 +21,13 @@ options {
     listen-on { {% for listen_ip in grains['ipv4'] %}{% if listen_ip != "127.0.0.1" %}{{ listen_ip }}; {% endif %}{% endfor %}};
 };
 
+logging {
+    channel queries_log {
+        file "/var/log/bind/queries.log";
+        print-time yes;
+    };
+    category queries {
+        queries_log;
+    };
+};
+

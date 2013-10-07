@@ -7,6 +7,12 @@
 include:
     - dns.bind
 
+/var/log/bind:
+    file.directory:
+        - user: bind
+        - group: bind
+        - perms: 755
+
 /etc/bind/named.conf.local:
     file.managed:
         - source: salt://dns/bind/named.conf.local
@@ -26,6 +32,7 @@ include:
         - perms: 444
         - require:
             - pkg: bind9
+            - file: /var/log/bind
 
 /etc/bind/slave:
     file.directory:
