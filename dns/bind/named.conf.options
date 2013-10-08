@@ -23,11 +23,21 @@ options {
 
 logging {
     channel queries_log {
-        file "/var/log/bind/queries.log";
+        file "/var/log/bind/queries.log" versions unlimited size 100m;
         print-time yes;
+        
+    };
+    channel default_log {
+        file "/var/log/bind/default.log" versions unlimited size 100m;
+        print-time yes;
+        print-category yes;
+        print-severity yes;
     };
     category queries {
         queries_log;
+    };
+    category default {
+        default_log;
     };
 };
 
