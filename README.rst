@@ -15,7 +15,7 @@ Requirements
 ------------
 
 These Salt formulas are currently designed only for Debian GNU/Linux, and
-tested only with version 7.0 (Squeeze).
+tested with versions 6.0 and 7.0 (Squeeze and Wheezy).
 
 SaltStack above version 0.16 is required.
 
