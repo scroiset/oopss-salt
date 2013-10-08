@@ -31,3 +31,10 @@ salt_directories:
         - require:
             - user: salt
 
+/etc/salt/master:
+    file.managed:
+        - user: root
+        - group: root
+        - mode: 444
+        - source: salt://sysutils/salt/master
+
