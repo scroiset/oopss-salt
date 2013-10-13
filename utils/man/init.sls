@@ -8,3 +8,7 @@ manpages:
     pkg:
         - installed
 
+man-db:
+    pkg:
+        - installed
+
