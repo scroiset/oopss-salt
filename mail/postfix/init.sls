@@ -17,7 +17,7 @@ postfix:
 
 /etc/postfix/main.cf:
     file.managed:
-        - source: salt://mail/postfix/main.cf
+        - source: salt://oopss-infra/mail/postfix/main.cf
         - template: jinja
         - mode: 644
         - user: root

@@ -10,7 +10,7 @@ locales:
 /etc/locale.gen:
     file:
         - managed
-        - source: salt://sysutils/locales/locale.gen
+        - source: salt://oopss-infra/sysutils/locales/locale.gen
         - mode: 644
         - user: root
         - group: root

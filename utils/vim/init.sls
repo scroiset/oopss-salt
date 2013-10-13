@@ -9,7 +9,7 @@ vim:
 
 /etc/vim/vimrc.local:
     file.managed:
-        - source: salt://utils/vim/vimrc
+        - source: salt://oopss-infra/utils/vim/vimrc
         - mode: 644
         - user: root
         - group: root

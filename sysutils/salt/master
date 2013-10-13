@@ -6,8 +6,4 @@
 
 state_verbose: False
 state_output: mixed
-file_roots:
-   base:
-        - /srv/salt/local
-        - /srv/salt/oopss-infra
 

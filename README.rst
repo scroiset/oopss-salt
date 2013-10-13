@@ -26,23 +26,14 @@ Install Salt master and minion.
 
 Clone this repository under ``/srv/salt/oopss-infra``.
 
-Create directory ``/srv/salt/local``.
-
-Create top file ``/srv/salt/local/top.sls`` and call formulas you want to use. Example : ::
+Create top file ``/srv/salt/top.sls`` and call formulas you want to use. Example : ::
 
     base:
         '*':
-            - utils
-            - dns.unbound
-            - mail.postfix
-            - net.ssh.server
+            - oopss-infra.utils
+            - oopss-infra.dns.unbound
+            - oopss-infra.mail.postfix
+            - oopss-infra.net.ssh.server
 
-- Configure ``/etc/salt/master`` with these directives : ::
-
-    file_roots:
-        base:
-            - /srv/salt/local
-            - /srv/salt/oopss-infra
-
-- Bind the minion to the master and execute ``state.highstatè``.
+Bind the minion to the master and execute ``state.highstate``.
 

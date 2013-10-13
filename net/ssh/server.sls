@@ -21,7 +21,7 @@ ssh:
 
 /etc/ssh/sshd_config:
     file.managed:
-        - source: salt://net/ssh/sshd_config
+        - source: salt://oopss-infra/net/ssh/sshd_config
         - mode: 644
         - user: root
         - group: root

@@ -9,7 +9,7 @@ bash-completion:
 
 /root/.bashrc:
     file.managed:
-        - source: salt://utils/bash/root.bashrc
+        - source: salt://oopss-infra/utils/bash/root.bashrc
         - mode: 644
         - user: root
         - group: root

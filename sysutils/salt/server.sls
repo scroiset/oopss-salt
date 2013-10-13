@@ -36,5 +36,5 @@ salt_directories:
         - user: root
         - group: root
         - mode: 444
-        - source: salt://sysutils/salt/master
+        - source: salt://oopss-infra/sysutils/salt/master
 

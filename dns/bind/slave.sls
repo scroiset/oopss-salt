@@ -15,7 +15,7 @@ include:
 
 /etc/bind/named.conf.local:
     file.managed:
-        - source: salt://dns/bind/named.conf.local
+        - source: salt://oopss-infra/dns/bind/named.conf.local
         - template: jinja
         - user: root
         - group: root
@@ -25,7 +25,7 @@ include:
 
 /etc/bind/named.conf.options:
     file.managed:
-        - source: salt://dns/bind/named.conf.options
+        - source: salt://oopss-infra/dns/bind/named.conf.options
         - template: jinja
         - user: root
         - group: root
