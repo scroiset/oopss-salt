@@ -4,9 +4,9 @@
 # URL : https://github.com/oopss/oopss-infra
 # Copyright 2013 Oopss.org <team@oopss.org>
 
-misc_packages:
-    pkg.installed:
-        - names:
-            - wget
-            - curl
+curl:
+    pkg.installed
+
+wget:
+    pkg.installed
 
