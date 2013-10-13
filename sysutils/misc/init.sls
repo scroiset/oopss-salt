@@ -9,5 +9,4 @@ misc_packages:
         - names:
             - wget
             - curl
-            - sysstat
 
