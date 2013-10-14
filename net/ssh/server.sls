@@ -5,7 +5,7 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 
 include:
-    - net.ssh
+    - oopss-infra.net.ssh
 
 openssh-server:
     pkg:
