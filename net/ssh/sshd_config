@@ -1,8 +1,10 @@
 
+##############################################################################
 # oopss-infra
 # Description : Oopss infrastructure files using SaltStack
 # URL : https://github.com/oopss/oopss-infra
 # Copyright 2013 Oopss.org <team@oopss.org>
+##############################################################################
 
 # Package generated configuration file
 # See the sshd_config(5) manpage for details
