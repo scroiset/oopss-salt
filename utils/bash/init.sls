@@ -10,7 +10,7 @@ bash-completion:
 /root/.bashrc:
     file.managed:
         - source: salt://oopss-infra/utils/bash/root.bashrc
-        - mode: 644
+        - mode: 444
         - user: root
         - group: root
         - backup: minion

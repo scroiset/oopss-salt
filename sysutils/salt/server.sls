@@ -34,7 +34,7 @@ salt_directories:
 /etc/salt/master:
     file.managed:
         - user: root
-        - group: root
-        - mode: 444
+        - group: adm
+        - mode: 440
         - source: salt://oopss-infra/sysutils/salt/master
 

@@ -11,7 +11,7 @@ locales:
     file:
         - managed
         - source: salt://oopss-infra/base/locales/locale.gen
-        - mode: 644
+        - mode: 444
         - user: root
         - group: root
         - backup: minion

@@ -22,9 +22,9 @@ ssh:
 /etc/ssh/sshd_config:
     file.managed:
         - source: salt://oopss-infra/net/ssh/sshd_config
-        - mode: 644
+        - mode: 440
         - user: root
-        - group: root
+        - group: adm
         - template: jinja
         - require:
             - pkg: openssh-server

@@ -10,7 +10,7 @@ git:
 /etc/gitconfig:
     file.managed:
         - source: salt://oopss-infra/scm/git/gitconfig
-        - mode: 644
+        - mode: 444
         - user: root
         - group: root
         - backup: minion

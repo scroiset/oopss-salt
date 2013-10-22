@@ -19,9 +19,9 @@ postfix:
     file.managed:
         - source: salt://oopss-infra/mail/postfix/main.cf
         - template: jinja
-        - mode: 644
+        - mode: 440
         - user: root
-        - group: root
+        - group: adm
         - require:
             - pkg: postfix
         - backup: minion

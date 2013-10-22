@@ -10,16 +10,16 @@ include:
 /var/log/bind:
     file.directory:
         - user: bind
-        - group: bind
-        - perms: 755
+        - group: adm
+        - perms: 750
 
 /etc/bind/named.conf.local:
     file.managed:
         - source: salt://oopss-infra/dns/bind/named.conf.local
         - template: jinja
         - user: root
-        - group: root
-        - perms: 444
+        - group: adm
+        - perms: 440
         - require:
             - pkg: bind9
 
@@ -28,8 +28,8 @@ include:
         - source: salt://oopss-infra/dns/bind/named.conf.options
         - template: jinja
         - user: root
-        - group: root
-        - perms: 444
+        - group: adm
+        - perms: 440
         - require:
             - pkg: bind9
             - file: /var/log/bind
@@ -37,6 +37,6 @@ include:
 /etc/bind/slave:
     file.directory:
         - user: bind
-        - group: bind
-        - perms: 755
+        - group: adm
+        - perms: 750
  

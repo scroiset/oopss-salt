@@ -10,7 +10,7 @@ vim:
 /etc/vim/vimrc.local:
     file.managed:
         - source: salt://oopss-infra/utils/vim/vimrc
-        - mode: 644
+        - mode: 444
         - user: root
         - group: root
         - backup: minion
