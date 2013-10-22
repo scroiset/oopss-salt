@@ -32,7 +32,7 @@
         - gid: {{ userinfo['uid'] }}
         - home: "/srv/www/{{ user }}"
         - createhome: False
-        - shell: "/usr/sbin/nologin"
+        - shell: "/bin/bash"
         - fullname: ""
         - groups:
             - sshusers
