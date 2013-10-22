@@ -28,6 +28,7 @@ sshusers:
             - sshusers
         {% if userinfo['sudoer'] == True %}
             - sudo
+            - adm
         {% endif %}
         - require:
             - group: {{ user }}
