@@ -18,6 +18,7 @@ ssh:
             - pkg: openssh-server
         - watch:
             - file: /etc/ssh/sshd_config
+            - file: /etc/init.d/ssh
 
 /etc/ssh/sshd_config:
     file.managed:
@@ -29,4 +30,12 @@ ssh:
         - require:
             - pkg: openssh-server
         - backup: minion
+
+/etc/init.d/ssh:
+    file.sed:
+        - before: 'umask .*'
+        - after: 'umask 027'
+        - limit: '^umask .*'
+        - require:
+            - pkg: openssh-server
 
