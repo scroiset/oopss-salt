@@ -40,7 +40,9 @@ nginx:
             root: /srv/www/{{ user }}/{{ root_path }}
             access_log: /srv/www/{{ user }}/log/{{ root_path }}-access.log
             error_log: /srv/www/{{ user }}/log/{{ root_path }}-error.log
-            upstream: {{ root_pathinfo['upstream'] }}
+{% for tag in root_pathinfo['config_tags'] %}
+            tag_{{ tag }}: True
+{% endfor %}
             socket: /srv/www/{{ user }}/.sock/{{ root_path }}.sock
         - require:
             - pkg: nginx

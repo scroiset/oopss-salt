@@ -12,7 +12,8 @@ server {
     access_log {{ access_log }};
     error_log {{ error_log }};
 
-{% if upstream == "gunicorn" %}
+{% if tag_http_proxy is defined %}
+    # http_proxy
     location / {
         proxy_pass http://unix:{{ socket }};
         proxy_set_header Host $host;
@@ -21,7 +22,8 @@ server {
     }
 {% endif %}
 
-{% if upstream == "php5-fpm" %}
+{% if tag_php_fastcgi is defined %}
+    # php_fastcgi
     index index.html index.php;
     location ~* \.php$ {
         fastcgi_pass unix:{{ socket }};
