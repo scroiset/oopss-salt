@@ -46,13 +46,13 @@ mysql-clean:
 # Read pillar databases:mysql:users then create users and databases
 ##############################################################################
 
-{% for user in salt['pillar.get']('databases:mysql:users', '') %}
+{% for user, password in salt['pillar.get']('databases:mysql:users').iteritems() %}
 mysql-user-{{ user }}:
     mysql_user:
         - present
         - name: {{ user }}
         - host: 127.0.0.1
-        - allow_passwordless: True
+        - password_hash: '{{ password }}'
         - require:
             - pkg: mysql-server
             - pkg: python-mysqldb
