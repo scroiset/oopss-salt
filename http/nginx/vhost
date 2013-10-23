@@ -30,5 +30,12 @@ server {
         include fastcgi_params;
     }
 {% endif %}
+
+{% if tag_php_rewrite_to_index is defined %}
+    # php_rewrite_to_index
+    location / {
+       try_files $uri $uri/ /index.php?$args;
+    }
+{% endif %}
 }
 
