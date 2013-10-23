@@ -28,9 +28,15 @@ sshusers:
         {% endif %}
         - groups:
             - sshusers
+        {% if userinfo['sudoer'] is defined %}
         {% if userinfo['sudoer'] == True %}
             - sudo
+        {% endif %}
+        {% endif %}
+        {% if userinfo['adm'] is defined %}
+        {% if userinfo['adm'] == True %}
             - adm
+        {% endif %}
         {% endif %}
         - require:
             - group: {{ user }}
