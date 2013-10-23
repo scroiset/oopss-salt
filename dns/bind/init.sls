@@ -11,7 +11,4 @@ bind9:
         - installed
     service:
         - running
-        - watch:
-            - file: /etc/bind/named.conf.local
-            - file: /etc/bind/named.conf.options
 

@@ -7,7 +7,14 @@
 ##############################################################################
 
 include:
-    - dns.bind
+    - oopss-infra.dns.bind
+
+extend:
+    bind9:
+        service:
+            - watch:
+                - file: /etc/bind/named.conf.local
+                - file: /etc/bind/named.conf.options
 
 /var/log/bind:
     file.directory:
