@@ -12,6 +12,7 @@ postfix:
 
     service:
         - running
+        - reload: True
         - require:
             - pkg: postfix
         - watch:

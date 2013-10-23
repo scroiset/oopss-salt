@@ -11,4 +11,5 @@ bind9:
         - installed
     service:
         - running
+        - reload: True
 

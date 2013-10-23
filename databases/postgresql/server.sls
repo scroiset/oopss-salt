@@ -15,6 +15,7 @@ postgresql-9.1:
 postgresql:
     service:
         - running
+        - reload: True
         - require:
             - pkg: postgresql-9.1
         - watch:

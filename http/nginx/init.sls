@@ -16,6 +16,7 @@ nginx:
 
     service:
         - running
+        - reload: True
         - require:
             - pkg: nginx
 
