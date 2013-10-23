@@ -20,5 +20,13 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 {% endif %}
+
+{% if upstream == "php5-fpm" %}
+    index index.html index.php;
+    location ~* \.php$ {
+        fastcgi_pass unix:{{ socket }};
+        include fastcgi_params;
+    }
+{% endif %}
 }
 
