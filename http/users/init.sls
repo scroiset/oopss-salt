@@ -61,7 +61,7 @@
     file.directory:
         - mode: 710
         - user: {{ user }}
-        - group: www-data
+        - group: {{ user }}
         - require:
             - user: {{ user }}
             - file: /srv/www/{{ user }}
@@ -80,7 +80,7 @@
     file.managed:
         - mode: 660
         - user: {{ user }}
-        - group: www-data
+        - group: {{ user }}
         - require:
             - user: {{ user }}
             - file: /srv/www/{{ user }}/log
@@ -89,7 +89,7 @@
     file.managed:
         - mode: 660
         - user: {{ user }}
-        - group: www-data
+        - group: {{ user }}
         - require:
             - user: {{ user }}
             - file: /srv/www/{{ user }}/log
