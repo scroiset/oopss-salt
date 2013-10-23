@@ -35,7 +35,9 @@ mysql:
 
 mysql-clean:
     cmd.wait:
-        - name: mysql -e "delete from user where user = '' or user = 'root'; flush privileges; drop database test;" mysql
+        - names:
+            - mysql -e "delete from user where user = '' or user = 'root'; flush privileges;" mysql
+            - mysql -e "delete from db where user = ''; flush privileges; drop database test;" mysql
         - watch:
             - pkg: mysql-server
 
