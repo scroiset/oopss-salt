@@ -6,6 +6,9 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
+include:
+    - oopss-infra.lang.php5
+
 php5-fpm:
     pkg.installed
 
