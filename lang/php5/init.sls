@@ -12,4 +12,5 @@ php5-pkg:
         - names:
             - php5-cli
             - php5-mysql
+            - php5-gd
 
