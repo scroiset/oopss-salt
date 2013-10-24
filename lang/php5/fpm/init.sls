@@ -18,7 +18,7 @@ php5-fpm:
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
-{% if root_pathinfo['config_tags']['php_fastcgi'] is defined %}
+{% if 'php_fastcgi' in root_pathinfo['config_tags'] %}
 /etc/php5/fpm/pool.d/{{ user }}-{{ root_path }}.conf:
     file.managed:
         - user: root
