@@ -12,6 +12,16 @@ server {
     access_log {{ access_log }};
     error_log {{ error_log }};
 
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location = /robots.txt {
+        log_not_found off;
+        access_log off;
+    }
+
 {% if tag_http_proxy is defined %}
     # http_proxy
     location / {
