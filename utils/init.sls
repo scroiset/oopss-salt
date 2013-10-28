@@ -7,6 +7,7 @@
 ##############################################################################
 
 include:
+    - oopss-infra.ftp.clients
     - oopss-infra.http.clients
     - oopss-infra.scm.git
     - oopss-infra.utils.bash
