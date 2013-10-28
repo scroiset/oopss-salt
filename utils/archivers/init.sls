@@ -6,13 +6,9 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
-include:
-    - oopss-infra.ftp.clients
-    - oopss-infra.http.clients
-    - oopss-infra.scm.git
-    - oopss-infra.utils.archivers
-    - oopss-infra.utils.bash
-    - oopss-infra.utils.screen
-    - oopss-infra.utils.vim
-    - oopss-infra.utils.man
+unzip:
+    pkg.installed
+
+unrar-free:
+    pkg.installed
 
