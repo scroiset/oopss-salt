@@ -29,6 +29,7 @@ php5-fpm:
         - context:
             user: {{ user }}
             root_path: {{ root_path }}
+            max_children: {{ salt['pillar.get']('lang:php5:fpm:max_children', '10') }}
         - require:
             - pkg: php5-fpm
 {% endif %}
