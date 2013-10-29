@@ -12,6 +12,7 @@ include:
     - oopss-infra.net.ssh.server
     - oopss-infra.sysutils.cron-apt
     - oopss-infra.sysutils.nagios
+    - oopss-infra.sysutils.perf-tools
     - oopss-infra.sysutils.rsyslog
     - oopss-infra.sysutils.salt
     - oopss-infra.sysutils.sudo
