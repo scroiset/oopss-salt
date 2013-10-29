@@ -62,3 +62,16 @@ sshusers:
 {% endfor %}
 {% endif %}
 
+
+##############################################################################
+# Forbid users to change manually their informations in /etc/{passwd,shadow}
+##############################################################################
+
+suid-remove:
+    file.managed:
+        - names:
+            - /usr/bin/chfn
+            - /usr/bin/chsh
+            - /usr/bin/passwd
+        - mode: 0755
+
