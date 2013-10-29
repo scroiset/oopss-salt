@@ -6,9 +6,9 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
-virtualenvwrapper:
+libpng-dev:
     pkg.installed
 
-python-dev:
+libjpeg-dev:
     pkg.installed
 
