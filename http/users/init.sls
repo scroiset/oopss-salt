@@ -32,6 +32,7 @@
     user.present:
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
+        - password: '{{ userinfo['password'] }}'
         - home: "/srv/www/{{ user }}"
         - createhome: False
         - shell: "/bin/bash"
