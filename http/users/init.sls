@@ -56,8 +56,8 @@
 # Log directory
 /srv/www/{{ user }}/log:
     file.directory:
-        - mode: 710
-        - user: {{ user }}
+        - mode: 750
+        - user: root
         - group: {{ user }}
         - require:
             - user: {{ user }}
@@ -79,8 +79,8 @@
 # Web server access file
 /srv/www/{{ user }}/log/{{ root_path }}-access.log:
     file.managed:
-        - mode: 660
-        - user: {{ user }}
+        - mode: 640
+        - user: www-data
         - group: {{ user }}
         - require:
             - user: {{ user }}
@@ -89,8 +89,8 @@
 # Web server error file
 /srv/www/{{ user }}/log/{{ root_path }}-error.log:
     file.managed:
-        - mode: 660
-        - user: {{ user }}
+        - mode: 640
+        - user: www-data
         - group: {{ user }}
         - require:
             - user: {{ user }}
