@@ -1,5 +1,6 @@
 /srv/www/{{ user }}/log/{{ root_path }}-access.log /srv/www/{{ user }}/log/{{ root_path }}-error.log {
     daily
+    size 0
     rotate 1
     create 640 www-data {{ user }}
 
