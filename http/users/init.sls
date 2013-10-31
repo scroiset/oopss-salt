@@ -6,25 +6,18 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
-#############################################################################
-# Create base directory for websites
-#############################################################################
-
+# Base directory for websites
 /srv/www:
     file.directory:
         - user: root
         - group: root
         - mode: 711
 
-#############################################################################
 # For each user in pillar http:users
-# - Ensure UNIX user is present with a dedicated group
-# - Ensure base directory exists with log and .sock directories
-# - Ensure each defined root_paths has a directory
-#############################################################################
-
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+
+# Web user and group
 {{ user }}:
     group.present:
         - gid: {{ userinfo['uid'] }}
@@ -42,6 +35,7 @@
         - require:
             - group: {{ user }}
 
+# Web user home directory
 /srv/www/{{ user }}:
     file.directory:
         - mode: 710
@@ -50,6 +44,7 @@
         - require:
             - user: {{ user }}
 
+# Socket directory
 /srv/www/{{ user }}/.sock:
     file.directory:
         - mode: 710
@@ -58,6 +53,7 @@
         - require:
             - file: /srv/www/{{ user }}
 
+# Log directory
 /srv/www/{{ user }}/log:
     file.directory:
         - mode: 710
@@ -67,8 +63,11 @@
             - user: {{ user }}
             - file: /srv/www/{{ user }}
 
+# For each root_path
 {% if userinfo['root_paths'] is defined %}
 {% for root_path in userinfo['root_paths'] %}
+
+# Root path
 /srv/www/{{ user }}/{{ root_path }}:
     file.directory:
         - user: {{ user }}
@@ -77,6 +76,7 @@
         - require:
             - file: /srv/www/{{ user }}
 
+# Web server access file
 /srv/www/{{ user }}/log/{{ root_path }}-access.log:
     file.managed:
         - mode: 660
@@ -86,6 +86,7 @@
             - user: {{ user }}
             - file: /srv/www/{{ user }}/log
 
+# Web server error file
 /srv/www/{{ user }}/log/{{ root_path }}-error.log:
     file.managed:
         - mode: 660
@@ -99,10 +100,7 @@
 {% endfor %}
 {% endif %}
 
-#############################################################################
 # Add www-data system user in each user group, so it can access static files
-#############################################################################
-
 www-data:
     user.present:
         - groups:
