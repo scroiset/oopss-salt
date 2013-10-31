@@ -62,6 +62,13 @@ awstats:
         - require:
             - file: /srv/www/{{ user }}/awstats
 
+# Awstats HTML dir
+/var/cache/awstats/{{ user }}-{{ root_path }}:
+    file.directory:
+        - mode: 750
+        - user: root
+        - group: www-data
+
 {% endfor %}
 {% endif %}
 {% endfor %}

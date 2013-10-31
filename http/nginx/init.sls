@@ -44,6 +44,7 @@ nginx:
             tag_{{ tag }}: True
 {% endfor %}
             socket: /srv/www/{{ user }}/.sock/{{ root_path }}.sock
+            user: {{ user }}
         - require:
             - pkg: nginx
 
