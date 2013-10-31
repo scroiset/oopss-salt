@@ -1,0 +1,41 @@
+/srv/www/{{ user }}/log/{{ root_path }}-access.log /srv/www/{{ user }}/log/{{ root_path }}-error.log {
+    daily
+    rotate 1
+    create 640 www-data {{ user }}
+
+    sharedscripts
+    postrotate
+        wwwuser="{{ user }}"
+        wwwroot="{{ root_path }}"
+        logdir="/srv/www/$wwwuser/log/"
+        year=$(date -d yesterday +%Y)
+        month=$(date -d yesterday +%m)
+        day=$(date -d yesterday +%d)
+        datepath="$year/$month/$day"
+
+        # Instruct NGINX to start writing to new logfile
+        [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
+
+        # Run Awstats if config file available
+        awstats_config="/etc/awstats/awstats.$wwwuser-$wwwroot.conf"
+        if [ -r $awstats_config ]; then
+            /usr/lib/cgi-bin/awstats.pl \
+                -config=$awstats_config \
+                -LogFile=$logdir/$wwwroot-access.log.1 -update >/dev/null
+        fi
+
+        # Create directory tree for log archive
+        for dir in $logdir/$year $logdir/$year/$month $logdir/$year/$month/$day; do
+            [ -d $dir ] || { mkdir -m 750 $dir; chown root:$wwwuser $dir; }
+        done
+
+        # Archive and compress log file
+        for logfilename in access.log error.log; do
+            archivelogfilename="$logdir/$datepath/$wwwroot-$logfilename"
+            mv $logdir/$wwwroot-$logfilename.1 $archivelogfilename
+            chown root:$wwwuser $archivelogfilename
+            bzip2 $archivelogfilename
+        done
+    endscript
+}
+

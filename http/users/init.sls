@@ -95,6 +95,21 @@
         - require:
             - user: {{ user }}
             - file: /srv/www/{{ user }}/log
+
+# Logrotate config
+/etc/logrotate.d/www-{{ user }}-{{ root_path }}:
+    file.managed:
+        - mode: 400
+        - user: root
+        - group: root
+        - source: salt://oopss-infra/http/users/logrotate
+        - template: jinja
+        - context:
+            user: {{ user }}
+            root_path: {{ root_path }}
+        - require:
+            - user: {{ user }}
+
 {% endfor %}
 {% endif %}
 {% endfor %}
