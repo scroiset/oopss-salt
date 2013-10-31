@@ -18,10 +18,9 @@
         [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
 
         # Run Awstats if config file available
-        awstats_config="/etc/awstats/awstats.$wwwuser-$wwwroot.conf"
-        if [ -r $awstats_config ]; then
+        if [ -r "/etc/awstats/awstats.$wwwuser-$wwwroot.conf" ]; then
             /usr/lib/cgi-bin/awstats.pl \
-                -config=$awstats_config \
+                -config="$wwwuser-$wwwroot" \
                 -LogFile=$logdir/$wwwroot-access.log.1 -update >/dev/null
         fi
 
