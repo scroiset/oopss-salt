@@ -25,7 +25,7 @@ server {
     location /awstats/ {
         alias /var/cache/awstats/reader-htdocs/;
         autoindex on;
-        index index.en.html
+        index index.en.html;
         auth_basic "Awstats {{ server_name }}";
         auth_basic_user_file /srv/www/{{ user }}/.htpasswd;
     }
