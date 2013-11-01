@@ -10,9 +10,18 @@
 awstats:
     pkg.installed
 
-# Remove awstats standard cron
+# Remove awstats standard cron.
+# Update is triggered by logrotate.
 /etc/cron.d/awstats:
     file.absent:
+        - require:
+            - pkg: awstats
+
+# Build Awstats static files after logrotate.
+/etc/cron.daily/z_awstats_buildstatic:
+    file.symlink:
+        - target: /usr/share/awstats/tools/buildstatic.sh
+        - force: True
         - require:
             - pkg: awstats
 
