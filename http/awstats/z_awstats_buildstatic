@@ -1,0 +1,5 @@
+#!/bin/sh
+
+umask 022
+/usr/share/awstats/tools/buildstatic.sh
+

@@ -19,9 +19,11 @@ awstats:
 
 # Build Awstats static files after logrotate.
 /etc/cron.daily/z_awstats_buildstatic:
-    file.symlink:
-        - target: /usr/share/awstats/tools/buildstatic.sh
-        - force: True
+    file.managed:
+        - source: salt://oopss-infra/http/awstats/z_awstats_buildstatic
+        - mode: 700
+        - user: root
+        - group: root
         - require:
             - pkg: awstats
 
