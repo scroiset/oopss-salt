@@ -16,7 +16,6 @@ locales:
         - mode: 444
         - user: root
         - group: root
-        - backup: minion
         - require:
             - pkg: locales
 

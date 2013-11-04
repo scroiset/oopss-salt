@@ -32,7 +32,6 @@ ssh:
         - template: jinja
         - require:
             - pkg: openssh-server
-        - backup: minion
 
 /etc/init.d/ssh:
     file.sed:

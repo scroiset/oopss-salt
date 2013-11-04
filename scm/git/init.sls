@@ -15,5 +15,4 @@ git:
         - mode: 444
         - user: root
         - group: root
-        - backup: minion
 
