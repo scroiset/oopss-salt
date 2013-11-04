@@ -20,6 +20,9 @@ nginx:
         - require:
             - pkg: nginx
 
+apache2-utils:
+    pkg.installed
+
 ##############################################################################
 # Read http:users pillar and create virtual hosts
 ##############################################################################
