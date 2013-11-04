@@ -51,7 +51,7 @@ mysql-user-{{ user }}:
     mysql_user:
         - present
         - name: {{ user }}
-        - host: 127.0.0.1
+        - host: localhost
         - password_hash: '{{ password }}'
         - require:
             - pkg: mysql-server
@@ -70,7 +70,7 @@ mysql-grant-{{ user }}:
         - grant: all privileges
         - database : {{ user }}.*
         - user : {{ user }}
-        - host: 127.0.0.1
+        - host: localhost
         - require:
             - mysql_database: mysql-db-{{ user }}
 {% endfor %}
