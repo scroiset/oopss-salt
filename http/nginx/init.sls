@@ -19,6 +19,15 @@ nginx:
         - reload: True
         - require:
             - pkg: nginx
+        - watch:
+            - file: /etc/nginx/conf.d/local.conf
+
+/etc/nginx/conf.d/local.conf:
+    file.managed:
+        - source: salt://oopss-infra/http/nginx/local.conf
+        - user: root
+        - group: root
+        - mode: 400
 
 apache2-utils:
     pkg.installed
