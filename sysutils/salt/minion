@@ -30,3 +30,7 @@ startup_states: 'highstate'
 # Specify MySQL config file for Debian
 mysql.default_file: '/etc/mysql/debian.cnf'
 
+# Specify the default returner. Needed as a workaround for this bug :
+# https://github.com/saltstack/salt/pull/7953.
+ext_job_cache: ''
+
