@@ -1,0 +1,32 @@
+
+##############################################################################
+# oopss-infra
+# Description : Oopss infrastructure files using SaltStack
+# URL : https://github.com/oopss/oopss-infra
+# Copyright 2013 Oopss.org <team@oopss.org>
+##############################################################################
+
+# Set the location of the salt master server, if the master server cannot be
+# resolved, then the minion will fail to start.
+master: {{ salt_master }}
+
+# The minion can locally cache the return data from jobs sent to it, this
+# can be a good way to keep track of jobs the minion has executed
+# (on the minion side). By default this feature is disabled, to enable
+# set cache_jobs to True
+cache_jobs: True
+
+# Backup files that are replaced by file.managed and file.recurse under
+# 'cachedir'/file_backups relative to their original location and appended
+# with a timestamp. The only valid setting is "minion". Disabled by default.
+backup_mode: minion
+
+# Run states when the minion daemon starts. To enable, set startup_states to:
+# 'highstate' -- Execute state.highstate
+# 'sls' -- Read in the sls_list option and execute the named sls files
+# 'top' -- Read top_file option and execute based on that file on the Master
+startup_states: 'highstate'
+
+# Specify MySQL config file for Debian
+mysql.default_file: '/etc/mysql/debian.cnf'
+
