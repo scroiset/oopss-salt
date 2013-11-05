@@ -10,6 +10,14 @@
 awstats:
     pkg.installed
 
+# Awstats global config
+/etc/awstats/awstats.conf.local:
+    file.managed:
+        - source: salt://oopss-infra/http/awstats/awstats.conf.local
+        - mode: 440
+        - user: root
+        - group: adm
+
 # Remove awstats standard cron.
 # Update is triggered by logrotate.
 /etc/cron.d/awstats:
@@ -30,6 +38,17 @@ awstats:
 # For each user in pillar http:users
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+
+# Awstats root for each user
+/srv/www/{{ user }}/awstats:
+    file.directory:
+        - mode: 750
+        - user: root
+        - group: {{ user }}
+        - require:
+            - user: {{ user }}
+            - file: /srv/www/{{ user }}
+
 {% if userinfo['root_paths'] is defined %}
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
 
@@ -45,24 +64,6 @@ awstats:
         - mode: 440
         - user: root
         - group: adm
-
-# Awstats global config
-/etc/awstats/awstats.conf.local:
-    file.managed:
-        - source: salt://oopss-infra/http/awstats/awstats.conf.local
-        - mode: 440
-        - user: root
-        - group: adm
-
-# Awstats root for each user
-/srv/www/{{ user }}/awstats:
-    file.directory:
-        - mode: 750
-        - user: root
-        - group: {{ user }}
-        - require:
-            - user: {{ user }}
-            - file: /srv/www/{{ user }}
 
 # Awstats dir for each root path
 /srv/www/{{ user }}/awstats/{{ root_path }}:
