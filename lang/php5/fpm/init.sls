@@ -12,6 +12,13 @@ include:
 php5-fpm:
     pkg.installed
 
+/etc/php5/fpm/conf.d/local.ini:
+    file.managed:
+        - source: salt://oopss-infra/lang/php5/fpm/local.ini
+        - user: root
+        - group: root
+        - mode: 400
+
 /etc/php5/fpm/pool.d/www.conf:
     file.absent
 
