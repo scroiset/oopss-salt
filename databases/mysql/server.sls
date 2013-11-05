@@ -27,6 +27,13 @@ mysql:
         - require:
             - pkg: mysql-server
 
+/etc/mysql/conf.d/local.cnf:
+    file.managed:
+        - source: salt://oopss-infra/databases/mysql/local.cnf
+        - user: root
+        - group: adm
+        - mode: 440
+
 /root/.my.cnf:
     file.symlink:
         - target: /etc/mysql/debian.cnf
