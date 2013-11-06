@@ -21,11 +21,19 @@ nginx:
             - pkg: nginx
         - watch:
             - file: /etc/nginx/conf.d/local.conf
+            - file: /etc/nginx/common.conf
             - file: /etc/nginx/sites-available/default
 
 /etc/nginx/conf.d/local.conf:
     file.managed:
         - source: salt://oopss-infra/http/nginx/local.conf
+        - user: root
+        - group: root
+        - mode: 400
+
+/etc/nginx/common.conf:
+    file.managed:
+        - source: salt://oopss-infra/http/nginx/common.conf
         - user: root
         - group: root
         - mode: 400

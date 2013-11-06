@@ -12,16 +12,6 @@ server {
     access_log {{ access_log }};
     error_log {{ error_log }};
 
-    location = /favicon.ico {
-        log_not_found off;
-        access_log off;
-    }
-
-    location = /robots.txt {
-        log_not_found off;
-        access_log off;
-    }
-
     location /awstats/ {
         alias /var/cache/awstats/{{ user }}-{{ root_path }}/;
         autoindex on;
@@ -30,9 +20,7 @@ server {
         auth_basic_user_file /srv/www/{{ user }}/.htpasswd;
     }
 
-    location /awstats-icon/ {
-        alias /usr/share/awstats/icon/;
-    }
+    include "/etc/nginx/common.conf";
 
 {% if tag_http_proxy is defined %}
     # http_proxy
