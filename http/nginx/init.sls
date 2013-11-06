@@ -76,6 +76,9 @@ apache2-utils:
             root_path: {{ root_path }}
         - require:
             - pkg: nginx
+            - file: /srv/www/{{ user }}/{{ root_path }}
+            - file: /srv/www/{{ user }}/log/{{ root_path }}-access.log
+            - file: /srv/www/{{ user }}/log/{{ root_path }}-error.log
         - watch_in:
             - service: nginx
 
