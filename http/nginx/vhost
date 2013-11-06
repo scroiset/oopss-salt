@@ -24,11 +24,15 @@ server {
 
 {% if tag_http_proxy is defined %}
     # http_proxy
-    location / {
+    location @http_proxy {
         proxy_pass http://unix:{{ socket }};
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location / {
+        try_files $uri @http_proxy;
     }
 {% endif %}
 
