@@ -29,6 +29,13 @@ nginx:
         - group: root
         - mode: 400
 
+/etc/nginx/sites-available/default:
+    file.managed:
+        - source: salt://oopss-infra/http/nginx/default_server
+        - user: root
+        - group: root
+        - mode: 400
+
 apache2-utils:
     pkg.installed
 
