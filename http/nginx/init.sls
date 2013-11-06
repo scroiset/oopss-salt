@@ -21,6 +21,7 @@ nginx:
             - pkg: nginx
         - watch:
             - file: /etc/nginx/conf.d/local.conf
+            - file: /etc/nginx/sites-available/default
 
 /etc/nginx/conf.d/local.conf:
     file.managed:
@@ -67,6 +68,8 @@ apache2-utils:
             root_path: {{ root_path }}
         - require:
             - pkg: nginx
+        - watch_in:
+            - service: nginx
 
 /etc/nginx/sites-enabled/{{ user }}-{{ root_path }}:
     file.symlink:
@@ -74,6 +77,8 @@ apache2-utils:
         - force: True
         - require:
             - file: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
+        - watch_in:
+            - service: nginx
 
 {% endfor %}
 {% endfor %}
