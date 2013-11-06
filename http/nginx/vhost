@@ -22,8 +22,7 @@ server {
 
     include "/etc/nginx/common.conf";
 
-{% if tag_http_proxy is defined %}
-    # http_proxy
+{% if tag_gunicorn is defined %}
     location @http_proxy {
         proxy_pass http://unix:{{ socket }};
         proxy_set_header Host $host;
@@ -36,8 +35,7 @@ server {
     }
 {% endif %}
 
-{% if tag_php_fastcgi is defined %}
-    # php_fastcgi
+{% if tag_php5 is defined %}
     index index.html index.php;
     location ~* \.php$ {
         fastcgi_pass unix:{{ socket }};
@@ -45,8 +43,7 @@ server {
     }
 {% endif %}
 
-{% if tag_php_rewrite_to_index is defined %}
-    # php_rewrite_to_index
+{% if tag_wordpress is defined %}
     location / {
        try_files $uri $uri/ /index.php?$args;
     }
