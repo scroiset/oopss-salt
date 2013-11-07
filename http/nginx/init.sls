@@ -64,7 +64,7 @@ apache2-utils:
         - source: salt://oopss-infra/http/nginx/vhost
         - template: jinja
         - context:
-            server_name: {% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %}
+            server_names: {{ root_pathinfo['server_names'] }}
             root: /srv/www/{{ user }}/{{ root_path }}
             access_log: /srv/www/{{ user }}/log/{{ root_path }}-access.log
             error_log: /srv/www/{{ user }}/log/{{ root_path }}-error.log

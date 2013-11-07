@@ -7,7 +7,7 @@
 ##############################################################################
 
 server {
-    server_name {{ server_name }};
+    server_name{% for server_name in server_names %} {{ server_name }}{% endfor %};
     root {{ root }};
     access_log {{ access_log }};
     error_log {{ error_log }};
@@ -16,7 +16,7 @@ server {
         alias /var/cache/awstats/{{ user }}-{{ root_path }}/;
         autoindex on;
         index index.en.html;
-        auth_basic "Awstats {{ server_name }}";
+        auth_basic "Awstats {{ server_names[0] }}";
         auth_basic_user_file /srv/www/{{ user }}/.htpasswd;
     }
 
