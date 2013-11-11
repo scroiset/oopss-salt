@@ -32,7 +32,7 @@ server {
 
     include "/etc/nginx/common.conf";
 
-{% if root_pathinfo['config_tags']['gunicorn'] is defined %}
+{% if 'gunicorn' in root_pathinfo['config_tags'] %}
     location @http_proxy {
         proxy_pass http://unix:{{ socket }};
         proxy_set_header Host $host;
@@ -45,7 +45,7 @@ server {
     }
 {% endif %}
 
-{% if root_pathinfo['config_tags']['php5'] is defined %}
+{% if 'php5' in root_pathinfo['config_tags'] %}
     index index.html index.php;
     location ~* \.php$ {
         fastcgi_pass unix:{{ socket }};
@@ -53,7 +53,7 @@ server {
     }
 {% endif %}
 
-{% if root_pathinfo['config_tags']['wordpress'] is defined %}
+{% if 'wordpress' in root_pathinfo['config_tags'] %}
     location / {
        try_files $uri $uri/ /index.php?$args;
     }
