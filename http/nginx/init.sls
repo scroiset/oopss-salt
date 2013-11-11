@@ -64,16 +64,10 @@ apache2-utils:
         - source: salt://oopss-infra/http/nginx/vhost
         - template: jinja
         - context:
-            server_names: {{ root_pathinfo['server_names'] }}
-            root: /srv/www/{{ user }}/{{ root_path }}
-            access_log: /srv/www/{{ user }}/log/{{ root_path }}-access.log
-            error_log: /srv/www/{{ user }}/log/{{ root_path }}-error.log
-{% for tag in root_pathinfo['config_tags'] %}
-            tag_{{ tag }}: True
-{% endfor %}
-            socket: /srv/www/{{ user }}/.sock/{{ root_path }}.sock
             user: {{ user }}
             root_path: {{ root_path }}
+            root_pathinfo: {{ root_pathinfo }}
+            socket: /srv/www/{{ user }}/.sock/{{ root_path }}.sock
         - require:
             - pkg: nginx
             - file: /srv/www/{{ user }}/{{ root_path }}

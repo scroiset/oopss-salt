@@ -7,22 +7,22 @@
 ##############################################################################
 
 server {
-    server_name{% for server_name in server_names %} {{ server_name }}{% endfor %};
-    root {{ root }};
-    access_log {{ access_log }};
-    error_log {{ error_log }};
+    server_name{% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %};
+    root /srv/www/{{ user }}/{{ root_path }};
+    access_log /srv/www/{{ user }}/log/{{ root_path }}-access.log;
+    error_log /srv/www/{{ user }}/log/{{ root_path }}-error.log;
 
     location /awstats/ {
         alias /var/cache/awstats/{{ user }}-{{ root_path }}/;
         autoindex on;
         index index.en.html;
-        auth_basic "Awstats {{ server_names[0] }}";
+        auth_basic "Awstats {{ root_pathinfo['server_names'][0] }}";
         auth_basic_user_file /srv/www/{{ user }}/.htpasswd;
     }
 
     include "/etc/nginx/common.conf";
 
-{% if tag_gunicorn is defined %}
+{% if root_pathinfo['config_tags']['gunicorn'] is defined %}
     location @http_proxy {
         proxy_pass http://unix:{{ socket }};
         proxy_set_header Host $host;
@@ -35,7 +35,7 @@ server {
     }
 {% endif %}
 
-{% if tag_php5 is defined %}
+{% if root_pathinfo['config_tags']['php5'] is defined %}
     index index.html index.php;
     location ~* \.php$ {
         fastcgi_pass unix:{{ socket }};
@@ -43,7 +43,7 @@ server {
     }
 {% endif %}
 
-{% if tag_wordpress is defined %}
+{% if root_pathinfo['config_tags']['wordpress'] is defined %}
     location / {
        try_files $uri $uri/ /index.php?$args;
     }
