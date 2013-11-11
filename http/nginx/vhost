@@ -12,6 +12,16 @@ server {
     access_log /srv/www/{{ user }}/log/{{ root_path }}-access.log;
     error_log /srv/www/{{ user }}/log/{{ root_path }}-error.log;
 
+{% if root_pathinfo['ssl'] is defined %}
+    listen {{ root_pathinfo['ssl']['port']|default('443') }} ssl;
+    ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers         AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
+    ssl_certificate     /etc/ssl/{{ root_pathinfo['ssl']['cert'] }}.pem;
+    ssl_certificate_key /etc/ssl/{{ root_pathinfo['ssl']['cert'] }}.pem;
+    ssl_session_cache   shared:SSL:10m;
+    ssl_session_timeout 10m;
+{% endif %}
+
     location /awstats/ {
         alias /var/cache/awstats/{{ user }}-{{ root_path }}/;
         autoindex on;
