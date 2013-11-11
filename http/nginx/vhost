@@ -63,7 +63,7 @@ server {
 {% if root_pathinfo['ssl'] is defined %}
 server {
     server_name{% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %};
-    return 301 http://$host$request_uri;
+    return 301 https://$host$request_uri;
 }
 {% endif %}
 
