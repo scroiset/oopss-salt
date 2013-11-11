@@ -14,4 +14,6 @@ php5-pkg:
             - php5-mysql
             - php5-pgsql
             - php5-gd
+            - php5-intl
+            - php5-mcrypt
 
