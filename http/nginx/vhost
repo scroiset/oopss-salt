@@ -32,6 +32,14 @@ server {
 
     include "/etc/nginx/common.conf";
 
+{% if root_pathinfo['denied_paths'] is defined %}
+{% for denied_path in root_pathinfo['denied_paths'] %}
+    location ~ {{ denied_path }} {
+        deny all;
+    }
+{% endfor %}
+{% endif %}
+
 {% if 'gunicorn' in root_pathinfo['config_tags'] %}
     location @http_proxy {
         proxy_pass http://unix:{{ socket }};
