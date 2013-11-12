@@ -28,6 +28,7 @@ phpmyadmin:
         - source: salt://oopss-infra/databases/phpmyadmin/fpm.conf
         - require:
             - pkg: php5-fpm
+            - user: phpmyadmin
         - watch_in:
             - service: php5-fpm
 
