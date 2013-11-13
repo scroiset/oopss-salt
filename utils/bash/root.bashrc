@@ -13,8 +13,15 @@
 # PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
 umask 077
 
-# Prompt
-PS1="\[$(tput setaf 1)\]\u@\h:\w\\$\[$(tput sgr0)\] "
+# Define different prompt colors depending of the environnement: dev/QA/prod.
+if hostname | grep -E -- '-dev$' >/dev/null; then
+    color="2"   # green
+elif hostname | grep -E -- '-qa$' >/dev/null; then
+    color="3"   # yellow
+else
+    color="1"   # red
+fi
+PS1="\[$(tput setaf $color)\]\u@\h:\w\\$\[$(tput sgr0)\] "
 
 # History control
 shopt -s histappend
