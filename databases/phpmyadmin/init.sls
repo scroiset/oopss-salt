@@ -41,3 +41,12 @@ phpmyadmin:
         - require:
             - pkg: pkg_phpmyadmin
 
+/var/lib/phpmyadmin/blowfish_secret.inc.php:
+    file.managed:
+        - owner: root
+        - group: phpmyadmin
+        - mode: 440
+        - require:
+            - pkg: pkg_phpmyadmin
+            - user: phpmyadmin
+
