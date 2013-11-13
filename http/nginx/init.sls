@@ -23,6 +23,7 @@ nginx:
             - file: /etc/nginx/conf.d/local.conf
             - file: /etc/nginx/common.conf
             - file: /etc/nginx/sites-available/default
+            - user: www-data
 
 /etc/nginx/conf.d/local.conf:
     file.managed:

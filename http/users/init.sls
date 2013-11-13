@@ -124,5 +124,9 @@ www-data:
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
             - {{ user }}
 {% endfor %}
+        - require:
+{% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+            - group: {{ user }}
+{% endfor %}
 {% endif %}
 
