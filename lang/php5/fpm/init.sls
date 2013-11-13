@@ -35,6 +35,7 @@ php5-fpm:
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
+{% if root_pathinfo['config_tags'] is defined %}
 {% if 'php5' in root_pathinfo['config_tags'] %}
 /etc/php5/fpm/pool.d/{{ user }}-{{ root_path }}.conf:
     file.managed:
@@ -51,6 +52,7 @@ php5-fpm:
             - pkg: php5-fpm
         - watch_in:
             - service: php5-fpm
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endfor %}
