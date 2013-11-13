@@ -16,3 +16,8 @@ include('/var/lib/phpmyadmin/blowfish_secret.inc.php');
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
 
+/*
+ * Hide warning about unconfigured configuration storage.
+ */
+$cfg['PmaNoRelation_DisableWarning'] = true;
+
