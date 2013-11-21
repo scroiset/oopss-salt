@@ -48,6 +48,7 @@ postgresql-db-{{ user }}:
         - present
         - name: {{ user }}
         - owner: {{ user }}
+        - encoding: 'UTF-8'
         - require:
             - postgres_user: postgresql-user-{{ user }}
 {% endfor %}
