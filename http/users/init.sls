@@ -44,6 +44,8 @@
         - require:
             - user: {{ user }}
 
+{% if userinfo['root_paths'] is defined %}
+
 # Socket directory
 /srv/www/{{ user }}/.sock:
     file.directory:
@@ -64,7 +66,6 @@
             - file: /srv/www/{{ user }}
 
 # For each root_path
-{% if userinfo['root_paths'] is defined %}
 {% for root_path in userinfo['root_paths'] %}
 
 # Root path
