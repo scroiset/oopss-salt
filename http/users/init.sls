@@ -32,13 +32,23 @@
         - fullname: ""
         - groups:
             - sshusers
+{% if userinfo['additional_groups'] is defined %}
+{% for group in userinfo['additional_groups'] %}
+            - {{ group }}
+{% endfor %}
+{% endif %}
         - require:
             - group: {{ user }}
+{% if userinfo['additional_groups'] is defined %}
+{% for group in userinfo['additional_groups'] %}
+            - group: {{ group }}
+{% endfor %}
+{% endif %}
 
 # Web user home directory
 /srv/www/{{ user }}:
     file.directory:
-        - mode: 710
+        - mode: 750
         - user: {{ user }}
         - group: {{ user }}
         - require:
