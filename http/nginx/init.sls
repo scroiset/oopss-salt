@@ -55,6 +55,7 @@ apache2-utils:
 
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% if userinfo['root_paths'] is defined %}
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
 
 /etc/nginx/sites-available/{{ user }}-{{ root_path }}:
@@ -87,6 +88,7 @@ apache2-utils:
             - service: nginx
 
 {% endfor %}
+{% endif %}
 {% endfor %}
 {% endif %}
 

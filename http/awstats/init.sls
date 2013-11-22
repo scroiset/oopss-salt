@@ -38,6 +38,7 @@ awstats:
 # For each user in pillar http:users
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% if userinfo['root_paths'] is defined %}
 
 # Awstats root for each user
 /srv/www/{{ user }}/awstats:
@@ -49,7 +50,6 @@ awstats:
             - user: {{ user }}
             - file: /srv/www/{{ user }}
 
-{% if userinfo['root_paths'] is defined %}
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
 
 # Awstats config file for each user

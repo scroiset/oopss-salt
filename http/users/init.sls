@@ -123,11 +123,15 @@ www-data:
             - www-data
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% if userinfo['root_paths'] is defined %}
             - {{ user }}
+{% endif %}
 {% endfor %}
         - require:
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% if userinfo['root_paths'] is defined %}
             - group: {{ user }}
+{% endif %}
 {% endfor %}
 {% endif %}
 

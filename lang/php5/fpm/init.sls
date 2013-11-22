@@ -34,6 +34,7 @@ php5-fpm:
 
 {% if salt['pillar.get']('http:users') is defined %}
 {% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% if userinfo['root_paths'] is defined %}
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
 {% if root_pathinfo['config_tags'] is defined %}
 {% if 'php5' in root_pathinfo['config_tags'] %}
@@ -55,6 +56,7 @@ php5-fpm:
 {% endif %}
 {% endif %}
 {% endfor %}
+{% endif %}
 {% endfor %}
 {% endif %}
 
