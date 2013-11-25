@@ -26,12 +26,20 @@
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
         - password: '{{ userinfo['password'] }}'
+{% if userinfo['ssh']|default(False) %}
         - home: "{{ salt['pillar.get']('http:basedir') }}/{{ user }}"
-        - createhome: False
         - shell: "/bin/bash"
+{% else %}
+        - home: "/{{ user }}"
+        - shell: "/usr/sbin/nologin"
+{% endif %}
+        - createhome: False
         - fullname: ""
         - groups:
             - sshusers
+{% if not userinfo['ssh']|default(False) %}
+            - sftponly
+{% endif %}
 {% if userinfo['additional_groups'] is defined %}
 {% for group in userinfo['additional_groups'] %}
             - {{ group }}
