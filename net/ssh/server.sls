@@ -14,7 +14,9 @@ openssh-server:
         - installed
 
 sftponly:
-    group.present
+    group:
+        - present
+        - system: True
 
 ssh:
     service:
