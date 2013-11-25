@@ -42,6 +42,10 @@ nginx:
 /etc/nginx/sites-available/default:
     file.managed:
         - source: salt://oopss-infra/http/nginx/default_server
+        - template: jinja
+        - context:
+            ssl_cert: {{ salt['pillar.get']('http:nginx:default_server:ssl_cert', '') }}
+            phpmyadmin: {{ salt['pillar.get']('http:nginx:default_server:phpmyadmin', '') }}
         - user: root
         - group: root
         - mode: 400
