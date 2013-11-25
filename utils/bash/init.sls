@@ -9,6 +9,13 @@
 bash-completion:
     pkg.installed
 
+/etc/bash.bashrc:
+    file.managed:
+        - source: salt://oopss-infra/utils/bash/bash.bashrc
+        - mode: 444
+        - user: root
+        - group: root
+
 /root/.bashrc:
     file.managed:
         - source: salt://oopss-infra/utils/bash/root.bashrc
