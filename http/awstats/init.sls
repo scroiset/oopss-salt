@@ -41,14 +41,14 @@ awstats:
 {% if userinfo['root_paths'] is defined %}
 
 # Awstats root for each user
-/srv/www/{{ user }}/awstats:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats:
     file.directory:
         - mode: 750
         - user: root
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: /srv/www/{{ user }}
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
 {% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
 
@@ -66,13 +66,13 @@ awstats:
         - group: adm
 
 # Awstats dir for each root path
-/srv/www/{{ user }}/awstats/{{ root_path }}:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats/{{ root_path }}:
     file.directory:
         - mode: 750
         - user: root
         - group: {{ user }}
         - require:
-            - file: /srv/www/{{ user }}/awstats
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats
 
 # Awstats HTML dir
 /var/cache/awstats/{{ user }}-{{ root_path }}:

@@ -7,6 +7,6 @@
 ##############################################################################
 
 Include "/etc/awstats/awstats.conf"
-DirData="/srv/www/{{ user }}/awstats/{{ root_path }}/"
+DirData="{{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats/{{ root_path }}/"
 SiteDomain="{{ server_name }}"
 

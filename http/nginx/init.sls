@@ -69,12 +69,12 @@ apache2-utils:
             user: {{ user }}
             root_path: {{ root_path }}
             root_pathinfo: {{ root_pathinfo }}
-            socket: /srv/www/{{ user }}/.sock/{{ root_path }}.sock
+            socket: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/.sock/{{ root_path }}.sock
         - require:
             - pkg: nginx
-            - file: /srv/www/{{ user }}/{{ root_path }}
-            - file: /srv/www/{{ user }}/log/{{ root_path }}-access.log
-            - file: /srv/www/{{ user }}/log/{{ root_path }}-error.log
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/{{ root_path }}
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log
         - watch_in:
             - service: nginx
 

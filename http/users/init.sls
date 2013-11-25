@@ -7,7 +7,7 @@
 ##############################################################################
 
 # Base directory for websites
-/srv/www:
+{{ salt['pillar.get']('http:basedir') }}:
     file.directory:
         - user: root
         - group: root
@@ -26,7 +26,7 @@
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
         - password: '{{ userinfo['password'] }}'
-        - home: "/srv/www/{{ user }}"
+        - home: "{{ salt['pillar.get']('http:basedir') }}/{{ user }}"
         - createhome: False
         - shell: "/bin/bash"
         - fullname: ""
@@ -46,7 +46,7 @@
 {% endif %}
 
 # Web user home directory
-/srv/www/{{ user }}:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}:
     file.directory:
         - mode: 750
         - user: {{ user }}
@@ -57,55 +57,55 @@
 {% if userinfo['root_paths'] is defined %}
 
 # Socket directory
-/srv/www/{{ user }}/.sock:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/.sock:
     file.directory:
         - mode: 710
         - user: {{ user }}
         - group: {{ user }}
         - require:
-            - file: /srv/www/{{ user }}
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
 # Log directory
-/srv/www/{{ user }}/log:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log:
     file.directory:
         - mode: 750
         - user: root
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: /srv/www/{{ user }}
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
 # For each root_path
 {% for root_path in userinfo['root_paths'] %}
 
 # Root path
-/srv/www/{{ user }}/{{ root_path }}:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/{{ root_path }}:
     file.directory:
         - user: {{ user }}
         - group: {{ user }}
         - mode: 750
         - require:
-            - file: /srv/www/{{ user }}
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
 # Web server access file
-/srv/www/{{ user }}/log/{{ root_path }}-access.log:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log:
     file.managed:
         - mode: 640
         - user: www-data
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: /srv/www/{{ user }}/log
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log
 
 # Web server error file
-/srv/www/{{ user }}/log/{{ root_path }}-error.log:
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log:
     file.managed:
         - mode: 640
         - user: www-data
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: /srv/www/{{ user }}/log
+            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log
 
 # Logrotate config
 /etc/logrotate.d/www-{{ user }}-{{ root_path }}:

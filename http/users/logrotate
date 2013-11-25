@@ -1,4 +1,4 @@
-/srv/www/{{ user }}/log/{{ root_path }}-access.log /srv/www/{{ user }}/log/{{ root_path }}-error.log {
+{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log {
     daily
     size 0
     rotate 1
@@ -8,7 +8,7 @@
     postrotate
         wwwuser="{{ user }}"
         wwwroot="{{ root_path }}"
-        logdir="/srv/www/$wwwuser/log/"
+        logdir="{{ salt['pillar.get']('http:basedir') }}/$wwwuser/log/"
         year=$(date -d yesterday +%Y)
         month=$(date -d yesterday +%m)
         day=$(date -d yesterday +%d)
