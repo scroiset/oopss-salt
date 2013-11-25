@@ -85,7 +85,7 @@ TCPKeepAlive yes
 # Allow client to pass locale environment variables
 AcceptEnv LANG LC_*
 
-Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp internal-sftp
 
 # Set this to 'yes' to enable PAM authentication, account processing,
 # and session processing. If this is enabled, PAM authentication will
@@ -105,5 +105,14 @@ AllowGroups sshusers root
 Match Address {{ ipaddr }}
     PasswordAuthentication yes
 {% endfor %}
+{% endif %}
+
+{% if salt['pillar.get']('http:basedir') is defined %}
+# Allow only chrooted SFTP
+Match Group sftponly
+    ChrootDirectory {{ salt['pillar.get']('http:basedir') }}
+    X11Forwarding no
+    AllowTcpForwarding no
+    ForceCommand internal-sftp
 {% endif %}
 

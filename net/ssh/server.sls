@@ -13,6 +13,9 @@ openssh-server:
     pkg:
         - installed
 
+sftponly:
+    group.present
+
 ssh:
     service:
         - running
