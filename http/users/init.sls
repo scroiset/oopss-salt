@@ -47,6 +47,9 @@
 {% endif %}
         - require:
             - group: {{ user }}
+{% if not userinfo['ssh']|default(False) %}
+            - group: sftponly
+{% endif %}
 {% if userinfo['additional_groups'] is defined %}
 {% for group in userinfo['additional_groups'] %}
             - group: {{ group }}
