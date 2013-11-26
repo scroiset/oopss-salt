@@ -1,0 +1,42 @@
+#!/bin/sh
+
+##############################################################################
+# oopss-infra
+# Description : Oopss infrastructure files using SaltStack
+# URL : https://github.com/oopss/oopss-infra
+# Copyright 2013 Oopss.org <team@oopss.org>
+##############################################################################
+
+# dump_pgsql dumps each PostgreSQL database in a separate file compressed with bzip2.
+# In addition, global objects are dumped into a _global.sql.bz2 file.
+# These dumps are stored in /var/backups/dump_pgsql/YYYY-MM-DD.
+# When the current set of dumps is done, the previous set is removed.
+# Requirements: the UNIX postgres account should be granted access to the database
+# as a privilegied user.
+
+set -e
+
+DUMPROOT="/var/backups/dump_pgsql"
+databases=$(sudo -u postgres psql -A -t -c "select datname from pg_database;" template1)
+dumpdir="$DUMPROOT/$(date -I)"
+
+if [ -d $dumpdir ]; then
+    echo "$dumpdir already exists. Aborting."
+    exit 1
+else
+    mkdir -p $dumpdir
+    chown postgres:postgres $dumpdir
+
+    sudo -u postgres pg_dumpall -g | bzip2 >$dumpdir/_global.sql.bz2
+
+    for db in $databases; do
+        [ "$db" = "template0" ] && continue
+        sudo -u postgres pg_dump -C $db | bzip2 >$dumpdir/$db.sql.gz
+    done
+fi
+
+# Remove all dump directories except the last.
+find $DUMPROOT -regextype posix-extended -type d \
+    -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}$' | sort | head -n -1 | \
+    while read dumpdir_todelete; do rm -r $dumpdir_todelete; done
+

@@ -60,3 +60,14 @@ postgresql-db-{{ user }}:
             - postgres_user: postgresql-user-{{ user }}
 {% endfor %}
 
+/etc/cron.daily/dump_pgsql:
+    {% if salt['pillar.get']('databases:postgresql:daily_dump') %}
+    file.managed:
+        - source: salt://oopss-infra/databases/postgresql/dump_pgsql
+        - user: root
+        - group: root
+        - mode: 700
+    {% else %}
+    file.absent
+    {% endif %}
+
