@@ -82,3 +82,14 @@ mysql-grant-{{ user }}:
             - mysql_database: mysql-db-{{ user }}
 {% endfor %}
 
+/etc/cron.daily/dump_mysql:
+    {% if salt['pillar.get']('databases:mysql:daily_dump') %}
+    file.managed:
+        - source: salt://oopss-infra/databases/mysql/dump_mysql
+        - user: root
+        - group: root
+        - mode: 700
+    {% else %}
+    file.absent
+    {% endif %}
+
