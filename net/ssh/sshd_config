@@ -107,7 +107,7 @@ Match Address {{ ipaddr }}
 {% endfor %}
 {% endif %}
 
-{% if salt['pillar.get']('http:basedir') is defined %}
+{% if salt['pillar.get']('http:basedir', '') %}
 # Allow only chrooted SFTP
 Match Group sftponly
     ChrootDirectory {{ salt['pillar.get']('http:basedir') }}
