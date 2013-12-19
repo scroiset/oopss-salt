@@ -13,6 +13,9 @@
 # PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
 umask 077
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Define different prompt colors depending of the environnement: dev/QA/prod.
 if hostname | grep -E -- '-dev$' >/dev/null; then
     color="2"   # green
