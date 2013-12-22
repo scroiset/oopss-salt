@@ -28,6 +28,7 @@ nginx:
 /etc/nginx/conf.d/local.conf:
     file.managed:
         - source: salt://oopss-infra/http/nginx/local.conf
+        - template: jinja
         - user: root
         - group: root
         - mode: 400

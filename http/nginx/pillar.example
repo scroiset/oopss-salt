@@ -6,9 +6,11 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% from "oopss-infra/http/nginx/map.jinja" import http_nginx_config with context %}
-
-{% for key, value in http_nginx_config.iteritems() %}
-{{ key }} {{ value }};
-{% endfor %}
+http:
+    nginx:
+        config:
+            client_max_body_size: 32m
+            server_tokens: 'off'
+            sendfile: 'off';
+            # Add here simple key/value directives.
 
