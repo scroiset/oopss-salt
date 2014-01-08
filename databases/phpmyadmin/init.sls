@@ -7,7 +7,7 @@
 ##############################################################################
 
 include:
-    - lang.php5.fpm
+    - oopss-infra.lang.php5.fpm
 
 pkg_phpmyadmin:
     pkg:
