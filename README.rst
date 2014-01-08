@@ -36,3 +36,16 @@ Create top file ``/srv/salt/top.sls`` and call formulas you want to use. Example
 
 Bind the minion to the master and execute ``state.highstate``.
 
+Guidelines
+----------
+- The project is sub-divised in formulas
+- Each formula resides in a sub-directory of a category (e.g. http/nginx/)
+- Software configuration should be defined in a map.jinja file
+- Users can overwrite map.jinja using Pillar
+- Each formula has a README.rst file
+- Each formula has a pillar.example file
+- Each dependency to another formula should be documented
+- Each file should have the standard header
+- Each formula's file should be documented in the README.rst file
+- Formulas should be generic if it don't increase complexity overmuch
+
