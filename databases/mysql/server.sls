@@ -53,7 +53,7 @@ mysql-clean:
 # Read pillar databases:mysql:users then create users and databases
 ##############################################################################
 
-{% for user, password in salt['pillar.get']('databases:mysql:users').iteritems() %}
+{% for user, password in salt['pillar.get']('databases:mysql:users', {}).iteritems() %}
 mysql-user-{{ user }}:
     mysql_user:
         - present

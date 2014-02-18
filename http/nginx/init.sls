@@ -58,10 +58,8 @@ apache2-utils:
 # Read http:users pillar and create virtual hosts
 ##############################################################################
 
-{% if salt['pillar.get']('http:users') is defined %}
-{% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
-{% if userinfo['root_paths'] is defined %}
-{% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
+{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
+{% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
 /etc/nginx/sites-available/{{ user }}-{{ root_path }}:
     file.managed:
@@ -93,7 +91,5 @@ apache2-utils:
             - service: nginx
 
 {% endfor %}
-{% endif %}
 {% endfor %}
-{% endif %}
 

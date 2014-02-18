@@ -10,8 +10,7 @@ sshusers:
     group.present:
         - system: True
 
-{% if pillar['users'] is defined %}
-{% for user, userinfo in pillar['users'].iteritems() %}
+{% for user, userinfo in salt['pillar.get']('users', {}).iteritems() %}
 {{ user }}:
     group.present:
         - gid: {{ userinfo['uid'] }}
@@ -60,7 +59,6 @@ sshusers:
         - require:
             - user: {{ user }}
 {% endfor %}
-{% endif %}
 
 
 ##############################################################################

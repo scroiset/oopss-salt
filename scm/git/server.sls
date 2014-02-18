@@ -16,7 +16,7 @@ include:
         - group: root
         - makedirs: True
 
-{% for git_project, git_projectinfo in pillar['git_projects'].iteritems() %}
+{% for git_project, git_projectinfo in salt['pillar.get']('git_projects', {}).iteritems() %}
 {{ git_project }}:
     group.present:
         - gid: {{ git_projectinfo['uid'] }}

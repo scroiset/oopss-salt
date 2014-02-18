@@ -35,7 +35,7 @@ postgresql:
 # Read pillar databases:postgresql:users then create users and databases
 ##############################################################################
 
-{% for user, password in salt['pillar.get']('databases:postgresql:users').iteritems() %}
+{% for user, password in salt['pillar.get']('databases:postgresql:users', {}).iteritems() %}
 postgresql-user-{{ user }}:
     postgres_user:
         - present

@@ -36,8 +36,7 @@ awstats:
             - pkg: awstats
 
 # For each user in pillar http:users
-{% if salt['pillar.get']('http:users') is defined %}
-{% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 {% if userinfo['root_paths'] is defined %}
 
 # Awstats root for each user
@@ -50,7 +49,7 @@ awstats:
             - user: {{ user }}
             - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
-{% for root_path, root_pathinfo in userinfo['root_paths'].iteritems() %}
+{% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
 # Awstats config file for each user
 /etc/awstats/awstats.{{ user }}-{{ root_path }}.conf:
@@ -84,5 +83,4 @@ awstats:
 {% endfor %}
 {% endif %}
 {% endfor %}
-{% endif %}
 

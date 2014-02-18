@@ -14,8 +14,7 @@
         - mode: 711
 
 # For each user in pillar http:users
-{% if salt['pillar.get']('http:users') is defined %}
-{% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 
 # Web user and group
 {{ user }}:
@@ -135,21 +134,20 @@
 {% endfor %}
 {% endif %}
 {% endfor %}
-{% endif %}
 
 # Add www-data system user in each user group, so it can access static files
 www-data:
     user.present:
         - groups:
             - www-data
-{% if salt['pillar.get']('http:users') is defined %}
-{% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% if salt['pillar.get']('http:users') %}
+{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 {% if userinfo['root_paths'] is defined %}
             - {{ user }}
 {% endif %}
 {% endfor %}
         - require:
-{% for user, userinfo in salt['pillar.get']('http:users').iteritems() %}
+{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 {% if userinfo['root_paths'] is defined %}
             - group: {{ user }}
 {% endif %}
