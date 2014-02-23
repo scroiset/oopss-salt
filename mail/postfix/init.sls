@@ -18,6 +18,10 @@ postfix:
         - watch:
             - file: /etc/postfix/main.cf
 
+pfqueue:
+    pkg:
+        - installed
+
 /etc/postfix/main.cf:
     file.managed:
         - source: salt://oopss-infra/mail/postfix/main.cf
