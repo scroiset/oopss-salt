@@ -7,7 +7,7 @@
 ##############################################################################
 
 include:
-    - git
+    - oopss-infra.scm.git
 
 {{ pillar['git_root'] }}/:
     file.directory:
