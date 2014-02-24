@@ -9,7 +9,9 @@
 include:
     - oopss-infra.scm.git
 
-{{ pillar['git_root'] }}/:
+{% set git_rootdir = salt['pillar.get']('git:rootdir', '/srv/git') %}
+
+{{ git_rootdir }}/:
     file.directory:
         - mode: 755
         - user: root
@@ -24,7 +26,7 @@ include:
     user.present:
         - uid: {{ git_projectinfo['uid'] }}
         - gid: {{ git_projectinfo['uid'] }}
-        - home: "{{ pillar['git_root'] }}/{{ git_project }}"
+        - home: "{{ git_rootdir }}/{{ git_project }}"
         - createhome: False
         - shell: "/usr/bin/git-shell"
         - groups:
@@ -44,9 +46,9 @@ include:
 {% endfor %}
 {% endfor %}
         - require:
-            - file: {{ pillar['git_root'] }}/{{ git_project }}
+            - file: {{ git_rootdir }}/{{ git_project }}
 
-{{ pillar['git_root'] }}/{{ git_project }}:
+{{ git_rootdir }}/{{ git_project }}:
     file.directory:
         - mode: 700
         - user: {{ git_project }}
@@ -64,15 +66,15 @@ ssh_keygen_{{ git_project }}:
         - unless: 'test -f $HOME/.ssh/id_rsa'
         - require:
             - user: {{ git_project }}
-            - file: {{ pillar['git_root'] }}/{{ git_project }}
+            - file: {{ git_rootdir }}/{{ git_project }}
 {% endif %}
 
 {% for repo in git_projectinfo['repos'] %}
-{{ pillar['git_root'] }}/{{ git_project }}/{{ repo }}.git:
+{{ git_rootdir }}/{{ git_project }}/{{ repo }}.git:
     git.present:
         - runas: {{ git_project }}
         - require:
-            - file: {{ pillar['git_root'] }}/{{ git_project }}
+            - file: {{ git_rootdir }}/{{ git_project }}
 {% endfor %}
 {% endfor %}
 
