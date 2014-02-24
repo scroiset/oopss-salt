@@ -6,6 +6,8 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
+{% from "oopss-infra/http/map.jinja" import http_config with context %}
+
 # Package
 awstats:
     pkg.installed
@@ -40,14 +42,14 @@ awstats:
 {% if userinfo['root_paths'] is defined %}
 
 # Awstats root for each user
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats:
+{{ http_config['rootdir'] }}/{{ user }}/awstats:
     file.directory:
         - mode: 750
         - user: root
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
+            - file: {{ http_config['rootdir'] }}/{{ user }}
 
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
@@ -65,13 +67,13 @@ awstats:
         - group: adm
 
 # Awstats dir for each root path
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats/{{ root_path }}:
+{{ http_config['rootdir'] }}/{{ user }}/awstats/{{ root_path }}:
     file.directory:
         - mode: 750
         - user: root
         - group: {{ user }}
         - require:
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/awstats
+            - file: {{ http_config['rootdir'] }}/{{ user }}/awstats
 
 # Awstats HTML dir
 /var/cache/awstats/{{ user }}-{{ root_path }}:

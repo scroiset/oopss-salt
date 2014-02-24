@@ -6,8 +6,9 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
-# Base directory for websites
-{{ salt['pillar.get']('http:basedir') }}:
+{% from "oopss-infra/http/map.jinja" import http_config with context %}
+
+{{ http_config['rootdir'] }}:
     file.directory:
         - user: root
         - group: root
@@ -26,7 +27,7 @@
         - gid: {{ userinfo['uid'] }}
         - password: '{{ userinfo['password'] }}'
 {% if userinfo['ssh']|default(False) %}
-        - home: "{{ salt['pillar.get']('http:basedir') }}/{{ user }}"
+        - home: "{{ http_config['rootdir'] }}/{{ user }}"
         - shell: "/bin/bash"
 {% else %}
         - home: "/{{ user }}"
@@ -56,7 +57,7 @@
 {% endif %}
 
 # Web user home directory
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}:
+{{ http_config['rootdir'] }}/{{ user }}:
     file.directory:
         - mode: 750
         - user: {{ user }}
@@ -67,55 +68,55 @@
 {% if userinfo['root_paths'] is defined %}
 
 # Socket directory
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/.sock:
+{{ http_config['rootdir'] }}/{{ user }}/.sock:
     file.directory:
         - mode: 710
         - user: {{ user }}
         - group: {{ user }}
         - require:
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
+            - file: {{ http_config['rootdir'] }}/{{ user }}
 
 # Log directory
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log:
+{{ http_config['rootdir'] }}/{{ user }}/log:
     file.directory:
         - mode: 750
         - user: root
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
+            - file: {{ http_config['rootdir'] }}/{{ user }}
 
 # For each root_path
 {% for root_path in userinfo['root_paths'] %}
 
 # Root path
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/{{ root_path }}:
+{{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}:
     file.directory:
         - user: {{ user }}
         - group: {{ user }}
         - mode: 750
         - require:
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
+            - file: {{ http_config['rootdir'] }}/{{ user }}
 
 # Web server access file
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log:
+{{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log:
     file.managed:
         - mode: 640
         - user: www-data
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log
+            - file: {{ http_config['rootdir'] }}/{{ user }}/log
 
 # Web server error file
-{{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log:
+{{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log:
     file.managed:
         - mode: 640
         - user: www-data
         - group: {{ user }}
         - require:
             - user: {{ user }}
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log
+            - file: {{ http_config['rootdir'] }}/{{ user }}/log
 
 # Logrotate config
 /etc/logrotate.d/www-{{ user }}-{{ root_path }}:

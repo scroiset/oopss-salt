@@ -6,11 +6,13 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
+{% from "oopss-infra/http/map.jinja" import http_config with context %}
+
 server {
     server_name{% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %};
-    root {{ salt['pillar.get']('http:basedir') }}/{{ user }}/{{ root_path }};
-    access_log {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log;
-    error_log {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log;
+    root {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }};
+    access_log {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log;
+    error_log {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log;
 
 {% if root_pathinfo['ssl'] is defined %}
     # Enable SSL if requested by pillar config.
@@ -28,7 +30,7 @@ server {
         autoindex on;
         index index.en.html;
         auth_basic "Awstats {{ root_pathinfo['server_names'][0] }}";
-        auth_basic_user_file {{ salt['pillar.get']('http:basedir') }}/{{ user }}/.htpasswd;
+        auth_basic_user_file {{ http_config['rootdir'] }}/{{ user }}/.htpasswd;
     }
 
     include "/etc/nginx/common.conf";

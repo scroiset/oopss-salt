@@ -6,6 +6,8 @@
 # Copyright 2013 Oopss.org <team@oopss.org>
 ##############################################################################
 
+{% from "oopss-infra/http/map.jinja" import http_config with context %}
+
 ##############################################################################
 # Install packages
 ##############################################################################
@@ -72,12 +74,12 @@ apache2-utils:
             user: {{ user }}
             root_path: {{ root_path }}
             root_pathinfo: {{ root_pathinfo }}
-            socket: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/.sock/{{ root_path }}.sock
+            socket: {{ http_config['rootdir'] }}/{{ user }}/.sock/{{ root_path }}.sock
         - require:
             - pkg: nginx
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/{{ root_path }}
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log
-            - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log
+            - file: {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}
+            - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log
+            - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log
         - watch_in:
             - service: nginx
 
