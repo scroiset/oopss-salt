@@ -17,6 +17,8 @@ postfix:
             - pkg: postfix
         - watch:
             - file: /etc/postfix/main.cf
+            - file: /etc/postfix/transport
+            - file: /etc/postfix/sasl_password
 
 pfqueue:
     pkg:
@@ -48,4 +50,32 @@ newaliases:
     cmd.wait:
         - watch:
             - file: /etc/aliases
+
+/etc/postfix/transport:
+    file.managed:
+        - source: salt://oopss-infra/mail/postfix/transport
+        - template: jinja
+        - mode: 400
+        - user: root
+        - group: root
+
+postmap-transport:
+    cmd.wait:
+        - name: postmap /etc/postfix/transport
+        - watch:
+            - file: /etc/postfix/transport
+
+/etc/postfix/sasl_password:
+    file.managed:
+        - source: salt://oopss-infra/mail/postfix/sasl_password
+        - template: jinja
+        - mode: 400
+        - user: root
+        - group: root
+
+postmap-sasl_password:
+    cmd.wait:
+        - name: postmap /etc/postfix/sasl_password
+        - watch:
+            - file: /etc/postfix/sasl_password
 
