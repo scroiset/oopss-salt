@@ -38,9 +38,9 @@ mynetworks = 127.0.0.0/8
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
-transport_maps = hash:/etc/postfix/transport
+transport_maps = hash:$config_directory/transport
 
 # SASL
 smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_password
+smtp_sasl_password_maps = hash:$config_directory/sasl_password
 
