@@ -44,10 +44,7 @@ server {
 {% endfor %}
 {% endif %}
 
-{# Begin config_tags configuration. #}
-{% if root_pathinfo['config_tags'] is defined %}
-
-{% if 'gunicorn' in root_pathinfo['config_tags'] %}
+{% if 'gunicorn' in root_pathinfo.get('config_tags', []) %}
     # Redirect request to HTTP proxy via UNIX socket, if no file matches.
     location @http_proxy {
         proxy_pass http://unix:{{ socket }};
@@ -57,7 +54,7 @@ server {
     }
 {% endif %}
 
-{% if 'php5' in root_pathinfo['config_tags'] %}
+{% if 'php5' in root_pathinfo.get('config_tags', []) %}
     # Redirect URL ending with .php to PHP-FPM.
     index index.html index.php;
     location ~* \.php$ {
@@ -67,9 +64,9 @@ server {
 {% endif %}
 
     location / {
-{% if 'gunicorn' in root_pathinfo['config_tags'] %}
+{% if 'gunicorn' in root_pathinfo.get('config_tags', []) %}
         try_files $uri @http_proxy;
-{% elif 'wordpress' in root_pathinfo['config_tags'] %}
+{% elif 'wordpress' in root_pathinfo.get('config_tags', []) %}
         # Redirect each request to index.php if no file matches.
         try_files $uri $uri/ /index.php?$args;
 {% endif %}
@@ -80,10 +77,6 @@ server {
         auth_basic_user_file {{ http_config['rootdir'] }}/{{ user }}/.htpasswd;
 {% endif %}
     }
-
-{# End config_tags configuration. #}
-{% endif %}
-
 }
 
 {% if root_pathinfo['redirect_from'] is defined %}
