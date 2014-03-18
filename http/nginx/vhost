@@ -55,10 +55,6 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
-
-    location / {
-        try_files $uri @http_proxy;
-    }
 {% endif %}
 
 {% if 'php5' in root_pathinfo['config_tags'] %}
@@ -70,12 +66,14 @@ server {
     }
 {% endif %}
 
-{% if 'wordpress' in root_pathinfo['config_tags'] %}
-    # Redirect each request to index.php if no file matches.
     location / {
-       try_files $uri $uri/ /index.php?$args;
-    }
+{% if 'gunicorn' in root_pathinfo['config_tags'] %}
+        try_files $uri @http_proxy;
+{% elif 'wordpress' in root_pathinfo['config_tags'] %}
+        # Redirect each request to index.php if no file matches.
+        try_files $uri $uri/ /index.php?$args;
 {% endif %}
+    }
 
 {# End config_tags configuration. #}
 {% endif %}
