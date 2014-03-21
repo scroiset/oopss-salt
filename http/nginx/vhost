@@ -76,6 +76,10 @@ server {
         auth_basic "HTTP AUTH {{ root_pathinfo['server_names'][0] }}";
         auth_basic_user_file {{ http_config['rootdir'] }}/{{ user }}/.htpasswd;
 {% endif %}
+
+{% if root_pathinfo.get('autoindex', False) %}
+        autoindex on;
+{% endif %}
     }
 }
 
