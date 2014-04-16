@@ -7,7 +7,7 @@
 ##############################################################################
 
 include:
-    - git
+    - oopss-infra.scm.git
 
 salt-master:
     pkg.installed
