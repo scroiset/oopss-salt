@@ -76,6 +76,24 @@
         - require:
             - file: {{ http_config['rootdir'] }}/{{ user }}
 
+# SSH directory
+{{ http_config['rootdir'] }}/{{ user }}/.ssh:
+    file.directory:
+        - mode: 700
+        - user: {{ user }}
+        - group: {{ user }}
+        - require:
+            - file: {{ http_config['rootdir'] }}/{{ user }}
+
+# SSH authorized_keys
+{{ http_config['rootdir'] }}/{{ user }}/.ssh/authorized_keys:
+    file.managed:
+        - mode: 600
+        - user: {{ user }}
+        - group: {{ user }}
+        - require:
+            - file: {{ http_config['rootdir'] }}/{{ user }}/.ssh
+
 # Log directory
 {{ http_config['rootdir'] }}/{{ user }}/log:
     file.directory:
