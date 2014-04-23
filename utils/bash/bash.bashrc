@@ -32,6 +32,3 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# Specify PostgreSQL host.
-export PGHOST="127.0.0.1"
-
