@@ -21,7 +21,6 @@ sftponly:
 ssh:
     service:
         - running
-        - reload: True
         - require:
             - pkg: openssh-server
         - watch:
