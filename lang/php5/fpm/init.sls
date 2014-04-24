@@ -15,12 +15,12 @@ php5-fpm:
 
     service:
         - running
-        - reload: True
         - require:
             - pkg: php5-fpm
         - watch:
             - file: /etc/php5/fpm/conf.d/local.ini
             - file: /etc/php5/fpm/pool.d/www.conf
+            - file: /etc/default/php5-fpm
 
 /etc/php5/fpm/conf.d/local.ini:
     file.managed:
@@ -31,6 +31,13 @@ php5-fpm:
 
 /etc/php5/fpm/pool.d/www.conf:
     file.absent
+
+/etc/default/php5-fpm:
+    file.managed:
+        - source: salt://oopss-infra/lang/php5/fpm/init_default
+        - user: root
+        - group: root
+        - mode: 400
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
