@@ -11,6 +11,7 @@ php5-pkg:
         - installed
         - names:
             - php5-cli
+            - php5-curl
             - php5-mysql
             - php5-pgsql
             - php5-gd
