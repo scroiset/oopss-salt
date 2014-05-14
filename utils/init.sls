@@ -17,6 +17,7 @@ pkg_utils:
         - names:
             - curl
             - dos2unix
+            - elinks
             - fetchmail
             - lftp
             - man-db
@@ -25,6 +26,7 @@ pkg_utils:
             - mutt
             - netcat
             - screen
+            - socat
             - unrar-free
             - unzip
             - wget
