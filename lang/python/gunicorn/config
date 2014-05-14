@@ -1,0 +1,20 @@
+
+##############################################################################
+# oopss-infra
+# Description : Oopss infrastructure files using SaltStack
+# URL : https://github.com/oopss/oopss-infra
+# Copyright 2013-2014 Oopss.org <team@oopss.org>
+##############################################################################
+
+CONFIG = {
+    'user': '{{ user }}',
+    'group': '{{ user }}',
+    'working_dir': '{{ salt['pillar.get']('http:basedir') }}/{{ user }}/.wsgi/',
+    'args': (
+        '--bind=unix:{{ salt['pillar.get']('http:basedir') }}/{{ user }}/.sock/{{ root_path }}.sock',
+        '--workers=4',
+        '--log-file={{ salt['pillar.get']('http:basedir') }}/{{ user }}/.gunicorn/{{ root_path }}.log',
+        '{{ root_path }}:application',
+    ),
+}
+
