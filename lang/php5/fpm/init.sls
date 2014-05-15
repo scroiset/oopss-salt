@@ -41,7 +41,7 @@ php5-fpm:
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
-{% if 'php5' in root_pathinfo.get('config_tags', []) %}
+{% if 'php' == root_pathinfo.get('type', '') or 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
 /etc/php5/fpm/pool.d/{{ user }}-{{ root_path }}.conf:
     file.managed:
         - user: root

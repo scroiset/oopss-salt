@@ -40,7 +40,7 @@ gunicorn:
             - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
-{% if 'gunicorn' in root_pathinfo.get('config_tags', []) %}
+{% if 'gunicorn' == root_pathinfo.get('type', '') %}
 /etc/gunicorn.d/{{ user }}-{{ root_path }}:
     file.managed:
         - user: root
