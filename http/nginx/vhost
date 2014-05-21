@@ -80,6 +80,18 @@ server {
 {% if root_pathinfo.get('autoindex', False) %}
         autoindex on;
 {% endif %}
+
+{% if root_pathinfo['rewrite'] is defined %}
+{% for rewrite_rule, rewrite_target in root_pathinfo['rewrite'].iteritems() %}
+        rewrite "{{ rewrite_rule }}" "{{ rewrite_target }}" break;
+{% endfor %}
+{% endif %}
+
+{% if root_pathinfo['error_pages'] is defined %}
+{% for error_code, error_target in root_pathinfo['error_pages'].iteritems() %}
+        error_page {{ error_code }} = "{{ error_target }}";
+{% endfor %}
+{% endif %}
     }
 }
 
