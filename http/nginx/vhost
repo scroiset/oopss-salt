@@ -87,6 +87,12 @@ server {
 {% endfor %}
 {% endif %}
 
+{% if root_pathinfo['redirect_permanent'] is defined %}
+{% for redirect_permanent_rule, redirect_permanent_target in root_pathinfo['redirect_permanent'].iteritems() %}
+        rewrite "{{ redirect_permanent_rule }}" "{{ redirect_permanent_target }}" permanent;
+{% endfor %}
+{% endif %}
+
 {% if root_pathinfo['error_pages'] is defined %}
 {% for error_code, error_target in root_pathinfo['error_pages'].iteritems() %}
         error_page {{ error_code }} = "{{ error_target }}";
