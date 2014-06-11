@@ -15,10 +15,15 @@ postfix:
         - reload: True
         - require:
             - pkg: postfix
+            - file: /etc/postfix/header_checks
         - watch:
             - file: /etc/postfix/main.cf
             - file: /etc/postfix/transport
             - file: /etc/postfix/sasl_password
+
+postfix-pcre:
+    pkg:
+        - installed
 
 pfqueue:
     pkg:
@@ -78,4 +83,10 @@ postmap-sasl_password:
         - name: postmap /etc/postfix/sasl_password
         - watch:
             - file: /etc/postfix/sasl_password
+
+/etc/postfix/header_checks:
+    file.managed:
+        - mode: 640
+        - user: root
+        - group: adm
 

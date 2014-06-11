@@ -44,3 +44,6 @@ transport_maps = hash:$config_directory/transport
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:$config_directory/sasl_password
 
+# Content inspection
+header_checks = pcre:$config_directory/header_checks
+
