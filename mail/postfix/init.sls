@@ -16,6 +16,7 @@ postfix:
         - require:
             - pkg: postfix
             - file: /etc/postfix/header_checks
+            - file: /etc/postfix/sasl_password
         - watch:
             - file: /etc/postfix/main.cf
             - file: /etc/postfix/transport
