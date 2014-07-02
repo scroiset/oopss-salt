@@ -10,11 +10,19 @@ include:
     - oopss-infra.dns.unbound
     - oopss-infra.mail.postfix
     - oopss-infra.net.ssh.server
-    - oopss-infra.sysutils.cron-apt
     - oopss-infra.sysutils.nagios
-    - oopss-infra.sysutils.perf-tools
-    - oopss-infra.sysutils.rsyslog
     - oopss-infra.sysutils.salt
-    - oopss-infra.sysutils.sudo
-    - oopss-infra.sysutils.sysstat
+
+pkg_sysutils:
+    pkg:
+        - installed
+        - names:
+            - apt-listchanges
+            - bonnie++
+            - cron-apt
+            - gdisk
+            - htop
+            - iotop
+            - rsyslog
+            - sudo
 
