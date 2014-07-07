@@ -12,3 +12,8 @@ libpng-dev:
 libjpeg-dev:
     pkg.installed
 
+jpegoptim:
+    pkg.installed
+
+optipng:
+    pkg.installed
