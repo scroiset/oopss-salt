@@ -12,12 +12,12 @@ include:
     - oopss-infra.net.ssh.server
     - oopss-infra.sysutils.nagios
     - oopss-infra.sysutils.salt
+    - oopss-infra.sysutils.apt-listchanges
 
 pkg_sysutils:
     pkg:
         - installed
         - names:
-            - apt-listchanges
             - bonnie++
             - cron-apt
             - gdisk
