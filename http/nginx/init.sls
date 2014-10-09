@@ -8,6 +8,10 @@
 
 {% from "oopss-infra/http/map.jinja" import http_config with context %}
 
+include:
+    - oopss-infra.net.ssh.server
+    - oopss-infra.http.users
+
 ##############################################################################
 # Install packages
 ##############################################################################
