@@ -15,7 +15,7 @@ server {
 
     {% if phpmyadmin_ssl_server %}
     location /phpmyadmin {
-        return 301 https://{{ ssl[phpmyadmin_ssl_server]['ipaddr'] }}:{{ ssl[phpmyadmin_ssl_server]['port']|default('443') }}$request_uri;
+        return 301 https://$host$request_uri;
     }
     {% endif %}
 }
