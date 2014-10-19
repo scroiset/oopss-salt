@@ -23,12 +23,15 @@ postgresql:
 
 /etc/postgresql/9.1/main/pg_hba.conf:
     file.managed:
+        - template: jinja
         - user: postgres
         - group: adm
         - mode: 440
         - source: salt://oopss-infra/databases/postgresql/pg_hba.conf
         - require:
             - pkg: postgresql-9.1
+        - context:
+            mon_user: {{ salt['pillar.get']('databases:postgresql:mon_user')|default(False) }}
 
 
 ##############################################################################
