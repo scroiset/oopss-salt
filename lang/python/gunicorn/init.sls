@@ -21,6 +21,13 @@ gunicorn:
 /etc/gunicorn.d/wsgi.example:
     file.absent
 
+/usr/local/bin/gunicorn-restart:
+    file.managed:
+        - mode: 755
+        - user: root
+        - group: root
+        - source: salt://oopss-infra/lang/python/gunicorn/gunicorn-restart
+
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 
 {{ salt['pillar.get']('http:basedir') }}/{{ user }}/.gunicorn:

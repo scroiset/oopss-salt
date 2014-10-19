@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# This script kills all gunicorn processes owned by the user executing it.
+# Then, the gunicorn master process is expected to respawn them. Doesn't run
+# when invoked by the root user.
+
+if [ $(whoami) != "root" ]; then
+    pkill -u $(whoami) -f /usr/bin/gunicorn
+    echo "Gunicorn processes restarted."
+fi
+
