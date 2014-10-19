@@ -9,6 +9,15 @@
 virtualenvwrapper:
     pkg.installed
 
+python-pip:
+    pkg.installed
+
 python-dev:
+    pkg.installed
+
+python-imaging:
+    pkg.installed
+
+python-psycopg2:
     pkg.installed
 
