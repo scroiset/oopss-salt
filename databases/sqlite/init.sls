@@ -6,21 +6,6 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-virtualenvwrapper:
-    pkg.installed
-
-python-pip:
-    pkg.installed
-
-python-dev:
-    pkg.installed
-
-python-imaging:
-    pkg.installed
-
-python-psycopg2:
-    pkg.installed
-
-python-pysqlite2:
+sqlite3:
     pkg.installed
 
