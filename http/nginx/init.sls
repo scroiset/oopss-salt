@@ -52,7 +52,7 @@ nginx:
         - template: jinja
         - context:
             ssl: {{ salt['pillar.get']('http:nginx:ssl', {}) }}
-            phpmyadmin_ssl_server: {{ salt['pillar.get']('http:nginx:phpmyadmin_ssl_server', '') }}
+            phpmyadmin_ssl_server: {{ salt['pillar.get']('http:nginx:phpmyadmin_ssl_server', False) }}
         - user: root
         - group: root
         - mode: 400
