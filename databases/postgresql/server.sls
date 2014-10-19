@@ -31,7 +31,7 @@ postgresql:
         - require:
             - pkg: postgresql-9.1
         - context:
-            mon_user: {{ salt['pillar.get']('databases:postgresql:mon_user')|default(False) }}
+            mon_user: {{ salt['pillar.get']('databases:postgresql:mon_user', False) }}
 
 
 ##############################################################################
