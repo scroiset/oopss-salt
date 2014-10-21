@@ -1,0 +1,26 @@
+
+##############################################################################
+# oopss-infra
+# Description : Oopss infrastructure files using SaltStack
+# URL : https://github.com/oopss/oopss-infra
+# Copyright 2013-2014 Oopss.org <team@oopss.org>
+##############################################################################
+
+{% for zone in salt['pillar.get']('dns:bind:master:zones', {}) %}
+zone "{{ zone }}" {
+    type master;
+    file "/etc/bind/master/{{ zone }}";
+    allow-query { any; };
+
+    {% for ipaddr in salt['pillar.get']('dns:bind:master:allow_transfer_from', {}) %}
+    {% if loop.first %}
+    allow-transfer {
+    {% endif %}
+        {{ ipaddr }};
+    {% if loop.last %}
+    };
+    {% endif %}
+    {% endfor %}
+};
+{% endfor %}
+

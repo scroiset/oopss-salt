@@ -6,30 +6,22 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-bind9:
-    pkg:
-        - installed
-    service:
-        - running
-        - reload: True
-        - watch:
-            - file: /etc/bind/named.conf.local
-            - file: /etc/bind/named.conf.options
+include:
+    - oopss-infra.dns.bind
 
-/var/log/bind:
+/etc/bind/master:
     file.directory:
         - user: bind
         - group: adm
         - perms: 750
 
-/etc/bind/named.conf.options:
+/etc/bind/named.conf.local:
     file.managed:
-        - source: salt://oopss-infra/dns/bind/named.conf.options
+        - source: salt://oopss-infra/dns/bind/named.conf.master
         - template: jinja
         - user: root
         - group: adm
         - perms: 440
         - require:
             - pkg: bind9
-            - file: /var/log/bind
 

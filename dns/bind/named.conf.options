@@ -14,7 +14,7 @@ options {
     // you will need to update your keys.  See https://www.isc.org/bind-keys
     //========================================================================
     dnssec-validation auto;
- 
+
     auth-nxdomain no;    # conform to RFC1035
     listen-on-v6 { none; };
 
@@ -27,7 +27,6 @@ logging {
     channel queries_log {
         file "/var/log/bind/queries.log" versions unlimited size 100m;
         print-time yes;
-        
     };
     channel default_log {
         file "/var/log/bind/default.log" versions unlimited size 100m;

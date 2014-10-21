@@ -6,12 +6,21 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% for zonename in salt['pillar.get']('dns:bind:zones') %}
-zone "{{ zonename }}" {
+{% for zone in salt['pillar.get']('dns:bind:slave:zones', {}) %}
+zone "{{ zone }}" {
     type slave;
-    file "/etc/bind/slave/{{ zonename }}";
-    masters { {{ salt['pillar.get']('dns:bind:master') }}; };
+    file "/etc/bind/slave/{{ zone }}";
     notify no;
+
+    {% for ipaddr in salt['pillar.get']('dns:bind:slave:transfer_from', {}) %}
+    {% if loop.first %}
+    masters {
+    {% endif %}
+        {{ ipaddr }};
+    {% if loop.last %}
+    };
+    {% endif %}
+    {% endfor %}
 };
 {% endfor %}
 
