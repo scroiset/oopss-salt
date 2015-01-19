@@ -31,7 +31,7 @@ else
 
     for db in $databases; do
         [ "$db" = "template0" ] && continue
-        sudo -u postgres pg_dump -C $db | bzip2 >$dumpdir/$db.sql.gz
+        sudo -u postgres pg_dump -C $db | bzip2 >$dumpdir/$db.sql.bz2
     done
 fi
 
