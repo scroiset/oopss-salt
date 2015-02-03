@@ -20,6 +20,7 @@ pkg_sysutils:
         - names:
             - bonnie++
             - cron-apt
+            - debian-goodies
             - gdisk
             - htop
             - iotop
