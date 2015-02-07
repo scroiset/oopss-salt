@@ -19,6 +19,7 @@ oopss_base_server_pkg:
             - gdisk
             - htop
             - iotop
+            - ntp
             - rsyslog
             - sudo
 
