@@ -21,5 +21,4 @@ oopss_base_server_pkg:
             - iotop
             - rsyslog
             - sudo
-            - unbound
 
