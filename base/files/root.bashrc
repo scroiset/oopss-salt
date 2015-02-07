@@ -22,9 +22,9 @@ if hostname | grep -E -- '-dev$' >/dev/null; then
 elif hostname | grep -E -- '-qa$' >/dev/null; then
     color="3"   # yellow
 else
-    color="1"   # red
+    color="9"   # red
 fi
-PS1="\[$(tput setaf $color)\]\u@\h:\w\\$\[$(tput sgr0)\] "
+PS1="\[$(tput setaf $color)\]\u@\H:\w\\$\[$(tput sgr0)\] "
 
 # History control
 shopt -s histappend
