@@ -20,3 +20,12 @@ oopss_base_vim_config:
         - user: root
         - group: root
 
+oopss_base_vim_alternatives:
+    cmd:
+        - run
+        - names:
+            - "update-alternatives --set vi /usr/bin/vim.basic"
+            - "update-alternatives --set editor /usr/bin/vim.basic"
+        - onchanges:
+            - pkg: oopss_base_vim_pkg
+
