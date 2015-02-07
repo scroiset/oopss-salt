@@ -4,6 +4,7 @@ oopss.base
 ==========
 
 Configure base system.
+See ``pîllar.example`` file.
 
 Available states
 ================
@@ -21,17 +22,23 @@ Enable French and US locales.
 ``oopss.base.motd``
 -------------------
 
-Edit ``/etc/motd`` according to pillar.
+Edit ``/etc/motd`` according to content defined in pillar ``oopss:base:motd``.
+
+``oopss.base.pkg``
+-----------------------
+
+Install standard and useful packages.
+Also install packages defined in pillar list ``oopss:base:pkg``.
 
 ``oopss.base.timezone``
 -----------------------
 
-Configure timezone according to pillar.
+Configure timezone according to pillar ``oopss:base:timezone``.
 
 ``oopss.base.users``
 --------------------
 
-Create UNIX users according to pillar.
+Create UNIX users according to pillar list ``oopss:base:users``.
 
 ``oopss.base.userslock``
 ------------------------
