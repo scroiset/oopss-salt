@@ -24,7 +24,7 @@ elif hostname | grep -E -- '-qa$' >/dev/null; then
 else
     color="9"   # red
 fi
-PS1="\[$(tput setaf $color)\]\u@\H:\w\\$\[$(tput sgr0)\] "
+PS1="\[$(tput setaf $color)\]\u@$(hostname -f):\w\\$\[$(tput sgr0)\] "
 
 # History control
 shopt -s histappend
