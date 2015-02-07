@@ -6,6 +6,9 @@ oopss:
 
         timezone: Europe/Paris
 
+        pkg:
+            - sl
+
         users:
 
             bob:

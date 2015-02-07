@@ -31,3 +31,13 @@ oopss_base_pkg:
             - unzip
             - wget
 
+{% if salt['pillar.get']('oopss:base:pkg', False) %}
+oopss_base_pkg_custom:
+    pkg:
+        - installed
+        - names:
+        {% for pkg in salt['pillar.get']('oopss:base:pkg') %}
+            - {{ pkg }}
+        {% endfor %}
+{% endif %}
+
