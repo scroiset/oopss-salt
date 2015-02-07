@@ -3,7 +3,7 @@
 oopss.base
 ==========
 
-Configure base system.
+Prepare base system.
 See ``pîllar.example`` file.
 
 Available states
@@ -12,7 +12,19 @@ Available states
 ``oopss.base``
 --------------
 
-Include every sub-states of this formula.
+Include non-server states of this formula.
+Install standard and useful packages.
+Also install packages defined in pillar list ``oopss:base:pkg``.
+
+``oopss.base.bash``
+------------------
+
+Configure Bash.
+
+``oopss.base.git``
+------------------
+
+Install and configure Git.
 
 ``oopss.base.locales``
 ----------------------
@@ -24,11 +36,11 @@ Enable French and US locales.
 
 Edit ``/etc/motd`` according to content defined in pillar ``oopss:base:motd``.
 
-``oopss.base.pkg``
+``oopss.base.server``
 -----------------------
 
-Install standard and useful packages.
-Also install packages defined in pillar list ``oopss:base:pkg``.
+Include server states of this formula in addition of ``oopss.base``.
+Install useful sysadmin packages.
 
 ``oopss.base.timezone``
 -----------------------
@@ -44,4 +56,9 @@ Create UNIX users according to pillar list ``oopss:base:users``.
 ------------------------
 
 Disallow users to change their account parameters (because Salt manages it).
+
+``oopss.base.vim``
+------------------
+
+Install and configure Vim.
 

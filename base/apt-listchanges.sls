@@ -6,9 +6,16 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-include:
-    - oopss-infra.mail.postfix
-    - oopss-infra.net.ssh.server
-    - oopss-infra.sysutils.nagios
-    - oopss-infra.sysutils.salt
+oopss_base_apt-listchanges_pkg:
+    pkg:
+        - name: apt-listchanges
+        - installed
+
+oopss_base_apt-listchanges_config:
+    file.managed:
+        - name: /etc/apt/listchanges.conf
+        - source: salt://oopss/base/files/listchanges.conf
+        - user: root
+        - group: adm
+        - mode: 440
 

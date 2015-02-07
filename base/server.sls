@@ -7,8 +7,19 @@
 ##############################################################################
 
 include:
-    - oopss-infra.mail.postfix
-    - oopss-infra.net.ssh.server
-    - oopss-infra.sysutils.nagios
-    - oopss-infra.sysutils.salt
+    - oopss.base
+
+oopss_base_server_pkg:
+    pkg:
+        - installed
+        - names:
+            - bonnie++
+            - cron-apt
+            - debian-goodies
+            - gdisk
+            - htop
+            - iotop
+            - rsyslog
+            - sudo
+            - unbound
 
