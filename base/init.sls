@@ -8,11 +8,14 @@
 
 include:
     - oopss.base.apt-listchanges
+    - oopss.base.bash
+    - oopss.base.git
     - oopss.base.locales
     - oopss.base.motd
     - oopss.base.timezone
     - oopss.base.users
     - oopss.base.userslock
+    - oopss.base.vim
 
 oopss_base_pkg:
     pkg:
