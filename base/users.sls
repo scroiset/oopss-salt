@@ -6,16 +6,21 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-sshusers:
-    group.present:
+oopss_base_users_sshgroup:
+    group:
+        - name: sshusers
+        - present
         - system: True
 
-{% for user, userinfo in salt['pillar.get']('users', {}).iteritems() %}
-{{ user }}:
+{% for user, userinfo in salt['pillar.get']('oopss:base:users', {}).iteritems() %}
+oopss_base_users_group_{{ user }}:
     group.present:
+        - name: {{ user }}
         - gid: {{ userinfo['uid'] }}
 
+oopss_base_users_user_{{ user }}:
     user.present:
+        - name: {{ user }}
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
         - home: "/home/{{ user }}"
@@ -26,50 +31,37 @@ sshusers:
         - password: {{ userinfo['password'] }}
         {% endif %}
         - groups:
+        {% if userinfo.get('ssh', False) %}
             - sshusers
-        {% if userinfo['sudoer'] is defined %}
-        {% if userinfo['sudoer'] == True %}
+        {% endif %}
+        {% if userinfo.get('sudoer', False) %}
             - sudo
         {% endif %}
-        {% endif %}
-        {% if userinfo['adm'] is defined %}
-        {% if userinfo['adm'] == True %}
+        {% if userinfo.get('adm', False) %}
             - adm
-        {% endif %}
         {% endif %}
         - require:
             - group: {{ user }}
             - group: sshusers
 
-{% if userinfo['ssh_auth'] is defined %}
-    ssh_auth:
-        - present
-        - user: {{ user }}
-        - names: {{ userinfo['ssh_auth'] }}
-        - require:
-            - file: /home/{{ user }}
-{% endif %}
-
-/home/{{ user }}:
+oopss_base_users_homedir_{{ user }}:
     file.directory:
+        - name: /home/{{ user }}
         - mode: 700
         - user: {{ user }}
         - group: {{ user }}
         - makedirs: True
         - require:
-            - user: {{ user }}
+            - user: oopss_base_users_user_{{ user }}
+
+{% if userinfo['ssh_auth'] is defined %}
+oopss_base_users_ssh_keys_{{ user }}:
+    ssh_auth:
+        - names: {{ userinfo['ssh_auth'] }}
+        - present
+        - user: {{ user }}
+        - require:
+            - file: oopss_base_users_homedir_{{ user }}
+{% endif %}
 {% endfor %}
-
-
-##############################################################################
-# Forbid users to change manually their informations in /etc/{passwd,shadow}
-##############################################################################
-
-suid-remove:
-    file.managed:
-        - names:
-            - /usr/bin/chfn
-            - /usr/bin/chsh
-            - /usr/bin/passwd
-        - mode: 0755
 

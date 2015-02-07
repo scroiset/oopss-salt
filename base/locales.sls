@@ -6,22 +6,26 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-locales:
-    pkg.installed
+oopss_base_locales_pkg:
+    pkg:
+        - name: locales
+        - installed
 
-/etc/locale.gen:
+oopss_base_locales_genfile:
     file:
+        - name: /etc/locale.gen
         - managed
-        - source: salt://oopss-infra/base/locales/locale.gen
+        - source: salt://oopss/base/files/locale.gen
         - mode: 444
         - user: root
         - group: root
         - require:
-            - pkg: locales
+            - pkg: oopss_base_locales_pkg
 
 # Run locale-gen(8) if /etc/locale.gen changes
-locale-gen:
+oopss_base_locales_gencmd:
     cmd.wait:
+        - name: locale-gen
         - watch:
-            - file: /etc/locale.gen
+            - file: oopss_base_locales_genfile
 

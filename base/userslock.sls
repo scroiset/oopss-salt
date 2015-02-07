@@ -6,11 +6,11 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-# Define timezone
-{% if pillar['timezone'] is defined %}
-/etc/localtime:
-    file.symlink:
-        - target: /usr/share/zoneinfo/{{ pillar['timezone'] }}
-        - force: True
-{% endif %}
+oopss_base_userslock:
+    file.managed:
+        - names:
+            - /usr/bin/chfn
+            - /usr/bin/chsh
+            - /usr/bin/passwd
+        - mode: 0755
 

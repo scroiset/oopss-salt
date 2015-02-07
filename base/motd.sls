@@ -6,8 +6,10 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-/etc/motd:
-    file.managed:
+oopss_base_motd_file:
+    file:
+        - name: /etc/motd
+        - managed
         - user: root
         - group: root
         - mode: 444
@@ -22,5 +24,5 @@
         #       value
         # Warning : the first caracter of the pillar value ("m" in the
         # example) should NOT be a space caracter !
-        - contents_pillar: base:motd
+        - contents_pillar: oopss:base:motd
 
