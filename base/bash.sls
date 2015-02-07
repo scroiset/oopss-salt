@@ -6,19 +6,27 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-bash-completion:
-    pkg.installed
+oopss_base_bash_pkg:
+    pkg:
+        - names:
+            - bash
+            - bash-completion
+        - installed
 
-/etc/bash.bashrc:
-    file.managed:
-        - source: salt://oopss-infra/utils/bash/bash.bashrc
+oopss_base_bash_bashrc:
+    file:
+        - name: /etc/bash.bashrc
+        - managed
+        - source: salt://oopss/base/files/bash.bashrc
         - mode: 444
         - user: root
         - group: root
 
-/root/.bashrc:
-    file.managed:
-        - source: salt://oopss-infra/utils/bash/root.bashrc
+oopss_base_bash_rootbashrc:
+    file:
+        - name: /root/.bashrc
+        - managed
+        - source: salt://oopss/base/files/root.bashrc
         - mode: 444
         - user: root
         - group: root

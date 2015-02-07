@@ -6,11 +6,17 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-include:
-    - oopss.base.locales
-    - oopss.base.motd
-    - oopss.base.pkg
-    - oopss.base.timezone
-    - oopss.base.users
-    - oopss.base.userslock
+oopss_base_git_pkg:
+    pkg:
+        - name: git
+        - installed
+
+oopss_base_git_config:
+    file:
+        - name: /etc/gitconfig
+        - managed
+        - source: salt://oopss/base/files/gitconfig
+        - mode: 444
+        - user: root
+        - group: root
 

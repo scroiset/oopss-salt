@@ -4,7 +4,6 @@ oopss.base
 ==========
 
 Configure base system.
-No packages are installed.
 
 Available states
 ================

@@ -7,11 +7,11 @@
 ##############################################################################
 
 include:
-    - oopss-infra.scm.git
-    - oopss-infra.utils.bash
-    - oopss-infra.utils.vim
+    - oopss.base.bash
+    - oopss.base.git
+    - oopss.base.vim
 
-pkg_utils:
+oopss_base_pkg:
     pkg:
         - installed
         - names:

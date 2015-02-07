@@ -6,12 +6,16 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-vim:
-    pkg.installed
+oopss_base_vim_pkg:
+    pkg:
+        - name: vim
+        - installed
 
-/etc/vim/vimrc.local:
-    file.managed:
-        - source: salt://oopss-infra/utils/vim/vimrc
+oopss_base_vim_config:
+    file:
+        - name: /etc/vim/vimrc.local
+        - managed
+        - source: salt://oopss/base/files/vimrc
         - mode: 444
         - user: root
         - group: root
