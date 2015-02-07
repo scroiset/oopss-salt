@@ -1,5 +1,7 @@
 oopss:
     base:
+        hosts: salt://example/hostfile
+
         motd: |
           Default MOTD
           Change me !

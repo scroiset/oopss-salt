@@ -26,6 +26,11 @@ Configure Bash.
 
 Install and configure Git.
 
+``oopss.base.hosts``
+--------------------
+
+Deploy ``/etc/hosts`` file according to source defined in pillar ``oopss:base:hosts``.
+
 ``oopss.base.locales``
 ----------------------
 
