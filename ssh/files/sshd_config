@@ -100,17 +100,15 @@ UsePAM yes
 
 AllowGroups sshusers root
 
-{% if pillar['privilegied_ipaddr'] is defined %}
-{% for ipaddr in pillar['privilegied_ipaddr'] %}
+{% for ipaddr in salt['pillar.get']('oopss:ssh:privilegied_ipaddr', []) %}
 Match Address {{ ipaddr }}
     PasswordAuthentication yes
 {% endfor %}
-{% endif %}
 
-{% if salt['pillar.get']('http:basedir', '') %}
+{% if salt['pillar.get']('oopss:ssh:sftp_root', False) %}
 # Allow only chrooted SFTP
 Match Group sftponly
-    ChrootDirectory {{ salt['pillar.get']('http:basedir') }}
+    ChrootDirectory {{ salt['pillar.get']('oopss:ssh:sftp_root') }}
     X11Forwarding no
     AllowTcpForwarding no
     ForceCommand internal-sftp

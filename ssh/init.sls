@@ -6,7 +6,8 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-openssh-client:
+oopss_ssh_pkg:
     pkg:
+        - name: openssh-client
         - installed
 

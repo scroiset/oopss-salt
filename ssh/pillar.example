@@ -1,0 +1,9 @@
+
+oopss:
+    ssh:
+        privilegied_ipaddr:
+            - 192.0.2.1
+            - 192.0.2.2
+
+        sftp_root: '/srv/www'
+
