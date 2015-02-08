@@ -1,0 +1,9 @@
+
+oopss:
+    nagios:
+        user_create: True            # default: False
+        user_name: nagios            # default: nagios
+        user_home: /var/lib/nagios   # default: /var/lib/nagios
+        user_group: sshusers         # default None
+        user_key: "ssh-rsa AAA.."    # default None
+
