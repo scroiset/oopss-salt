@@ -36,6 +36,8 @@ Deploy ``/etc/hosts`` file according to source defined in pillar ``oopss:base:ho
 
 Enable French and US locales.
 
+Manage the ``/etc/default/locale`` file according to pillar ``oopss:base:locales:default``.
+
 ``oopss.base.motd``
 -------------------
 

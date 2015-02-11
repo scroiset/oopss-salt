@@ -2,6 +2,9 @@ oopss:
     base:
         hosts: salt://example/hostfile
 
+        locales:
+            default: False   # default: False (remove /etc/default/locale)
+
         motd: |
           Default MOTD
           Change me !

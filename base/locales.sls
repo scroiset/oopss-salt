@@ -29,3 +29,21 @@ oopss_base_locales_gencmd:
         - watch:
             - file: oopss_base_locales_genfile
 
+# If oopss:base:locales:default is defined, then apply this locale as default.
+# If not, remove the /etc/default/locale so no preferred locale is defined.
+oopss_base_locales_default:
+    file:
+        - name: /etc/default/locale
+{% if salt['pillar.get']('oopss:base:locales:default', False) %}
+        - managed
+        - source: salt://oopss/base/files/default_locale
+        - template: jinja
+        - user: root
+        - group: root
+        - mode: 644
+        - context:
+            locale: {{ salt['pillar.get']('oopss:base:locales:default') }}
+{% else %}
+        - absent
+{% endif %}
+
