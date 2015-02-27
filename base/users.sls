@@ -41,7 +41,7 @@ oopss_base_users_user_{{ user }}:
             - adm
         {% endif %}
         - require:
-            - group: {{ user }}
+            - group: oopss_base_users_group_{{ user }}
             - group: sshusers
 
 oopss_base_users_homedir_{{ user }}:
