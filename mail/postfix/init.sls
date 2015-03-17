@@ -63,9 +63,10 @@ oopss_postfix_aliases:
         - group: root
 
 postmap-transport:
-    cmd.wait:
-        - name: postmap /etc/postfix/transport
-        - watch:
+    cmd:
+        - run
+        - name: "postmap /etc/postfix/transport"
+        - onchanges:
             - file: /etc/postfix/transport
 
 /etc/postfix/sasl_password:
@@ -77,9 +78,10 @@ postmap-transport:
         - group: root
 
 postmap-sasl_password:
-    cmd.wait:
-        - name: postmap /etc/postfix/sasl_password
-        - watch:
+    cmd:
+        - run
+        - name: "postmap /etc/postfix/sasl_password"
+        - onchanges:
             - file: /etc/postfix/sasl_password
 
 /etc/postfix/header_checks:
