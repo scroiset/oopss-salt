@@ -44,18 +44,15 @@ pfqueue:
     file.managed:
         - contents: {{ grains['fqdn'] }}
 
-/etc/aliases:
-    file.sed:
-        - before: 'root: .*'
-        - after: 'root: {{ salt['pillar.get']('mail:postfix:admin_mail', 'root') }}'
-        - limit: '^root: '
-        - require:
-            - pkg: postfix
-
-newaliases:
-    cmd.wait:
-        - watch:
-            - file: /etc/aliases
+oopss_postfix_aliases:
+    alias:
+        - name: root
+        {% if salt['pillar.get']('oopss:postfix:root_alias', False) %}
+        - present
+        - target: "{{ salt['pillar.get']('oopss:postfix:root_alias') }}, root"
+        {% else %}
+        - absent
+        {% endif %}
 
 /etc/postfix/transport:
     file.managed:
