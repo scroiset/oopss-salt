@@ -16,3 +16,10 @@ oopss_base_debian_sourceslist:
         - group: adm
         - mode: 440
 
+oopss_base_debian_update:
+    cmd:
+        - run
+        - name: "apt-get update"
+        - onchanges:
+            - file: oopss_base_debian_sourceslist
+
