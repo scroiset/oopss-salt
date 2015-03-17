@@ -32,7 +32,7 @@ pfqueue:
 
 /etc/postfix/main.cf:
     file.managed:
-        - source: salt://oopss-infra/mail/postfix/files/main.cf
+        - source: salt://oopss/mail/postfix/files/main.cf
         - template: jinja
         - mode: 444
         - user: root
@@ -59,7 +59,7 @@ newaliases:
 
 /etc/postfix/transport:
     file.managed:
-        - source: salt://oopss-infra/mail/postfix/files/transport
+        - source: salt://oopss/mail/postfix/files/transport
         - template: jinja
         - mode: 400
         - user: root
@@ -73,7 +73,7 @@ postmap-transport:
 
 /etc/postfix/sasl_password:
     file.managed:
-        - source: salt://oopss-infra/mail/postfix/files/sasl_password
+        - source: salt://oopss/mail/postfix/files/sasl_password
         - template: jinja
         - mode: 400
         - user: root
