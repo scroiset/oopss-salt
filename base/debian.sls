@@ -13,8 +13,8 @@ oopss_base_debian_sourceslist:
         - source: salt://oopss/base/files/sources.list
         - template: jinja
         - user: root
-        - group: adm
-        - mode: 440
+        - group: root
+        - mode: 444
 
 oopss_base_debian_update:
     cmd:
