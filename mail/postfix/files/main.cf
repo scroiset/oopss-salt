@@ -33,7 +33,10 @@ myhostname = {{ grains['fqdn'] }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydestination = $myhostname, localhost
-relayhost =
+
+{% if salt['pillar.get']('oopss:postfix:relayhost', False) %}
+relayhost = {{ salt['pillar.get']('oopss:postfix:relayhost') }}
+{% endif %}
 
 # The list of "trusted" remote SMTP clients that have more privileges than
 # "strangers".
