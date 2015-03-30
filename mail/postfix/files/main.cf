@@ -40,7 +40,7 @@ relayhost = {{ salt['pillar.get']('oopss:postfix:relayhost') }}
 
 # The list of "trusted" remote SMTP clients that have more privileges than
 # "strangers".
-mynetworks = 127.0.0.0/8{%- for ipaddr in salt['pillar.get']('mail:postfix:mynetworks', {}) %}
+mynetworks = 127.0.0.0/8{%- for ipaddr in salt['pillar.get']('oopss:postfix:mynetworks', {}) %}
 {%- if loop.first %}, {% endif %}
 {{- ipaddr }}
 {% endfor %}
