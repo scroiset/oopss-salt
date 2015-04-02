@@ -6,6 +6,8 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-mysql-client:
-    pkg.installed
+oopss_mysql_pkg:
+    pkg:
+        - installed
+        - name: mysql-client
 
