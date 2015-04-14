@@ -17,6 +17,10 @@ server {
 {% if root_pathinfo['ssl'] is defined %}
     # Enable SSL if requested by pillar config.
     listen {{ root_pathinfo['ssl']['ipaddr'] }}:{{ root_pathinfo['ssl']['port']|default('443') }} ssl;
+    {% if not root_pathinfo['ssl'].get('redirect_http', True) %}
+    listen 80;
+    {% endif %}
+
     ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers         AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
     ssl_certificate     {{ root_pathinfo['ssl']['cert'] }};
@@ -111,11 +115,13 @@ server {
 {% endif %}
 
 {% if root_pathinfo['ssl'] is defined %}
+{% if root_pathinfo['ssl'].get('redirect_http', True) %}
 # If this is a SSL virtual server, redirect each server name called without SSL
 # to the SSL counterpart.
 server {
     server_name{% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %};
     return 301 https://$host$request_uri;
 }
+{% endif %}
 {% endif %}
 
