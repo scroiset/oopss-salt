@@ -7,7 +7,7 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-# dump_mysql dumps each MySQL database in a separate file compressed with bzip2.
+# dump_mysql dumps each MySQL database in a separate file compressed with gzip.
 # These dumps are stored in /var/backups/dump_mysql/YYYY-MM-DD.
 # When the current set of dumps is done, the previous set is removed.
 # Requirements: the "mysql" command run under root account should connect to the
@@ -28,7 +28,7 @@ else
         if [ $db = "information_schema" ] || [ $db = "performance_schema" ]; then
             continue
         fi
-        mysqldump --events $db | bzip2 > $dumpdir/$db.sql.bz2
+        mysqldump --events $db | gzip > $dumpdir/$db.sql.gz
     done
 fi
 
