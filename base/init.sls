@@ -22,6 +22,7 @@ oopss_base_pkg:
     pkg:
         - installed
         - names:
+            - bzip2
             - curl
             - dos2unix
             - elinks
