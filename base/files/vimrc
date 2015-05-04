@@ -19,6 +19,7 @@ set hidden
 set showcmd
 set expandtab
 set tabstop=4
+set iskeyword-=_
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
