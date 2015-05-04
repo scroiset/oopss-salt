@@ -39,6 +39,7 @@ diff = vimdiff
 [alias]
 co = checkout
 ci = commit -v
+d = diff --no-prefix
 st = status
 w = whatchanged
 sg = diff --staged
