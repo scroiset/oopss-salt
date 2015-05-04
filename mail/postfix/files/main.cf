@@ -33,18 +33,22 @@ myhostname = {{ grains['fqdn'] }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydestination = $myhostname, localhost
-relayhost =
+
+{% if salt['pillar.get']('oopss:postfix:relayhost', False) %}
+relayhost = {{ salt['pillar.get']('oopss:postfix:relayhost') }}
+{% endif %}
 
 # The list of "trusted" remote SMTP clients that have more privileges than
 # "strangers".
-mynetworks = 127.0.0.0/8{%- for ipaddr in salt['pillar.get']('mail:postfix:mynetworks', {}) %}
+mynetworks = 127.0.0.0/8{%- for ipaddr in salt['pillar.get']('oopss:postfix:mynetworks', {}) %}
 {%- if loop.first %}, {% endif %}
 {{- ipaddr }}
 {% endfor %}
 
 mailbox_size_limit = 0
 recipient_delimiter = +
-inet_interfaces = all
+inet_interfaces = {{ salt['pillar.get']('oopss:postfix:inet_interfaces', 'loopback-only') }}
+smtp_host_lookup = dns, native
 transport_maps = hash:$config_directory/transport
 
 # SASL

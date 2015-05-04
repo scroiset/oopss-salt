@@ -5,11 +5,11 @@ Oopss infrastructure files using SaltStack
 Introduction
 ------------
 
-These SaltStack formulas run the Oopss.org infrastructure.
+This is a collection of SaltStack formulas used run the Oopss.org infrastructure.
 
-Feel free to use them as is, or as a way to learn SaltStack.
+Each formula should be provided with a ``README.rst`` file and a ``pillar.example`` file.
 
-This is tightly related to our infrastructure, but we plan to make it more generic.
+Feel free to use them directly or as a way to learn SaltStack.
 
 Requirements
 ------------

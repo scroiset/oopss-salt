@@ -1,0 +1,31 @@
+
+" oopss-infra
+" Description : Oopss infrastructure files using SaltStack
+" URL : https://github.com/oopss/oopss-infra
+" Copyright 2013-2014 Oopss.org <team@oopss.org>
+
+syntax on
+set backspace=indent,eol,start
+set hlsearch
+set encoding=utf8
+set background=dark
+set nocompatible
+set autoindent
+set ignorecase
+set smartcase
+set showmatch
+set incsearch
+set hidden
+set showcmd
+set expandtab
+set tabstop=4
+set iskeyword-=_
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+if has("autocmd")
+  filetype plugin indent on
+endif
+

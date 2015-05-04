@@ -1,0 +1,39 @@
+#!/bin/sh
+
+##############################################################################
+# oopss-infra
+# Description : Oopss infrastructure files using SaltStack
+# URL : https://github.com/oopss/oopss-infra
+# Copyright 2013-2014 Oopss.org <team@oopss.org>
+##############################################################################
+
+# dump_mysql dumps each MySQL database in a separate file compressed with gzip.
+# These dumps are stored in /var/backups/dump_mysql/YYYY-MM-DD.
+# When the current set of dumps is done, the previous set is removed.
+# Requirements: the "mysql" command run under root account should connect to the
+# database server with a privilegied account, without asking password.
+
+set -e
+
+DUMPROOT="/var/backups/dump_mysql"
+databases=$(mysql -ss -e "show databases")
+dumpdir="$DUMPROOT/$(date -I)"
+
+if [ -d $dumpdir ]; then
+    echo "$dumpdir already exists. Aborting."
+    exit 1
+else
+    mkdir -p $dumpdir
+    for db in $databases; do
+        if [ $db = "information_schema" ] || [ $db = "performance_schema" ]; then
+            continue
+        fi
+        mysqldump --events $db | gzip > $dumpdir/$db.sql.gz
+    done
+fi
+
+# Remove all dump directories except the last.
+find $DUMPROOT -regextype posix-extended -type d \
+    -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}$' | sort | head -n -1 | \
+    while read dumpdir_todelete; do rm -r $dumpdir_todelete; done
+

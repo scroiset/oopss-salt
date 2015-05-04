@@ -32,7 +32,7 @@ pfqueue:
 
 /etc/postfix/main.cf:
     file.managed:
-        - source: salt://oopss-infra/mail/postfix/files/main.cf
+        - source: salt://oopss/mail/postfix/files/main.cf
         - template: jinja
         - mode: 444
         - user: root
@@ -44,45 +44,44 @@ pfqueue:
     file.managed:
         - contents: {{ grains['fqdn'] }}
 
-/etc/aliases:
-    file.sed:
-        - before: 'root: .*'
-        - after: 'root: {{ salt['pillar.get']('mail:postfix:admin_mail', 'root') }}'
-        - limit: '^root: '
-        - require:
-            - pkg: postfix
-
-newaliases:
-    cmd.wait:
-        - watch:
-            - file: /etc/aliases
+oopss_postfix_aliases:
+    alias:
+        - name: root
+        {% if salt['pillar.get']('oopss:postfix:root_alias', False) %}
+        - present
+        - target: "{{ salt['pillar.get']('oopss:postfix:root_alias') }}, root"
+        {% else %}
+        - absent
+        {% endif %}
 
 /etc/postfix/transport:
     file.managed:
-        - source: salt://oopss-infra/mail/postfix/files/transport
+        - source: salt://oopss/mail/postfix/files/transport
         - template: jinja
         - mode: 400
         - user: root
         - group: root
 
 postmap-transport:
-    cmd.wait:
-        - name: postmap /etc/postfix/transport
-        - watch:
+    cmd:
+        - run
+        - name: "postmap /etc/postfix/transport"
+        - onchanges:
             - file: /etc/postfix/transport
 
 /etc/postfix/sasl_password:
     file.managed:
-        - source: salt://oopss-infra/mail/postfix/files/sasl_password
+        - source: salt://oopss/mail/postfix/files/sasl_password
         - template: jinja
         - mode: 400
         - user: root
         - group: root
 
 postmap-sasl_password:
-    cmd.wait:
-        - name: postmap /etc/postfix/sasl_password
-        - watch:
+    cmd:
+        - run
+        - name: "postmap /etc/postfix/sasl_password"
+        - onchanges:
             - file: /etc/postfix/sasl_password
 
 /etc/postfix/header_checks:

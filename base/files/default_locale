@@ -1,0 +1,3 @@
+# File managed by Oopss Salt Formula <https://github.com/oopss/oopss-infra>
+# Don't edit manually
+LANG={{ locale }}
