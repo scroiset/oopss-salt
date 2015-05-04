@@ -11,10 +11,10 @@ salt-minion:
 
 /etc/salt/minion:
     file.managed:
-        - source: salt://oopss-infra/sysutils/salt/minion
+        - source: salt://oopss/sysutils/salt/minion
         - template: jinja
         - context:
-            salt_master: {{ salt['pillar.get']('sysutils:salt:salt_master', 'salt') }}
+            salt_master: {{ salt['pillar.get']('oopss:sysutils:salt:salt_master', 'salt') }}
         - user: root
         - group: root
         - mode: 400
