@@ -21,12 +21,6 @@ cache_jobs: True
 # with a timestamp. The only valid setting is "minion". Disabled by default.
 backup_mode: minion
 
-# Run states when the minion daemon starts. To enable, set startup_states to:
-# 'highstate' -- Execute state.highstate
-# 'sls' -- Read in the sls_list option and execute the named sls files
-# 'top' -- Read top_file option and execute based on that file on the Master
-startup_states: 'highstate'
-
 # Specify MySQL config file for Debian
 mysql.default_file: '/etc/mysql/debian.cnf'
 
