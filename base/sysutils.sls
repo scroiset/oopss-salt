@@ -6,10 +6,7 @@
 # Copyright 2013-2014 Oopss.org <team@oopss.org>
 ##############################################################################
 
-include:
-    - oopss.base
-
-oopss_base_server_pkg:
+oopss_base_sysutils_pkg:
     pkg:
         - installed
         - names:
