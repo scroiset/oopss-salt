@@ -1,3 +1,5 @@
+# Managed by Salt
+
 {% for entry in salt['pillar.get']('oopss:base:debian:sources', []) -%}
 {{ entry }}
 {% endfor %}

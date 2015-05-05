@@ -23,3 +23,16 @@ oopss_base_debian_update:
         - onchanges:
             - file: oopss_base_debian_sourceslist
 
+oopss_base_debian_apt-listchanges_pkg:
+    pkg:
+        - name: apt-listchanges
+        - installed
+
+oopss_base_debian_apt-listchanges_config:
+    file.managed:
+        - name: /etc/apt/listchanges.conf
+        - source: salt://oopss/base/files/listchanges.conf
+        - user: root
+        - group: adm
+        - mode: 440
+

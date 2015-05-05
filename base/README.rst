@@ -4,7 +4,8 @@ oopss.base
 ==========
 
 Prepare base system.
-See ``pîllar.example`` file.
+
+See ``pîllar.example`` for an exhaustive list of available pillar.
 
 Available states
 ================
@@ -12,14 +13,20 @@ Available states
 ``oopss.base``
 --------------
 
-Include non-server states of this formula.
-Install standard and useful packages.
-Also install packages defined in pillar list ``oopss:base:pkg``.
+Include all of the above. Be careful.
+
+OS-specific states are included only if applicable.
 
 ``oopss.base.bash``
 ------------------
 
-Configure Bash.
+Configure Bash globally and for root account.
+
+``oopss.base.debian``
+---------------------
+
+Manage Debian-specific things : sources.list (based on pillar
+``oopss:base:debian:sources``) and apt-listchanges.
 
 ``oopss.base.git``
 ------------------
@@ -37,16 +44,16 @@ Deploy ``/etc/hosts`` file according to source defined in pillar ``oopss:base:ho
 Enable French and US locales.
 
 Manage the ``/etc/default/locale`` file according to pillar ``oopss:base:locales:default``.
+If not defined, don't create the file.
 
 ``oopss.base.motd``
 -------------------
 
 Edit ``/etc/motd`` according to content defined in pillar ``oopss:base:motd``.
 
-``oopss.base.server``
+``oopss.base.sysutils``
 -----------------------
 
-Include server states of this formula in addition of ``oopss.base``.
 Install useful sysadmin packages.
 
 ``oopss.base.timezone``
@@ -63,6 +70,12 @@ Create UNIX users according to pillar list ``oopss:base:users``.
 ------------------------
 
 Disallow users to change their account parameters (because Salt manages it).
+
+``oopss.base.utils``
+-----------------------
+
+Install standard and useful packages.
+Also install packages defined in pillar list ``oopss:base:utils:pkg``.
 
 ``oopss.base.vim``
 ------------------
