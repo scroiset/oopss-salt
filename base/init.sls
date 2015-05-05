@@ -12,9 +12,11 @@ include:
     - oopss.base.hosts
     - oopss.base.locales
     - oopss.base.motd
+    - oopss.base.sysutils
     - oopss.base.timezone
     - oopss.base.users
     - oopss.base.userslock
+    - oopss.base.utils
     - oopss.base.vim
 
     {% if grains['os'] == 'Debian' %}
