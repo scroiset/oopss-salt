@@ -25,7 +25,8 @@ Configure Bash globally and for root account.
 ``oopss.base.debian``
 ---------------------
 
-Manage Debian-specific things : sources.list and apt-listchanges.
+Manage Debian-specific things : sources.list (based on pillar
+``oopss:base:debian:sources``) and apt-listchanges.
 
 ``oopss.base.git``
 ------------------
