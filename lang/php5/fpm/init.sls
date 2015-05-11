@@ -7,7 +7,7 @@
 ##############################################################################
 
 include:
-    - oopss-infra.lang.php5
+    - oopss.lang.php5
 
 php5-fpm:
     pkg:
@@ -24,7 +24,7 @@ php5-fpm:
 
 /etc/php5/fpm/conf.d/local.ini:
     file.managed:
-        - source: salt://oopss-infra/lang/php5/fpm/local.ini
+        - source: salt://oopss/lang/php5/fpm/local.ini
         - user: root
         - group: root
         - mode: 400
@@ -34,7 +34,7 @@ php5-fpm:
 
 /etc/default/php5-fpm:
     file.managed:
-        - source: salt://oopss-infra/lang/php5/fpm/init_default
+        - source: salt://oopss/lang/php5/fpm/init_default
         - user: root
         - group: root
         - mode: 400
@@ -47,7 +47,7 @@ php5-fpm:
         - user: root
         - group: adm
         - mode: 440
-        - source: salt://oopss-infra/lang/php5/fpm/config
+        - source: salt://oopss/lang/php5/fpm/config
         - template: jinja
         - context:
             user: {{ user }}

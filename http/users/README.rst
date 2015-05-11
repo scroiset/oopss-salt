@@ -1,5 +1,5 @@
 
-oopss-infra.http.users
+oopss.http.users
 ======================
 
 Requirements

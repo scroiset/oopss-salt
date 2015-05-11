@@ -6,7 +6,7 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% from "oopss-infra/http/map.jinja" import http_config with context %}
+{% from "oopss/http/map.jinja" import http_config with context %}
 
 # Package
 awstats:
@@ -15,7 +15,7 @@ awstats:
 # Awstats global config
 /etc/awstats/awstats.conf.local:
     file.managed:
-        - source: salt://oopss-infra/http/awstats/awstats.conf.local
+        - source: salt://oopss/http/awstats/awstats.conf.local
         - mode: 440
         - user: root
         - group: adm
@@ -30,7 +30,7 @@ awstats:
 # Build Awstats static files after logrotate.
 /etc/cron.daily/z_awstats_buildstatic:
     file.managed:
-        - source: salt://oopss-infra/http/awstats/z_awstats_buildstatic
+        - source: salt://oopss/http/awstats/z_awstats_buildstatic
         - mode: 700
         - user: root
         - group: root
@@ -56,7 +56,7 @@ awstats:
 # Awstats config file for each user
 /etc/awstats/awstats.{{ user }}-{{ root_path }}.conf:
     file.managed:
-        - source: salt://oopss-infra/http/awstats/config
+        - source: salt://oopss/http/awstats/config
         - template: jinja
         - context:
             user: {{ user }}

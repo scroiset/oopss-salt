@@ -26,7 +26,7 @@ gunicorn:
         - mode: 755
         - user: root
         - group: root
-        - source: salt://oopss-infra/lang/python/gunicorn/gunicorn-restart
+        - source: salt://oopss/lang/python/gunicorn/gunicorn-restart
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 
@@ -53,7 +53,7 @@ gunicorn:
         - user: root
         - group: adm
         - mode: 440
-        - source: salt://oopss-infra/lang/python/gunicorn/config
+        - source: salt://oopss/lang/python/gunicorn/config
         - template: jinja
         - context:
             user: {{ user }}

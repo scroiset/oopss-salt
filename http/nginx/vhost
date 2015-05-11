@@ -6,7 +6,7 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% from "oopss-infra/http/map.jinja" import http_config with context %}
+{% from "oopss/http/map.jinja" import http_config with context %}
 
 server {
     server_name{% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %};

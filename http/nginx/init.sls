@@ -6,11 +6,7 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% from "oopss-infra/http/map.jinja" import http_config with context %}
-
-include:
-    - oopss-infra.net.ssh.server
-    - oopss-infra.http.users
+{% from "oopss/http/map.jinja" import http_config with context %}
 
 ##############################################################################
 # Install packages
@@ -33,7 +29,7 @@ nginx:
 
 /etc/nginx/conf.d/local.conf:
     file.managed:
-        - source: salt://oopss-infra/http/nginx/local.conf
+        - source: salt://oopss/http/nginx/local.conf
         - template: jinja
         - user: root
         - group: root
@@ -41,14 +37,14 @@ nginx:
 
 /etc/nginx/common.conf:
     file.managed:
-        - source: salt://oopss-infra/http/nginx/common.conf
+        - source: salt://oopss/http/nginx/common.conf
         - user: root
         - group: root
         - mode: 400
 
 /etc/nginx/sites-available/default:
     file.managed:
-        - source: salt://oopss-infra/http/nginx/default_server
+        - source: salt://oopss/http/nginx/default_server
         - template: jinja
         - context:
             ssl: {{ salt['pillar.get']('http:nginx:ssl', {}) }}
@@ -72,7 +68,7 @@ apache2-utils:
         - user: root
         - group: adm
         - mode: 440
-        - source: salt://oopss-infra/http/nginx/vhost
+        - source: salt://oopss/http/nginx/vhost
         - template: jinja
         - context:
             user: {{ user }}

@@ -1,6 +1,6 @@
 
 ======================
-oopss-infra.http.nginx
+oopss.http.nginx
 ======================
 
 Formula for managing the NGINX web server.

@@ -1,6 +1,6 @@
 
 ================
-oopss-infra.http
+oopss.http
 ================
 
 Base config for HTTP-related formulas.

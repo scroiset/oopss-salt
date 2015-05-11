@@ -6,7 +6,7 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% from "oopss-infra/http/map.jinja" import http_config with context %}
+{% from "oopss/http/map.jinja" import http_config with context %}
 
 {{ http_config['rootdir'] }}:
     file.directory:
@@ -142,7 +142,7 @@
         - mode: 400
         - user: root
         - group: root
-        - source: salt://oopss-infra/http/users/logrotate
+        - source: salt://oopss/http/users/logrotate
         - template: jinja
         - context:
             user: {{ user }}
