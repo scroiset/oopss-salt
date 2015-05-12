@@ -105,12 +105,3 @@ Match Address {{ ipaddr }}
     PasswordAuthentication yes
 {% endfor %}
 
-{% if salt['pillar.get']('oopss:ssh:sftp_root', False) %}
-# Allow only chrooted SFTP
-Match Group sftponly
-    ChrootDirectory {{ salt['pillar.get']('oopss:ssh:sftp_root') }}
-    X11Forwarding no
-    AllowTcpForwarding no
-    ForceCommand internal-sftp
-{% endif %}
-

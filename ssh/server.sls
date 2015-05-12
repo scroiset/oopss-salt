@@ -34,14 +34,6 @@ oopss_ssh_server_initscript:
         - require:
             - pkg: oopss_ssh_server_pkg
 
-{% if salt['pillar.get']('oopss:ssh:sftp_root', False) %}
-oopss_ssh_server_group_sftponly:
-    group:
-        - name: sftponly
-        - present
-        - system: True
-{% endif %}
-
 oopss_ssh_server_service:
     service:
         - name: ssh

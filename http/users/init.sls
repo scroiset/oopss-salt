@@ -26,20 +26,12 @@
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
         - password: '{{ userinfo['password'] }}'
-{% if userinfo['ssh']|default(False) %}
         - home: "{{ http_config['rootdir'] }}/{{ user }}"
         - shell: "/bin/bash"
-{% else %}
-        - home: "/{{ user }}"
-        - shell: "/usr/sbin/nologin"
-{% endif %}
         - createhome: False
         - fullname: ""
         - groups:
             - sshusers
-{% if not userinfo['ssh']|default(False) %}
-            - sftponly
-{% endif %}
 {% if userinfo['additional_groups'] is defined %}
 {% for group in userinfo['additional_groups'] %}
             - {{ group }}
@@ -47,9 +39,6 @@
 {% endif %}
         - require:
             - group: {{ user }}
-{% if not userinfo['ssh']|default(False) %}
-            - group: sftponly
-{% endif %}
 {% if userinfo['additional_groups'] is defined %}
 {% for group in userinfo['additional_groups'] %}
             - group: {{ group }}
