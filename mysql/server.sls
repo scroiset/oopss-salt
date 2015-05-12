@@ -31,6 +31,7 @@ oopss_mysql_server_config_base:
         - managed
         - name: /etc/mysql/conf.d/local.cnf
         - source: salt://oopss/mysql/files/local.cnf
+        - template: jinja
         - user: root
         - group: adm
         - mode: 440

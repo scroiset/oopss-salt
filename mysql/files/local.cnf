@@ -1,17 +1,9 @@
+# Managed by Salt
 
-##############################################################################
-# oopss-salt
-# Description : Oopss infrastructure files using SaltStack
-# URL : https://github.com/oopss/oopss-salt
-# Copyright 2013-2015 Oopss.org <team@oopss.org>
-##############################################################################
+{% from "oopss/mysql/map.jinja" import oopss_mysql_server_config with context %}
 
 [mysqld]
-bind-address = 0.0.0.0
-log-bin = /var/log/mysql/mysql-bin
-max_binlog_size = 1000M
-expire_logs_days = 15
-slow_query_log = 1
-slow_query_log_file = /var/log/mysql/mysql-slow.log
-long_query_time = 10
+{% for key, value in oopss_mysql_server_config.iteritems() -%}
+{{ key }} = {{ value }}
+{% endfor %}
 

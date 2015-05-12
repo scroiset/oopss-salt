@@ -1,0 +1,21 @@
+
+##############################################################################
+# oopss-salt
+# Description : Oopss infrastructure files using SaltStack
+# URL : https://github.com/oopss/oopss-salt
+# Copyright 2013-2015 Oopss.org <team@oopss.org>
+##############################################################################
+
+{% set oopss_mysql_server_config = salt['grains.filter_by']({
+    'default': {
+        'bind-address': '127.0.0.1',
+        'log-bin': '/var/log/mysql/mysql-bin',
+        'max_binlog_size': '100M',
+        'expire_logs_days': '15',
+        'slow_query_log': '1',
+        'slow_query_log_file': '/var/log/mysql/mysql-slow.log',
+        'long_query_time': '2',
+    },
+},
+merge=salt['pillar.get']('oopss:mysql:server:config'), default='default') %}
+
