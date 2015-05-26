@@ -7,21 +7,29 @@
 ##############################################################################
 
 include:
-    - oopss-infra.dns.bind
+    - oopss.bind
 
-/etc/bind/master:
-    file.directory:
+oopss_bind_masterconfdir:
+    file:
+        - directory
+        - name: /etc/bind/master
         - user: bind
         - group: adm
         - perms: 750
+        - require:
+            - pkg: oopss_bind_pkg
 
-/etc/bind/named.conf.local:
-    file.managed:
-        - source: salt://oopss-infra/dns/bind/named.conf.master
+oopss_bind_localconf:
+    file:
+        - managed
+        - name: /etc/bind/named.conf.local
+        - source: salt://oopss/bind/files/named.conf.master
         - template: jinja
         - user: root
         - group: adm
         - perms: 440
         - require:
-            - pkg: bind9
+            - pkg: oopss_bind_pkg
+        - watch_in:
+            - service: oopss_bind_service
 
