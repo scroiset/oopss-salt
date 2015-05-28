@@ -1,3 +1,7 @@
 oopss:
     munin:
         server_cidr: 192.0.2.1/32
+        server:
+            node:
+                - example1.example.com
+                - example2.example.com
