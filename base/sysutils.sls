@@ -16,6 +16,7 @@ oopss_base_sysutils_pkg:
             - gdisk
             - htop
             - iotop
+            - nmap
             - rsyslog
             - sudo
 
