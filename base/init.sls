@@ -13,6 +13,7 @@ include:
     - oopss.base.locales
     - oopss.base.motd
     - oopss.base.sysutils
+    - oopss.base.sudo
     - oopss.base.timezone
     - oopss.base.users
     - oopss.base.userslock

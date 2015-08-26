@@ -1,0 +1,6 @@
+# Managed by Salt
+
+{% for entry in salt['pillar.get']('oopss:sudo:defaults', []) %}
+Defaults {{ entry }}
+{% endfor %}
+
