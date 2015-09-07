@@ -54,6 +54,9 @@ transport_maps = hash:$config_directory/transport
 # SASL
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:$config_directory/sasl_password
+{%- if salt['pillar.get']('oopss:postfix:smtp_bind_address', False) %}
+smtp_bind_address = {{ salt['pillar.get']('oopss:postfix:smtp_bind_address') }}
+{% endif %}
 
 # Content inspection
 header_checks = pcre:$config_directory/header_checks
