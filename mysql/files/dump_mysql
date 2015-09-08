@@ -28,7 +28,7 @@ else
         if [ $db = "information_schema" ] || [ $db = "performance_schema" ]; then
             continue
         fi
-        mysqldump --events $db | gzip > $dumpdir/$db.sql.gz
+        mysqldump --events --master-data=2 $db | gzip > $dumpdir/$db.sql.gz
     done
 fi
 
