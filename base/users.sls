@@ -27,8 +27,10 @@ oopss_base_users_user_{{ user }}:
         - createhome: False
         - shell: "/bin/bash"
         - fullname: {{ userinfo['fullname'] }}
-        {% if userinfo['password'] is defined %}
+        {% if userinfo['password'] is defined and userinfo['password'] %}
         - password: {{ userinfo['password'] }}
+        {% else %}
+        - password: '!'
         {% endif %}
         - groups:
         {% if userinfo.get('ssh', False) %}
