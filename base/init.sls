@@ -12,6 +12,7 @@ include:
     - oopss.base.hosts
     - oopss.base.locales
     - oopss.base.motd
+    - oopss.base.resolv
     - oopss.base.sysutils
     - oopss.base.sudo
     - oopss.base.timezone
