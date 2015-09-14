@@ -51,6 +51,11 @@ If not defined, don't create the file.
 
 Edit ``/etc/motd`` according to content defined in pillar ``oopss:base:motd``.
 
+``oopss.base.resolv``
+-------------------
+
+Manage DNS resolution via ``/etc/resolv.conf``.
+
 ``oopss.base.sysutils``
 -----------------------
 

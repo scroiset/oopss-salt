@@ -16,6 +16,11 @@ oopss:
           Default MOTD
           Change me !
 
+        resolv:
+            nameservers:
+                - 8.8.8.8
+                - 8.8.4.4
+
         timezone: Europe/Paris
 
         users:
