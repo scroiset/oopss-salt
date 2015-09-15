@@ -71,6 +71,12 @@ server {
         fastcgi_pass unix:{{ socket }};
         include fastcgi_params;
     }
+    location = "/fpm-status" {
+        fastcgi_pass unix:{{ socket }};
+        include fastcgi_params;
+        allow 127.0.0.1;
+        deny all;
+    }
 {% endif %}
 
     location / {
