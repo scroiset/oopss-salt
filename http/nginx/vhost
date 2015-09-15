@@ -74,7 +74,9 @@ server {
     location = "/fpm-status" {
         fastcgi_pass unix:{{ socket }};
         include fastcgi_params;
-        allow 127.0.0.1;
+        {%- for ipaddr in grains['ipv4'] %}
+        allow {{ ipaddr }};
+        {%- endfor %}
         deny all;
     }
 {% endif %}
