@@ -53,7 +53,7 @@ oopss_mysql_server_cleancmd:
             - pkg: oopss_mysql_server_pkg
 
 oopss_mysql_server_dumpscript:
-    {% if salt['pillar.get']('oopss:mysql:daily_dump') %}
+    {% if salt['pillar.get']('oopss:mysql:server:daily_dump') %}
     file:
         - managed
         - name: /etc/cron.daily/dump_mysql
