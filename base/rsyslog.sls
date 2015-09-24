@@ -7,7 +7,7 @@
 ##############################################################################
 
 # Disable kernel logging on LXC guests
-{% if grains['virtual_subtype'] == 'LXC' %}
+{% if grains['virtual_subtype'] is defined and grains['virtual_subtype'] == 'LXC' %}
 oopss_base_rsyslog_disable_ikmlog:
     file:
         - comment
