@@ -52,13 +52,12 @@ Bind the minions to the master and execute ``state.highstate``.
 
 Guidelines for creating/maintaining formulas
 --------------------------------------------
-- The project is sub-divised in formulas
-- Software configuration should be defined in a map.jinja file
-- Users can overwrite map.jinja using Pillar
-- Each formula has a README.rst file
-- Each formula has a pillar.example file
-- Each dependency to another formula should be documented
-- Each file should have the standard header
-- Each formula's file should be documented in the README.rst file
-- Formulas should be generic if it don't increase complexity overmuch
+1. The project is sub-divised in formulas
+2. Formulas can be configured using Pillar
+3. Each formula must have a README.rst file which document each state file
+4. Each formula must have a pillar.example file
+5. Optionally, a map.jinja file can be used for handling various OS configuration
+6. Each dependency to another formula must be documented
+7. Each state file must have the standard header
+8. Each managed template file must have the header : "Managed by Salt"
 
