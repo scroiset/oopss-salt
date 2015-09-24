@@ -6,8 +6,8 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-unbound_pkg:
+oopss_unbound_pkg:
     pkg:
-        - name: unbound
         - installed
+        - name: unbound
 
