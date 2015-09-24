@@ -56,6 +56,11 @@ Edit ``/etc/motd`` according to content defined in pillar ``oopss:base:motd``.
 
 Manage DNS resolution via ``/etc/resolv.conf``.
 
+``oopss.base.rsyslog``
+----------------------
+
+Manage rsyslog service.
+
 ``oopss.base.sysutils``
 -----------------------
 

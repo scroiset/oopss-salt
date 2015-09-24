@@ -13,6 +13,7 @@ include:
     - oopss.base.locales
     - oopss.base.motd
     - oopss.base.resolv
+    - oopss.base.rsyslog
     - oopss.base.sysutils
     - oopss.base.sudo
     - oopss.base.timezone
