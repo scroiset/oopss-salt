@@ -21,6 +21,8 @@
 {{ user }}:
     group.present:
         - gid: {{ userinfo['uid'] }}
+        - addusers:
+            - www-data
 
     user.present:
         - uid: {{ userinfo['uid'] }}
@@ -142,23 +144,4 @@
 {% endfor %}
 {% endif %}
 {% endfor %}
-
-# Add www-data system user in each user group, so it can access static files
-www-data:
-    user.present:
-        - groups:
-            - www-data
-{% if salt['pillar.get']('http:users') %}
-{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-{% if userinfo['root_paths'] is defined %}
-            - {{ user }}
-{% endif %}
-{% endfor %}
-        - require:
-{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-{% if userinfo['root_paths'] is defined %}
-            - group: {{ user }}
-{% endif %}
-{% endfor %}
-{% endif %}
 

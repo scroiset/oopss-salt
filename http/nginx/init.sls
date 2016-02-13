@@ -25,7 +25,10 @@ nginx:
             - file: /etc/nginx/conf.d/local.conf
             - file: /etc/nginx/common.conf
             - file: /etc/nginx/sites-available/default
-            - user: www-data
+{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
+            - group: {{ user }}
+{% endfor %}
+
 
 /etc/nginx/conf.d/local.conf:
     file.managed:
