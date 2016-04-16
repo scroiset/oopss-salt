@@ -22,3 +22,11 @@ oopss_drbd_config:
         - require:
             - pkg: oopss_drbd_pkg
 
+{% if salt['pillar.get']('oopss:drbd:local_config_location', False) %}
+oopss_drbd_config_local:
+    file:
+        - recurse
+        - name: /etc/drbd.d/
+        - source: {{ salt['pillar.get']('oopss:drbd:local_config_location') }}
+        - file_mode: 400
+{% endif %}
