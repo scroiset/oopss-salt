@@ -38,5 +38,5 @@ salt_directories:
         - user: root
         - group: adm
         - mode: 440
-        - source: salt://oopss/sysutils/salt/master
+        - source: salt://oopss/sysutils/salt/files/master
 
