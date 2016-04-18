@@ -6,9 +6,9 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-# Starting with Jessie, the check_drbd is provided by the
+# Starting with Debian Jessie, the check_drbd is provided by the
 # nagios-plugins-contrib package. Before, it has to be installed manually.
-{% if grains['osrelease_info'][0] < 8 %}
+{% if grains['os'] == 'Debian' and grains['osrelease_info'][0] < 8 %}
 oopss_drbd_nagios_pluginfile:
     file:
         - managed
