@@ -17,6 +17,5 @@ oopss_base_sysutils_pkg:
             - htop
             - iotop
             - nmap
-            - rsyslog
             - sudo
 
