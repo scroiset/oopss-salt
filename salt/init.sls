@@ -11,7 +11,7 @@ salt-minion:
 
 /etc/salt/minion:
     file.managed:
-        - source: salt://oopss/sysutils/salt/files/minion
+        - source: salt://oopss/salt/files/minion
         - template: jinja
         - context:
             salt_master: {{ salt['pillar.get']('oopss:sysutils:salt:salt_master', 'salt') }}
