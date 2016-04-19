@@ -6,15 +6,21 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-postfix:
+oopss_postfix_pkg:
     pkg:
         - installed
+        - names:
+            - postfix
+            - postfix-pcre
+            - pfqueue
 
+oopss_postfix_service:
     service:
         - running
+        - name: postfix
         - reload: True
         - require:
-            - pkg: postfix
+            - pkg: oopss_postfix_pkg
             - file: /etc/postfix/header_checks
             - file: /etc/postfix/sasl_password
         - watch:
@@ -22,17 +28,9 @@ postfix:
             - file: /etc/postfix/transport
             - file: /etc/postfix/sasl_password
 
-postfix-pcre:
-    pkg:
-        - installed
-
-pfqueue:
-    pkg:
-        - installed
-
 /etc/postfix/main.cf:
     file.managed:
-        - source: salt://oopss/mail/postfix/files/main.cf
+        - source: salt://oopss/postfix/files/main.cf
         - template: jinja
         - mode: 444
         - user: root
@@ -56,7 +54,7 @@ oopss_postfix_aliases:
 
 /etc/postfix/transport:
     file.managed:
-        - source: salt://oopss/mail/postfix/files/transport
+        - source: salt://oopss/postfix/files/transport
         - template: jinja
         - mode: 400
         - user: root
@@ -71,7 +69,7 @@ postmap-transport:
 
 /etc/postfix/sasl_password:
     file.managed:
-        - source: salt://oopss/mail/postfix/files/sasl_password
+        - source: salt://oopss/postfix/files/sasl_password
         - template: jinja
         - mode: 400
         - user: root
