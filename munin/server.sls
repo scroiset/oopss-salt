@@ -11,6 +11,14 @@ oopss_munin_server_pkg:
         - installed
         - name: munin
 
+oopss_munin_server_mainconf:
+    file:
+        - managed
+        - name: /etc/munin/munin.conf
+        - contents: 'includedir /etc/munin/munin-conf.d'
+        - require:
+            - pkg: oopss_munin_server_pkg
+
 oopss_munin_server_conf:
     file:
         - managed
