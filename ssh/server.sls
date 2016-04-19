@@ -25,6 +25,8 @@ oopss_ssh_server_config:
         - require:
             - pkg: oopss_ssh_server_pkg
 
+# Restrict umask for logged-in users.
+{% if grains['os'] == 'Debian' and grains['osrelease_info'][0] < 8 %}
 oopss_ssh_server_initscript:
     file.sed:
         - name: /etc/init.d/ssh
@@ -33,6 +35,22 @@ oopss_ssh_server_initscript:
         - limit: '^umask .*'
         - require:
             - pkg: oopss_ssh_server_pkg
+        - watch_in:
+            - service: oopss_ssh_server_service
+{% elif grains['os'] == 'Debian' and grains['osrelease_info'][0] >= 8 %}
+oopss_ssh_server_systemd_unit:
+    file.managed:
+        - name: /etc/systemd/system/ssh.service.d/umask.conf
+        - source: salt://oopss/ssh/files/systemd_umask.conf
+        - makedirs: True
+        - user: root
+        - group: adm
+        - mode: 440
+        - require:
+            - pkg: oopss_ssh_server_pkg
+        - watch_in:
+            - service: oopss_ssh_server_service
+{% endif %}
 
 oopss_ssh_server_service:
     service:
@@ -42,5 +60,4 @@ oopss_ssh_server_service:
             - pkg: oopss_ssh_server_pkg
         - watch:
             - file: oopss_ssh_server_config
-            - file: oopss_ssh_server_initscript
 
