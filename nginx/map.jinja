@@ -16,5 +16,5 @@
 } %}
 
 {% set http_nginx_config = salt['grains.filter_by'](http_nginx_config_default,
-    merge=salt['pillar.get']('http:nginx:config')) %}
+    merge=salt['pillar.get']('oopss:nginx:config')) %}
 
