@@ -31,7 +31,7 @@ oopss_munin_conf:
         - require:
             - pkg: oopss_munin_pkg
 
-{% if salt['pillar.get']('oopss:munin:web_server', False) == 'oopss.nginx' %}
+{% if salt['pillar.get']('oopss:munin:http_server', False) == 'oopss.nginx' %}
 include:
     - oopss.nginx
 
@@ -45,7 +45,7 @@ oopss_munin_nginx_conf:
         - group: adm
         - mode: 440
         - context:
-            munin_hostname: {{ salt['pillar.get']('oopss:munin:hostname', 'munin.localdomain') }}
+            munin_hostname: {{ salt['pillar.get']('oopss:munin:http_hostname', 'munin.localdomain') }}
         - require:
             - pkg: oopss_nginx_pkg
         - watch_in:
