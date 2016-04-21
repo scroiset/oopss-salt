@@ -152,7 +152,7 @@
         - user: root
         - group: adm
         - mode: 440
-        - source: salt://oopss/http/nginx/vhost
+        - source: salt://oopss/http/users/files/vhost
         - template: jinja
         - context:
             user: {{ user }}
