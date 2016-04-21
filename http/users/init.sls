@@ -23,6 +23,10 @@
         - gid: {{ userinfo['uid'] }}
         - addusers:
             - www-data
+{% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
+        - watch_in:
+            - service: nginx
+{% endif %}
 
     user.present:
         - uid: {{ userinfo['uid'] }}
@@ -96,7 +100,7 @@
             - file: {{ http_config['rootdir'] }}/{{ user }}
 
 # For each root_path
-{% for root_path in userinfo['root_paths'] %}
+{% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
 # Root path
 {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}:
@@ -140,6 +144,38 @@
             root_path: {{ root_path }}
         - require:
             - user: {{ user }}
+
+# If using Nginx
+{% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
+/etc/nginx/sites-available/{{ user }}-{{ root_path }}:
+    file.managed:
+        - user: root
+        - group: adm
+        - mode: 440
+        - source: salt://oopss/http/nginx/vhost
+        - template: jinja
+        - context:
+            user: {{ user }}
+            root_path: {{ root_path }}
+            root_pathinfo: {{ root_pathinfo }}
+            socket: {{ http_config['rootdir'] }}/{{ user }}/.sock/{{ root_path }}.sock
+        - require:
+            - pkg: nginx
+            - file: {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}
+            - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log
+            - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log
+        - watch_in:
+            - service: nginx
+
+/etc/nginx/sites-enabled/{{ user }}-{{ root_path }}:
+    file.symlink:
+        - target: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
+        - force: True
+        - require:
+            - file: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
+        - watch_in:
+            - service: nginx
+{% endif %}
 
 {% endfor %}
 {% endif %}

@@ -6,12 +6,6 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-{% from "oopss/http/map.jinja" import http_config with context %}
-
-##############################################################################
-# Install packages
-##############################################################################
-
 nginx:
     pkg:
         - installed
@@ -58,43 +52,4 @@ nginx:
 
 apache2-utils:
     pkg.installed
-
-##############################################################################
-# Read http:users pillar and create virtual hosts
-##############################################################################
-
-{% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-{% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
-
-/etc/nginx/sites-available/{{ user }}-{{ root_path }}:
-    file.managed:
-        - user: root
-        - group: adm
-        - mode: 440
-        - source: salt://oopss/http/nginx/vhost
-        - template: jinja
-        - context:
-            user: {{ user }}
-            root_path: {{ root_path }}
-            root_pathinfo: {{ root_pathinfo }}
-            socket: {{ http_config['rootdir'] }}/{{ user }}/.sock/{{ root_path }}.sock
-        - require:
-            - pkg: nginx
-            - file: {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}
-            - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log
-            - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log
-        - watch_in:
-            - service: nginx
-
-/etc/nginx/sites-enabled/{{ user }}-{{ root_path }}:
-    file.symlink:
-        - target: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
-        - force: True
-        - require:
-            - file: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
-        - watch_in:
-            - service: nginx
-
-{% endfor %}
-{% endfor %}
 
