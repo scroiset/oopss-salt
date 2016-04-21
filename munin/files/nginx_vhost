@@ -1,0 +1,7 @@
+# Managed by Salt. Don't overwrite manually.
+
+server {
+    server_name {{ munin_hostname }};
+    root /var/cache/munin/www/;
+}
+
