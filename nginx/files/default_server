@@ -28,12 +28,10 @@ server {
         return 403;
     }
 
-    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers         AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
     ssl_certificate     {{ ssl_serverinfo['cert'] }};
     ssl_certificate_key {{ ssl_serverinfo['cert'] }};
-    ssl_session_cache   shared:SSL:10m;
-    ssl_session_timeout 10m;
+
+    {% include "oopss/nginx/files/ssl_config" %}
 
     {% if ssl_server == phpmyadmin_ssl_server %}
     location /phpmyadmin {
