@@ -8,6 +8,11 @@
 
 {% from "oopss/http/map.jinja" import http_config with context %}
 
+{% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
+include:
+    - oopss.nginx
+{% endif %}
+
 {{ http_config['rootdir'] }}:
     file.directory:
         - user: root
