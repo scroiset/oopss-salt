@@ -61,4 +61,5 @@ Guidelines for creating/maintaining formulas
 7. Each state file must have the standard header
 8. Each managed template file must have the header : "Managed by Salt"
 9. Templates should not reference pillar directly. Contexts should be used.
+10. Every root-level state (e.g. oopss.munin) should be able to execute independently of others.
 
