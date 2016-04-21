@@ -60,4 +60,5 @@ Guidelines for creating/maintaining formulas
 6. Each dependency to another formula must be documented
 7. Each state file must have the standard header
 8. Each managed template file must have the header : "Managed by Salt"
+9. Templates should not reference pillar directly. Contexts should be used.
 

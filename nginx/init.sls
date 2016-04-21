@@ -52,4 +52,3 @@ oopss_nginx_service:
         - group: root
         - mode: 400
 
-
