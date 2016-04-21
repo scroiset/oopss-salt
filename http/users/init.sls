@@ -25,7 +25,7 @@
             - www-data
 {% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
         - watch_in:
-            - service: nginx
+            - service: oopss_nginx_service
 {% endif %}
 
     user.present:
@@ -160,12 +160,12 @@
             root_pathinfo: {{ root_pathinfo }}
             socket: {{ http_config['rootdir'] }}/{{ user }}/.sock/{{ root_path }}.sock
         - require:
-            - pkg: nginx
+            - pkg: oopss_nginx_pkg
             - file: {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}
             - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log
             - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log
         - watch_in:
-            - service: nginx
+            - service: oopss_nginx_service
 
 /etc/nginx/sites-enabled/{{ user }}-{{ root_path }}:
     file.symlink:
@@ -174,7 +174,7 @@
         - require:
             - file: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
         - watch_in:
-            - service: nginx
+            - service: oopss_nginx_service
 {% endif %}
 
 {% endfor %}
