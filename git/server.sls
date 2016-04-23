@@ -51,5 +51,15 @@ oopss_git_server_dir_{{ git_project }}:
         - makedirs: True
         - require:
             - user: oopss_git_server_user_{{ git_project }}
+
+{% for repo in git_projectinfo['repos'] %}
+oopss_git_server_repo_{{ repo }}:
+    git:
+        - present
+        - name: {{ git_rootdir }}/{{ git_project }}/{{ repo }}.git
+        - runas: {{ git_project }}
+        - require:
+            - file: oopss_git_server_dir_{{ git_project }}
+{% endfor %}
 {% endfor %}
 
