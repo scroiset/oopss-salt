@@ -79,5 +79,17 @@ oopss_git_server_ssh_auth_{{ git_project }}:
             - file: oopss_git_server_dir_{{ git_project }}
 {% endif %}
 
+# Generate SSH key if ssh_keygen is defined for this user
+{% if git_projectinfo.get('ssh_keygen', False) %}
+oopss_git_server_ssh_keygen_{{ git_project }}:
+    cmd.run:
+        - name: 'ssh-keygen -N "" -f $HOME/.ssh/id_rsa'
+        - user: {{ git_project }}
+        - unless: 'test -f $HOME/.ssh/id_rsa'
+        - require:
+            - user: oopss_git_server_user_{{ git_project }}
+            - file: oopss_git_server_dir_{{ git_project }}
+{% endif %}
+
 {% endfor %}
 
