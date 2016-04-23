@@ -7,23 +7,30 @@
 ##############################################################################
 
 include:
-    - oopss-infra.scm.git
+    - oopss.git
 
-{% set git_rootdir = salt['pillar.get']('git:rootdir', '/srv/git') %}
+{% set git_rootdir = salt['pillar.get']('oopss:git:rootdir', '/srv/git') %}
 
-{{ git_rootdir }}/:
-    file.directory:
+oopss_git_server_rootdir:
+    file:
+        - directory
+        - name: {{ git_rootdir }}
         - mode: 755
         - user: root
         - group: root
         - makedirs: True
 
-{% for git_project, git_projectinfo in salt['pillar.get']('git_projects', {}).iteritems() %}
-{{ git_project }}:
-    group.present:
+{% for git_project, git_projectinfo in salt['pillar.get']('oopss:git:projects', {}).iteritems() %}
+oopss_git_server_group_{{ git_project }}:
+    group:
+        - present
+        - name: {{ git_project }}
         - gid: {{ git_projectinfo['uid'] }}
 
-    user.present:
+oopss_git_server_user_{{ git_project }}:
+    user:
+        - present
+        - name: {{ git_project }}
         - uid: {{ git_projectinfo['uid'] }}
         - gid: {{ git_projectinfo['uid'] }}
         - home: "{{ git_rootdir }}/{{ git_project }}"
@@ -32,49 +39,17 @@ include:
         - groups:
             - sshusers
         - require:
-            - group: {{ git_project }}
-            - group: sshusers
+            - group: oopss_git_server_group_{{ git_project }}
 
-    # Add keys for authorized users
-    ssh_auth:
-        - present
-        - user: {{ git_project }}
-        - names:
-{% for user in git_projectinfo['allowed_users'] %}
-{% for ssh_key in pillar['users'][user]['ssh_auth'] %}
-            - {{ ssh_key }}
-{% endfor %}
-{% endfor %}
-        - require:
-            - file: {{ git_rootdir }}/{{ git_project }}
-
-{{ git_rootdir }}/{{ git_project }}:
-    file.directory:
+oopss_git_server_dir_{{ git_project }}:
+    file:
+        - directory
+        - name: {{ git_rootdir }}/{{ git_project }}
         - mode: 700
         - user: {{ git_project }}
         - group: {{ git_project }}
         - makedirs: True
         - require:
-            - user: {{ git_project }}
-
-# Generate SSH key if ssh_keygen is defined for this user
-{% if git_projectinfo['ssh_keygen'] %}
-ssh_keygen_{{ git_project }}:
-    cmd.run:
-        - name: 'ssh-keygen -N "" -f $HOME/.ssh/id_rsa'
-        - user: {{ git_project }}
-        - unless: 'test -f $HOME/.ssh/id_rsa'
-        - require:
-            - user: {{ git_project }}
-            - file: {{ git_rootdir }}/{{ git_project }}
-{% endif %}
-
-{% for repo in git_projectinfo['repos'] %}
-{{ git_rootdir }}/{{ git_project }}/{{ repo }}.git:
-    git.present:
-        - runas: {{ git_project }}
-        - require:
-            - file: {{ git_rootdir }}/{{ git_project }}
-{% endfor %}
+            - user: oopss_git_server_user_{{ git_project }}
 {% endfor %}
 
