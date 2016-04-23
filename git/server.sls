@@ -64,6 +64,7 @@ oopss_git_server_repo_{{ repo }}:
 {% endfor %}
 
 # Add keys for authorized users
+{% if user_lookup_pillar %}
 {% if git_projectinfo['allowed_users'] is defined %}
 oopss_git_server_ssh_auth_{{ git_project }}:
     ssh_auth:
@@ -77,6 +78,7 @@ oopss_git_server_ssh_auth_{{ git_project }}:
 {% endfor %}
         - require:
             - file: oopss_git_server_dir_{{ git_project }}
+{% endif %}
 {% endif %}
 
 # Generate SSH key if ssh_keygen is defined for this user
