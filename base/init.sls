@@ -8,7 +8,6 @@
 
 include:
     - oopss.base.bash
-    - oopss.base.git
     - oopss.base.hosts
     - oopss.base.locales
     - oopss.base.motd

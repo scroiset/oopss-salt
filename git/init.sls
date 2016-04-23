@@ -6,17 +6,19 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
-oopss_base_git_pkg:
+oopss_git_pkg:
     pkg:
-        - name: git
         - installed
+        - name: git
 
-oopss_base_git_config:
+oopss_git_config:
     file:
-        - name: /etc/gitconfig
         - managed
-        - source: salt://oopss/base/files/gitconfig
+        - name: /etc/gitconfig
+        - source: salt://oopss/git/files/gitconfig
         - mode: 444
         - user: root
         - group: root
+        - require:
+            - pkg: oopss_git_pkg
 
