@@ -10,6 +10,7 @@ include:
     - oopss.git
 
 {% set git_rootdir = salt['pillar.get']('oopss:git:rootdir', '/srv/git') %}
+{% set user_lookup_pillar = salt['pillar.get']('oopss:git:user_lookup_pillar', False) %}
 
 oopss_git_server_rootdir:
     file:
@@ -61,5 +62,22 @@ oopss_git_server_repo_{{ repo }}:
         - require:
             - file: oopss_git_server_dir_{{ git_project }}
 {% endfor %}
+
+# Add keys for authorized users
+{% if git_projectinfo['allowed_users'] is defined %}
+oopss_git_server_ssh_auth_{{ git_project }}:
+    ssh_auth:
+        - present
+        - user: {{ git_project }}
+        - names:
+{% for user in git_projectinfo['allowed_users'] %}
+{% for ssh_key in salt['pillar.get'](user_lookup_pillar+':'+user+':ssh_auth', []) %}
+            - {{ ssh_key }}
+{% endfor %}
+{% endfor %}
+        - require:
+            - file: oopss_git_server_dir_{{ git_project }}
+{% endif %}
+
 {% endfor %}
 
