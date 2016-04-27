@@ -11,22 +11,16 @@ oopss_drbd_pkg:
         - name: drbd8-utils
         - installed
 
-oopss_drbd_config:
+{% for config_file, location in salt['pillar.get']('oopss:drbd:config_files', []).iteritems() %}
+oopss_drbd_config_{{ config_file }}:
     file:
         - managed
-        - name: /etc/drbd.d/global_common.conf
-        - source: salt://oopss/drbd/files/global_common.conf
+        - name: /etc/drbd.d/{{ config_file }}
+        - source: {{ location }}
         - user: root
         - group: adm
         - mode: 640
         - require:
             - pkg: oopss_drbd_pkg
+{% endfor %}
 
-{% if salt['pillar.get']('oopss:drbd:local_config_location', False) %}
-oopss_drbd_config_local:
-    file:
-        - recurse
-        - name: /etc/drbd.d/
-        - source: {{ salt['pillar.get']('oopss:drbd:local_config_location') }}
-        - file_mode: 400
-{% endif %}
