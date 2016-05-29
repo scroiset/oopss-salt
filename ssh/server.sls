@@ -15,9 +15,10 @@ oopss_ssh_server_pkg:
         - installed
 
 oopss_ssh_server_config:
-    file.managed:
+    file:
+        - managed
         - name: /etc/ssh/sshd_config
-        - source: salt://oopss/ssh/files/sshd_config
+        - source: salt://oopss/ssh/files/sshd_config.{{ grains['oscodename'] }}
         - mode: 440
         - user: root
         - group: adm
