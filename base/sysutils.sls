@@ -10,6 +10,7 @@ oopss_base_sysutils_pkg:
     pkg:
         - installed
         - names:
+            - atop
             - bonnie++
             - cron-apt
             - debian-goodies
@@ -18,4 +19,5 @@ oopss_base_sysutils_pkg:
             - iotop
             - nmap
             - sudo
+            - sysstat
 
