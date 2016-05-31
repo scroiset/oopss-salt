@@ -1,3 +1,5 @@
 # Managed by Salt
 
+{% if locale %}
 LANG={{ locale }}
+{% endif %}

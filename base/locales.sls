@@ -34,7 +34,6 @@ oopss_base_locales_gencmd:
 oopss_base_locales_default:
     file:
         - name: /etc/default/locale
-{% if salt['pillar.get']('oopss:base:locales:default', False) %}
         - managed
         - source: salt://oopss/base/files/default_locale
         - template: jinja
@@ -43,7 +42,4 @@ oopss_base_locales_default:
         - mode: 644
         - context:
             locale: {{ salt['pillar.get']('oopss:base:locales:default') }}
-{% else %}
-        - absent
-{% endif %}
 
