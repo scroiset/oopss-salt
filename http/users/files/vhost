@@ -35,8 +35,6 @@ server {
         auth_basic_user_file {{ http_config['rootdir'] }}/{{ user }}/.htpasswd;
     }
 
-    include "/etc/nginx/common.conf";
-
 {% if root_pathinfo['expires_static'] is defined %}
     location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
         expires {{ root_pathinfo['expires_static'] }};
@@ -114,6 +112,20 @@ server {
         error_page {{ error_code }} = "{{ error_target }}";
 {% endfor %}
 {% endif %}
+
+        location = /favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+
+        location = /robots.txt {
+            log_not_found off;
+            access_log off;
+        }
+
+        location /awstats-icon/ {
+            alias /usr/share/awstats/icon/;
+        }
     }
 }
 
