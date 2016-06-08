@@ -22,7 +22,6 @@ oopss_nginx_service:
             - pkg: oopss_nginx_pkg
         - watch:
             - file: /etc/nginx/conf.d/local.conf
-            - file: /etc/nginx/common.conf
             - file: /etc/nginx/sites-available/default
 
 
@@ -30,13 +29,6 @@ oopss_nginx_service:
     file.managed:
         - source: salt://oopss/nginx/files/local.conf
         - template: jinja
-        - user: root
-        - group: root
-        - mode: 400
-
-/etc/nginx/common.conf:
-    file.managed:
-        - source: salt://oopss/nginx/files/common.conf
         - user: root
         - group: root
         - mode: 400
