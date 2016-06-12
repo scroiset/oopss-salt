@@ -113,6 +113,15 @@ server {
 {% endfor %}
 {% endif %}
 
+{% if root_pathinfo['nginx_internal'] is defined %}
+{% for src, target in root_pathinfo['nginx_internal'].iteritems() %}
+        location {{ src }} {
+            internal;
+            alias {{ target }};
+        }
+{% endfor %}
+{% endif %}
+
         location = /favicon.ico {
             log_not_found off;
             access_log off;
