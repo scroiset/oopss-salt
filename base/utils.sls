@@ -15,6 +15,7 @@ oopss_base_utils_pkg:
             - dos2unix
             - elinks
             - fetchmail
+            - file
             - heirloom-mailx
             - lftp
             - man-db
