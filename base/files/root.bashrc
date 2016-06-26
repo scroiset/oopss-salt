@@ -45,3 +45,10 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# Fix Debian bug #770684 when launching lxc-start with restrictive umask
+lxc-start() {
+    umask 022
+    /usr/bin/lxc-start $*
+    umask 077
+}
+
