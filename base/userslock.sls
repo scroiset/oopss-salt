@@ -13,4 +13,5 @@ oopss_base_userslock:
             - /usr/bin/chsh
             - /usr/bin/passwd
         - mode: 0755
+        - replace: False
 
