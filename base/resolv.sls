@@ -6,6 +6,7 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
+{%- if salt['pillar.get']('oopss:base:resolv:nameservers', False) %}
 oopss_base_resolv_file:
     file:
         - name: /etc/resolv.conf
@@ -15,4 +16,5 @@ oopss_base_resolv_file:
         - user: root
         - group: root
         - mode: 644
+{% endif %}
 

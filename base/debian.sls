@@ -6,6 +6,7 @@
 # Copyright 2013-2015 Oopss.org <team@oopss.org>
 ##############################################################################
 
+{% if salt['pillar.get']('oopss:base:debian:sources', False) %}
 oopss_base_debian_sourceslist:
     file:
         - name: /etc/apt/sources.list
@@ -22,6 +23,7 @@ oopss_base_debian_update:
         - name: "apt-get update"
         - onchanges:
             - file: oopss_base_debian_sourceslist
+{% endif %}
 
 oopss_base_debian_apt-listchanges_pkg:
     pkg:
