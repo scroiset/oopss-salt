@@ -1,6 +1,6 @@
 # Managed by Salt
 
-{% for entry in salt['pillar.get']('oopss:sudo:defaults', []) %}
+{% for entry in salt['pillar.get']('oopss:base:sudo:defaults', []) %}
 Defaults {{ entry }}
 {% endfor %}
 
