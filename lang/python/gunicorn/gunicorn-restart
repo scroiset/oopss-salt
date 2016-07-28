@@ -1,4 +1,5 @@
 #!/bin/sh
+# Managed by Salt
 
 # This script kills all gunicorn processes owned by the user executing it.
 # Then, the gunicorn master process is expected to respawn them. Doesn't run

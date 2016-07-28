@@ -1,11 +1,6 @@
 <?php
 
-##############################################################################
-# oopss-salt
-# Description : Oopss infrastructure files using SaltStack
-# URL : https://github.com/oopss/oopss-salt
-# Copyright 2013-2015 Oopss.org <team@oopss.org>
-##############################################################################
+# Managed by Salt
 
 // Load secret generated on postinst
 include('/var/lib/phpmyadmin/blowfish_secret.inc.php');

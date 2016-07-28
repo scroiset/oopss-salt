@@ -1,11 +1,5 @@
 #!/bin/sh
-
-##############################################################################
-# oopss-salt
-# Description : Oopss infrastructure files using SaltStack
-# URL : https://github.com/oopss/oopss-salt
-# Copyright 2013-2015 Oopss.org <team@oopss.org>
-##############################################################################
+# Managed by Salt
 
 # dump_mysql dumps each MySQL database in a separate file compressed with gzip.
 # These dumps are stored in /var/backups/dump_mysql/YYYY-MM-DD.

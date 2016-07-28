@@ -1,4 +1,6 @@
 #!/bin/bash
+# Managed by Salt
+
 ##
 ## buildstatic.sh, written by Sergey B Kirpichev <skirpichev@gmail.com>
 ##

@@ -1,3 +1,5 @@
+# Managed by Salt
+
 {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-access.log {{ salt['pillar.get']('http:basedir') }}/{{ user }}/log/{{ root_path }}-error.log {
     daily
     size 0
