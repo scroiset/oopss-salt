@@ -3,7 +3,7 @@
 # oopss-salt
 # Description : Oopss infrastructure files using SaltStack
 # URL : https://github.com/oopss/oopss-salt
-# Copyright 2013-2015 Oopss.org <team@oopss.org>
+# Copyright 2013-2016 Oopss.org <team@oopss.org>
 ##############################################################################
 
 {% from "oopss/http/map.jinja" import http_config with context %}
