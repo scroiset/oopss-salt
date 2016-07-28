@@ -1,4 +1,3 @@
-
 oopss:
     nagios:
         user_create: True            # default: False
