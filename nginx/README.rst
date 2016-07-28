@@ -1,7 +1,7 @@
 
-======================
+================
 oopss.http.nginx
-======================
+================
 
 Formula for managing the NGINX web server.
 
