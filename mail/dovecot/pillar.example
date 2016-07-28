@@ -1,6 +1,0 @@
-    mail:
-        dovecot:
-            mail_root: '/srv/mail'
-            mail_uid: 2000
-            mail_gid: 2000
-            modoboa_db_password: 'XXX'
