@@ -55,12 +55,10 @@ Guidelines for creating/maintaining formulas
 --------------------------------------------
 1. The project is sub-divised in formulas
 2. Formulas can be configured using Pillar
-3. Each formula must have a README.rst file which document each state file
-4. Each formula must have a pillar.example file
-5. Optionally, a map.jinja file can be used for handling various OS configuration
-6. Each dependency to another formula must be documented
+3. Each formula must have a pillar.example file
+4. Optionally, a map.jinja file can be used for handling various OS configuration
+5. Every root-level state (e.g. oopss.munin) should be able to execute independently of others.
 7. Each state file must have the standard header
 8. Each managed template file must have the header : "Managed by Salt"
 9. Templates should not reference pillar directly. Contexts should be used.
-10. Every root-level state (e.g. oopss.munin) should be able to execute independently of others.
 
