@@ -41,7 +41,6 @@ Create top file ``/srv/salt/top.sls`` and call formulas you want to use. Example
     base:
         '*':
             - oopss.base
-            - oopss.unbound
             - oopss.postfix
             - oopss.nginx
 
