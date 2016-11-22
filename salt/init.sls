@@ -9,8 +9,9 @@
 salt-minion:
     pkg.installed
 
-/etc/salt/minion:
+oopss_salt_minion_config:
     file.managed:
+        - name: /etc/salt/minion.d/local.conf
         - source: salt://oopss/salt/files/minion
         - template: jinja
         - context:
