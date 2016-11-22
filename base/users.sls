@@ -13,6 +13,9 @@ oopss_base_users_sshgroup:
         - system: True
 
 {% for user, userinfo in salt['pillar.get']('oopss:base:users', {}).iteritems() %}
+
+{% set homedir = userinfo['home'] | default(['/home', user]|join('/')) %}
+
 oopss_base_users_group_{{ user }}:
     group.present:
         - name: {{ user }}
@@ -23,7 +26,7 @@ oopss_base_users_user_{{ user }}:
         - name: {{ user }}
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
-        - home: "/home/{{ user }}"
+        - home: {{ homedir }}
         - createhome: False
         - shell: "/bin/bash"
         - fullname: {{ userinfo['fullname'] }}
@@ -48,7 +51,7 @@ oopss_base_users_user_{{ user }}:
 
 oopss_base_users_homedir_{{ user }}:
     file.directory:
-        - name: /home/{{ user }}
+        - name: {{ homedir }}
         - mode: 700
         - user: {{ user }}
         - group: {{ user }}
