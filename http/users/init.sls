@@ -89,6 +89,7 @@ include:
 {{ http_config['rootdir'] }}/{{ user }}/.ssh/authorized_keys:
     file.managed:
         - mode: 600
+        - replace: False
         - user: {{ user }}
         - group: {{ user }}
         - require:
@@ -120,6 +121,7 @@ include:
 {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log:
     file.managed:
         - mode: 640
+        - replace: False
         - user: www-data
         - group: {{ user }}
         - require:
@@ -130,6 +132,7 @@ include:
 {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log:
     file.managed:
         - mode: 640
+        - replace: False
         - user: www-data
         - group: {{ user }}
         - require:

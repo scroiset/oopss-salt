@@ -85,6 +85,7 @@ postmap-sasl_password:
 /etc/postfix/header_checks:
     file.managed:
         - mode: 640
+        - replace: False
         - user: root
         - group: adm
 
