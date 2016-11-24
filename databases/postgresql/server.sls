@@ -7,7 +7,7 @@
 ##############################################################################
 
 include:
-    - oopss-infra.databases.postgresql
+    - oopss.databases.postgresql
 
 postgresql-9.1:
     pkg.installed
@@ -27,7 +27,7 @@ postgresql:
         - user: postgres
         - group: adm
         - mode: 440
-        - source: salt://oopss-infra/databases/postgresql/pg_hba.conf
+        - source: salt://oopss/databases/postgresql/pg_hba.conf
         - require:
             - pkg: postgresql-9.1
         - context:
@@ -66,7 +66,7 @@ postgresql-db-{{ user }}:
 /etc/cron.daily/dump_pgsql:
     {% if salt['pillar.get']('databases:postgresql:daily_dump') %}
     file.managed:
-        - source: salt://oopss-infra/databases/postgresql/dump_pgsql
+        - source: salt://oopss/databases/postgresql/dump_pgsql
         - user: root
         - group: root
         - mode: 700

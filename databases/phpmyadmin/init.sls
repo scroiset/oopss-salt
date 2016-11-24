@@ -7,7 +7,7 @@
 ##############################################################################
 
 include:
-    - oopss-infra.lang.php5.fpm
+    - oopss.lang.php5.fpm
 
 pkg_phpmyadmin:
     pkg:
@@ -25,7 +25,7 @@ phpmyadmin:
         - user: root
         - group: adm
         - mode: 440
-        - source: salt://oopss-infra/databases/phpmyadmin/fpm.conf
+        - source: salt://oopss/databases/phpmyadmin/fpm.conf
         - require:
             - pkg: php5-fpm
             - user: phpmyadmin
@@ -37,13 +37,14 @@ phpmyadmin:
         - user: root
         - group: root
         - mode: 444
-        - source: salt://oopss-infra/databases/phpmyadmin/config.inc.php
+        - source: salt://oopss/databases/phpmyadmin/config.inc.php
         - require:
             - pkg: pkg_phpmyadmin
 
 /var/lib/phpmyadmin/blowfish_secret.inc.php:
     file.managed:
-        - owner: root
+        - replace: False
+        - user: root
         - group: phpmyadmin
         - mode: 440
         - require:
