@@ -29,11 +29,10 @@ oopss_ssh_server_config:
 # Restrict umask for logged-in users.
 {% if grains['os'] == 'Debian' and grains['osrelease_info'][0] < 8 %}
 oopss_ssh_server_initscript:
-    file.sed:
+    file.replace:
         - name: /etc/init.d/ssh
-        - before: 'umask .*'
-        - after: 'umask 027'
-        - limit: '^umask .*'
+        - pattern: 'umask .*'
+        - repl: 'umask 027'
         - require:
             - pkg: oopss_ssh_server_pkg
         - watch_in:
