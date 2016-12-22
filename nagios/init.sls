@@ -14,7 +14,9 @@
 
 oopss_nagios_pkg:
     pkg:
-        - name: nagios-plugins
+        - names:
+            - nagios-plugins
+            - nagios-plugins-contrib
         - installed
 
 {% if user_create %}
