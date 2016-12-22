@@ -1,0 +1,29 @@
+# Managed by Salt. Don't overwrite manually.
+
+server {
+    server_name {{ nagios_hostname }};
+    root /usr/share/nagios3/htdocs/;
+    index index.php;
+    
+    rewrite ^/nagios3/(.*)$ /$1;
+    location /stylesheets {
+        alias /etc/nagios3/stylesheets;
+    }
+
+    location ~ \.cgi$ {
+        root /usr/lib/cgi-bin/nagios3;
+        rewrite ^/cgi-bin/nagios3/(.*)$ /$1;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/nagios3$fastcgi_script_name; 
+        fastcgi_param AUTH_USER $remote_user;
+        fastcgi_param REMOTE_USER $remote_user;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
+
+    location ~ \.php$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /usr/share/nagios3/htdocs/$fastcgi_script_name;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+    }
+}
+
