@@ -167,6 +167,8 @@ include:
             root_path: {{ root_path }}
             root_pathinfo: {{ root_pathinfo }}
             socket: {{ http_config['rootdir'] }}/{{ user }}/.sock/{{ root_path }}.sock
+            http_auth_file: {{ root_pathinfo.get('http_auth_file', http_config['rootdir'] + "/" + user + "/.htpasswd") }}
+
         - require:
             - pkg: oopss_nginx_pkg
             - file: {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}

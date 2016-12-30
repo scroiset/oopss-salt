@@ -26,7 +26,7 @@ server {
         autoindex on;
         index index.en.html;
         auth_basic "Awstats {{ root_pathinfo['server_names'][0] }}";
-        auth_basic_user_file {{ http_config['rootdir'] }}/{{ user }}/.htpasswd;
+        auth_basic_user_file {{ http_auth_file }};
     }
 
 {% if root_pathinfo['expires_static'] is defined %}
@@ -82,7 +82,7 @@ server {
 {% if root_pathinfo.get('http_auth', False) %}
         # HTTP AUTH
         auth_basic "HTTP AUTH {{ root_pathinfo['server_names'][0] }}";
-        auth_basic_user_file {{ http_config['rootdir'] }}/{{ user }}/.htpasswd;
+        auth_basic_user_file {{ http_auth_file }};
 {% endif %}
 
 {% if root_pathinfo.get('autoindex', False) %}
