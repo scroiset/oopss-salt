@@ -4,7 +4,13 @@ server {
     server_name {{ nagios_hostname }};
     root /usr/share/nagios3/htdocs/;
     index index.php;
-    
+
+    {% if ssl %}
+    listen {{ ssl['ipaddr'] }}:443 ssl;
+    ssl_certificate     {{ ssl['cert'] }};
+    ssl_certificate_key {{ ssl['cert'] }};
+    {% endif %}
+
     rewrite ^/nagios3/(.*)$ /$1;
     location /stylesheets {
         alias /etc/nagios3/stylesheets;
@@ -27,3 +33,9 @@ server {
     }
 }
 
+{% if ssl %}
+server {
+    server_name {{ nagios_hostname }};
+    return 301 https://$host$request_uri;
+}
+{% endif %}

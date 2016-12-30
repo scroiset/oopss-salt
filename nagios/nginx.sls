@@ -28,6 +28,7 @@ oopss_nagios_nginx_conf:
         - mode: 440
         - context:
             nagios_hostname: {{ salt['pillar.get']('oopss:nagios:nginx:hostname', 'nagios.localdomain') }}
+            ssl: {{ salt['pillar.get']('oopss:nagios:nginx:ssl', False) }}
         - require:
             - pkg: oopss_nginx_pkg
             - pkg: oopss_nagios_nginx_pkg
