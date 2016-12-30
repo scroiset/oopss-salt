@@ -91,6 +91,11 @@ UsePAM yes
 
 AllowGroups sshusers root
 
+{% if salt['pillar.get']('oopss:ssh:deny_password_auth_for_sudoers', False) %}
+Match Group sudo
+    PasswordAuthentication no
+{% endif %}
+
 {% for ipaddr in salt['pillar.get']('oopss:ssh:privilegied_ipaddr', []) %}
 Match Address {{ ipaddr }}
     PasswordAuthentication yes
