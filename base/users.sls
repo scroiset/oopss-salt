@@ -61,10 +61,14 @@ oopss_base_users_homedir_{{ user }}:
 
 {% if userinfo['ssh_auth'] is defined %}
 oopss_base_users_ssh_keys_{{ user }}:
-    ssh_auth:
-        - names: {{ userinfo['ssh_auth'] }}
-        - present
+    file:
+        - managed
+        - name: {{ homedir }}/.ssh/authorized_keys
+        - contents: {{ userinfo['ssh_auth'] }}
+        - makedirs: True
         - user: {{ user }}
+        - group: {{ user }}
+        - mode: 400
         - require:
             - file: oopss_base_users_homedir_{{ user }}
 {% endif %}
