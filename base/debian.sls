@@ -19,3 +19,18 @@ oopss_base_debian_apt-listchanges_config:
         - group: adm
         - mode: 440
 
+oopss_base_debian_unattended_pkg:
+    pkg:
+        - name: unattended-upgrades
+        - installed
+
+oopss_base_debian_unattended_config:
+    file:
+        - managed
+        - name: /etc/apt/apt.conf.d/50unattended-upgrades
+        - source: salt://oopss/base/files/50unattended-upgrades
+        - template: jinja
+        - user: root
+        - group: root
+        - mode: 444
+

@@ -11,7 +11,6 @@ oopss_base_sysutils_pkg:
         - installed
         - names:
             - bonnie++
-            - cron-apt
             - debian-goodies
             - fio
             - gdisk
