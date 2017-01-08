@@ -6,9 +6,6 @@
 # Copyright 2013-2016 Oopss.org <team@oopss.org>
 ##############################################################################
 
-# Starting with Debian Jessie, rsyslog is not needed anymore
-{% if grains['os'] == 'Debian' and grains['osrelease_info'][0] < 8 %}
-
 oopss_base_rsyslog_pkg:
     pkg:
         - installed
@@ -32,4 +29,3 @@ oopss_base_rsyslog_service:
         - require:
             - pkg: oopss_base_rsyslog_pkg
 
-{% endif %}
