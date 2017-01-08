@@ -33,4 +33,6 @@ oopss_base_debian_unattended_config:
         - user: root
         - group: root
         - mode: 444
+        - require:
+            - oopss_base_debian_unattended_pkg
 
