@@ -40,10 +40,14 @@ php5-fpm:
         - mode: 400
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
+{% set user_is_active = userinfo.get('is_active', False) %}
+
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 {% if 'php' == root_pathinfo.get('type', '') or 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
 /etc/php5/fpm/pool.d/{{ user }}-{{ root_path }}.conf:
-    file.managed:
+    file:
+        {%- if user_is_active %}
+        - managed
         - user: root
         - group: adm
         - mode: 440
@@ -55,6 +59,9 @@ php5-fpm:
             max_children: {{ salt['pillar.get']('lang:php5:fpm:max_children', '10') }}
         - require:
             - pkg: php5-fpm
+        {%- else %}
+        - absent
+        {%- endif %}
         - watch_in:
             - service: php5-fpm
 {% endif %}

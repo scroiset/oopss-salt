@@ -21,19 +21,28 @@ include:
 
 # For each user in pillar http:users
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-
+{% set user_is_active = userinfo.get('is_active', False) %}
 # Web user and group
 {{ user }}:
-    group.present:
+    group:
+        {%- if user_is_active %}
+        - present
         - gid: {{ userinfo['uid'] }}
         - addusers:
             - www-data
+        {%- else %}
+        - absent
+        - require:
+            - user: {{ user }}
+        {%- endif %}
 {% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
         - watch_in:
             - service: oopss_nginx_service
 {% endif %}
 
-    user.present:
+    user:
+        {%- if user_is_active %}
+        - present
         - uid: {{ userinfo['uid'] }}
         - gid: {{ userinfo['uid'] }}
         - password: '{{ userinfo['password'] }}'
@@ -55,6 +64,11 @@ include:
             - group: {{ group }}
 {% endfor %}
 {% endif %}
+        {%- else %}
+        - absent
+        {%- endif %}
+
+{% if user_is_active %}
 
 # Web user home directory
 {{ http_config['rootdir'] }}/{{ user }}:
@@ -65,7 +79,11 @@ include:
         - require:
             - user: {{ user }}
 
+{% endif %}
+
 {% if userinfo['root_paths'] is defined %}
+
+{% if user_is_active %}
 
 # Socket directory
 {{ http_config['rootdir'] }}/{{ user }}/.sock:
@@ -105,9 +123,12 @@ include:
             - user: {{ user }}
             - file: {{ http_config['rootdir'] }}/{{ user }}
 
+{% endif %} {# user_is_active #}
+
 # For each root_path
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
+{% if user_is_active %}
 # Root path
 {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}:
     file.directory:
@@ -139,9 +160,12 @@ include:
             - user: {{ user }}
             - file: {{ http_config['rootdir'] }}/{{ user }}/log
 
+{% endif %} {# user_is_active #}
 # Logrotate config
 /etc/logrotate.d/www-{{ user }}-{{ root_path }}:
-    file.managed:
+    file:
+        {%- if user_is_active %}
+        - managed
         - mode: 400
         - user: root
         - group: root
@@ -152,11 +176,16 @@ include:
             root_path: {{ root_path }}
         - require:
             - user: {{ user }}
+        {%- else %}
+        - absent
+        {%- endif %}
 
 # If using Nginx
 {% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
 /etc/nginx/sites-available/{{ user }}-{{ root_path }}:
-    file.managed:
+    file:
+        {%- if user_is_active %}
+        - managed
         - user: root
         - group: adm
         - mode: 440
@@ -174,15 +203,23 @@ include:
             - file: {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}
             - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log
             - file: {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log
+        {%- else %}
+        - absent
+        {%- endif %}
         - watch_in:
             - service: oopss_nginx_service
 
 /etc/nginx/sites-enabled/{{ user }}-{{ root_path }}:
-    file.symlink:
+    file:
+        {%- if user_is_active %}
+        - symlink
         - target: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
         - force: True
         - require:
             - file: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
+        {%- else %}
+        - absent
+        {%- endif %}
         - watch_in:
             - service: oopss_nginx_service
 {% endif %}

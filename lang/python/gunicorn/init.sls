@@ -29,6 +29,9 @@ gunicorn:
         - source: salt://oopss/lang/python/gunicorn/gunicorn-restart
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
+{% set user_is_active = userinfo.get('is_active', False) %}
+
+{% if user_is_active %}
 
 {{ salt['pillar.get']('http:basedir') }}/{{ user }}/.gunicorn:
     file.directory:
@@ -46,10 +49,14 @@ gunicorn:
         - require:
             - file: {{ salt['pillar.get']('http:basedir') }}/{{ user }}
 
+{% endif %} {# user_is_active #}
+
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 {% if 'gunicorn' == root_pathinfo.get('type', '') %}
 /etc/gunicorn.d/{{ user }}-{{ root_path }}:
-    file.managed:
+    file:
+        {%- if user_is_active %}
+        - managed
         - user: root
         - group: adm
         - mode: 440
@@ -60,6 +67,9 @@ gunicorn:
             root_path: {{ root_path }}
         - require:
             - pkg: gunicorn
+        {%- else %}
+        - absent
+        {%- endif %}
         - watch_in:
             - service: gunicorn
 
