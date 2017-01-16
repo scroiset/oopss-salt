@@ -20,6 +20,7 @@ oopss_munin_nginx_conf:
         - mode: 440
         - context:
             munin_hostname: {{ salt['pillar.get']('oopss:munin:nginx:hostname', 'munin.localdomain') }}
+            ssl: {{ salt['pillar.get']('oopss:munin:nginx:ssl', False) }}
         - require:
             - pkg: oopss_nginx_pkg
         - watch_in:
