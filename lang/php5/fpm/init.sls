@@ -40,7 +40,7 @@ php5-fpm:
         - mode: 400
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-{% set user_is_active = userinfo.get('is_active', False) %}
+{% set user_is_active = userinfo.get('is_active', True) %}
 
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 {% if 'php' == root_pathinfo.get('type', '') or 'php_redirect_to_index' == root_pathinfo.get('type', '') %}

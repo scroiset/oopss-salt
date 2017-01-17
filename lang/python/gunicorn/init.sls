@@ -29,7 +29,7 @@ gunicorn:
         - source: salt://oopss/lang/python/gunicorn/gunicorn-restart
 
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-{% set user_is_active = userinfo.get('is_active', False) %}
+{% set user_is_active = userinfo.get('is_active', True) %}
 
 {% if user_is_active %}
 

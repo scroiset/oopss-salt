@@ -40,7 +40,7 @@ awstats:
 # For each user in pillar http:users
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
 
-{% if userinfo.get('is_active', False) and userinfo['root_paths'] is defined %}
+{% if userinfo.get('is_active', True) and userinfo['root_paths'] is defined %}
 
 # Awstats root for each user
 {{ http_config['rootdir'] }}/{{ user }}/awstats:
