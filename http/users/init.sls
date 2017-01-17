@@ -128,6 +128,8 @@ include:
 # For each root_path
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
+{% set rootpath_is_active = root_pathinfo.get('is_active', True) %}
+
 {% if user_is_active %}
 # Root path
 {{ http_config['rootdir'] }}/{{ user }}/{{ root_path }}:
@@ -164,7 +166,7 @@ include:
 # Logrotate config
 /etc/logrotate.d/www-{{ user }}-{{ root_path }}:
     file:
-        {%- if user_is_active %}
+        {%- if user_is_active and rootpath_is_active %}
         - managed
         - mode: 400
         - user: root
@@ -184,7 +186,7 @@ include:
 {% if salt['pillar.get']('http:web_server', False) == 'oopss.nginx' %}
 /etc/nginx/sites-available/{{ user }}-{{ root_path }}:
     file:
-        {%- if user_is_active %}
+        {%- if user_is_active and rootpath_is_active %}
         - managed
         - user: root
         - group: adm
@@ -211,7 +213,7 @@ include:
 
 /etc/nginx/sites-enabled/{{ user }}-{{ root_path }}:
     file:
-        {%- if user_is_active %}
+        {%- if user_is_active and rootpath_is_active %}
         - symlink
         - target: /etc/nginx/sites-available/{{ user }}-{{ root_path }}
         - force: True

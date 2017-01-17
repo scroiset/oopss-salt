@@ -55,7 +55,7 @@ gunicorn:
 {% if 'gunicorn' == root_pathinfo.get('type', '') %}
 /etc/gunicorn.d/{{ user }}-{{ root_path }}:
     file:
-        {%- if user_is_active %}
+        {%- if user_is_active and root_pathinfo.get('is_active', True) %}
         - managed
         - user: root
         - group: adm

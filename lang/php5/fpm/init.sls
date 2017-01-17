@@ -46,7 +46,7 @@ php5-fpm:
 {% if 'php' == root_pathinfo.get('type', '') or 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
 /etc/php5/fpm/pool.d/{{ user }}-{{ root_path }}.conf:
     file:
-        {%- if user_is_active %}
+        {%- if user_is_active and root_pathinfo.get('is_active', True) %}
         - managed
         - user: root
         - group: adm
