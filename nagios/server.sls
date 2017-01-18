@@ -14,6 +14,26 @@ oopss_nagios_server_pkg:
             - php5-cgi
         - install_recommends: False
 
+oopss_nagios_server_perms:
+    file:
+        - directory
+        - name: /var/lib/nagios3/
+        - mode: 751
+        - require:
+            - pkg: oopss_nagios_server_pkg
+
+oopss_nagios_server_perms_rw:
+    file:
+        - directory
+        - name: /var/lib/nagios3/rw/
+        - user: nagios
+        - group: www-data
+        - mode: 2750
+        - require:
+            - pkg: oopss_nagios_server_pkg
+        - watch_in:
+            - service: oopss_nagios_server_service
+
 oopss_nagios_server_service:
     service:
         - running
