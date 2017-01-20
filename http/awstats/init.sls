@@ -39,7 +39,8 @@ awstats:
 
 # For each user in pillar http:users
 {% for user, userinfo in salt['pillar.get']('http:users', {}).iteritems() %}
-{% if userinfo['root_paths'] is defined %}
+
+{% if userinfo.get('is_active', True) and userinfo['root_paths'] is defined %}
 
 # Awstats root for each user
 {{ http_config['rootdir'] }}/{{ user }}/awstats:
@@ -53,9 +54,13 @@ awstats:
 
 {% for root_path, root_pathinfo in userinfo.get('root_paths', {}).iteritems() %}
 
+{% set rootpath_is_active = root_pathinfo.get('is_active', True) %}
+
 # Awstats config file for each user
 /etc/awstats/awstats.{{ user }}-{{ root_path }}.conf:
-    file.managed:
+    file:
+        {%- if rootpath_is_active %}
+        - managed
         - source: salt://oopss/http/awstats/config
         - template: jinja
         - context:
@@ -65,7 +70,11 @@ awstats:
         - mode: 440
         - user: root
         - group: adm
+        {%- else %}
+        - absent
+        {%- endif %}
 
+{% if rootpath_is_active %}
 # Awstats dir for each root path
 {{ http_config['rootdir'] }}/{{ user }}/awstats/{{ root_path }}:
     file.directory:
@@ -82,6 +91,7 @@ awstats:
         - user: root
         - group: www-data
 
+{% endif %}
 {% endfor %}
 {% endif %}
 {% endfor %}
