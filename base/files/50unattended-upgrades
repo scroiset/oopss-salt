@@ -1,8 +1,5 @@
 Unattended-Upgrade::Origins-Pattern {
-      "o=Debian,n={{ grains['oscodename'] }}";
-      "o=Debian,n={{ grains['oscodename'] }}-updates";
-      "o=Debian,n={{ grains['oscodename'] }}-proposed-updates";
-      "o=Debian,n={{ grains['oscodename'] }},l=Debian-Security";
+      "o=Debian";
 };
 Unattended-Upgrade::Mail "root";
 APT::Periodic::Update-Package-Lists "1";
