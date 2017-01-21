@@ -31,3 +31,19 @@ oopss_munin_conf:
         - require:
             - pkg: oopss_munin_pkg
 
+{% for plugin, arg in salt['pillar.get']('oopss:munin:plugins', {}).iteritems() %}
+{% if arg %}
+{% set plugin_fullname = plugin + arg %}
+{% else %}
+{% set plugin_fullname = plugin %}
+{% endif %}
+oopss_munin_plugin_{{ plugin_fullname }}:
+    file:
+        - symlink
+        - name: /etc/munin/plugins/{{ plugin_fullname }}
+        - target: /usr/share/munin/plugins/{{ plugin }}
+        - require:
+            - pkg: oopss_munin_pkg
+        - watch_in:
+            - service: oopss_munin_service
+{% endfor %}
