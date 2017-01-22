@@ -141,6 +141,19 @@ server {
 }
 {% endif %}
 
+{% if root_pathinfo['redirect_from_ssl'] is defined %}
+# Redirect each server name specified in redirect_from (from pillar config) to
+# the main server name of the virtual server (over SSL).
+server {
+    server_name{% for redirect_from_ssl in root_pathinfo['redirect_from_ssl'] %} {{ redirect_from_ssl }}{% endfor %};
+    listen {{ root_pathinfo['ssl']['ipaddr'] }}:{{ root_pathinfo['ssl']['port']|default('443') }} ssl;
+    ssl_certificate     {{ root_pathinfo['ssl']['cert'] }};
+    ssl_certificate_key {{ root_pathinfo['ssl']['cert'] }};
+    {% include "oopss/nginx/files/ssl_config" %}
+    return 301 https://{{ root_pathinfo['server_names'][0] }}$request_uri;
+}
+{% endif %}
+
 {% if root_pathinfo['ssl'] is defined %}
 {% if root_pathinfo['ssl'].get('redirect_http', True) %}
 # If this is a SSL virtual server, redirect each server name called without SSL
