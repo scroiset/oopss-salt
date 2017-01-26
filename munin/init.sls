@@ -9,7 +9,9 @@
 oopss_munin_pkg:
     pkg:
         - installed
-        - name: munin-node
+        - names:
+            - munin-node
+            - libdbd-pg-perl
 
 oopss_munin_service:
     service:
