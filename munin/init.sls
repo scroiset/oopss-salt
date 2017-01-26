@@ -31,19 +31,28 @@ oopss_munin_conf:
         - require:
             - pkg: oopss_munin_pkg
 
-{% for plugin, arg in salt['pillar.get']('oopss:munin:plugins', {}).iteritems() %}
-{% if arg %}
-{% set plugin_fullname = plugin + arg %}
-{% else %}
-{% set plugin_fullname = plugin %}
-{% endif %}
-oopss_munin_plugin_{{ plugin_fullname }}:
+{% for plugin, arg_list in salt['pillar.get']('oopss:munin:plugins', {}).iteritems() %}
+{% if arg_list is sequence %}
+{% for arg in arg_list %}
+oopss_munin_plugin_{{ plugin }}_{{ arg }}:
     file:
         - symlink
-        - name: /etc/munin/plugins/{{ plugin_fullname }}
+        - name: /etc/munin/plugins/{{ plugin+arg }}
         - target: /usr/share/munin/plugins/{{ plugin }}
         - require:
             - pkg: oopss_munin_pkg
         - watch_in:
             - service: oopss_munin_service
+{% endfor %}
+{% else %}
+oopss_munin_plugin_{{ plugin }}:
+    file:
+        - symlink
+        - name: /etc/munin/plugins/{{ plugin }}
+        - target: /usr/share/munin/plugins/{{ plugin }}
+        - require:
+            - pkg: oopss_munin_pkg
+        - watch_in:
+            - service: oopss_munin_service
+{% endif %}
 {% endfor %}
