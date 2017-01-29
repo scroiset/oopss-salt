@@ -33,6 +33,12 @@ oopss_munin_conf:
         - require:
             - pkg: oopss_munin_pkg
 
+oopss_munin_cron:
+    file:
+        - comment
+        - name: /etc/cron.d/munin-node
+        - regex: ^[^#].*apt_all
+
 {% for plugin, arg_list in salt['pillar.get']('oopss:munin:plugins', {}).iteritems() %}
 {% if arg_list is sequence %}
 {% for arg in arg_list %}
