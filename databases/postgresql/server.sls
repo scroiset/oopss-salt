@@ -32,23 +32,28 @@ postgresql:
             - pkg: postgresql-9.1
         - context:
             mon_user: {{ salt['pillar.get']('databases:postgresql:mon_user', False) }}
+            users: {{ salt['pillar.get']('databases:postgresql:users', {}) }}
 
 
 ##############################################################################
 # Read pillar databases:postgresql:users then create users and databases
 ##############################################################################
 
-{% for user, password in salt['pillar.get']('databases:postgresql:users', {}).iteritems() %}
+{% for user, prop in salt['pillar.get']('databases:postgresql:users', {}).iteritems() %}
 postgresql-user-{{ user }}:
     postgres_user:
+      {%- if prop.get('active', true) %}
         - present
-        - name: {{ user }}
         # Password should be provided in Pillar as the result of
         # MD5(clearpassword+username).
         # WARNING: Until now, the postgres_user state does not support user
         # modification. So, password modification won't work.
-        - password: 'md5{{ password }}'
+        - password: 'md5{{ prop.password }}'
         - encrypted: False
+      {%- else %}
+        - absent
+      {%- endif %}
+        - name: {{ user }}
         - require:
             - pkg: postgresql-9.1
 
