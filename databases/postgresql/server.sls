@@ -38,7 +38,7 @@ postgresql:
 # Read pillar databases:postgresql:users then create users and databases
 ##############################################################################
 
-{% for user, password in salt['pillar.get']('databases:postgresql:users', {}).iteritems() %}
+{% for user, prop in salt['pillar.get']('databases:postgresql:users', {}).iteritems() %}
 postgresql-user-{{ user }}:
     postgres_user:
         - present
@@ -47,7 +47,11 @@ postgresql-user-{{ user }}:
         # MD5(clearpassword+username).
         # WARNING: Until now, the postgres_user state does not support user
         # modification. So, password modification won't work.
-        - password: 'md5{{ password }}'
+      {%- if prop.get('active', true) %}
+        - password: 'md5{{ prop.password }}'
+      {%- else %}
+        - password: 'md5xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+      {%- endif %}
         - encrypted: False
         - require:
             - pkg: postgresql-9.1
