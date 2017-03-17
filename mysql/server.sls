@@ -67,13 +67,17 @@ oopss_mysql_server_dumpscript:
         - name: /etc/cron.daily/dump_mysql
     {% endif %}
 
-{% for user, password in salt['pillar.get']('oopss:mysql:server:users', {}).iteritems() %}
+{% for user, prop in salt['pillar.get']('oopss:mysql:server:users', {}).iteritems() %}
 oopss_mysql_users_{{ user }}:
     mysql_user:
         - present
         - name: {{ user }}
         - host: localhost
-        - password_hash: '{{ password }}'
+        {%- if prop.get('active', true) %}
+        - password_hash: '{{ prop.password }}'
+        {%- else %}
+        - password_hash: '*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+        {%- endif %}
         - require:
             - pkg: oopss_mysql_server_pkg
 
@@ -86,7 +90,11 @@ oopss_mysql_users_db_{{ user }}:
 
 oopss_mysql_users_grant_{{ user }}:
     mysql_grants:
+      {%- if prop.get('active', true) %}
         - present
+      {%- else %}
+        - absent
+      {% endif %}
         - grant: all privileges
         - database : {{ user }}.*
         - user : {{ user }}
