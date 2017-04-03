@@ -26,6 +26,7 @@ oopss_base_utils_pkg:
             - openssh-client
             - screen
             - socat
+            - tmux
             - unrar-free
             - unzip
             - wget
