@@ -6,10 +6,12 @@
 # Copyright 2013-2016 Oopss.org <team@oopss.org>
 ##############################################################################
 
+{% from "oopss/databases/postgresql/map.jinja" import postgresql with context %}
+
 include:
     - oopss.databases.postgresql
 
-postgresql-9.1:
+postgresql-{{ postgresql.version }}:
     pkg.installed
 
 postgresql:
@@ -17,11 +19,11 @@ postgresql:
         - running
         - reload: True
         - require:
-            - pkg: postgresql-9.1
+            - pkg: postgresql-{{ postgresql.version }}
         - watch:
-            - file: /etc/postgresql/9.1/main/pg_hba.conf
+            - file: /etc/postgresql/{{ postgresql.version }}/main/pg_hba.conf
 
-/etc/postgresql/9.1/main/pg_hba.conf:
+/etc/postgresql/{{ postgresql.version }}/main/pg_hba.conf:
     file.managed:
         - template: jinja
         - user: postgres
@@ -29,7 +31,7 @@ postgresql:
         - mode: 440
         - source: salt://oopss/databases/postgresql/pg_hba.conf
         - require:
-            - pkg: postgresql-9.1
+            - pkg: postgresql-{{ postgresql.version }}
         - context:
             mon_user: {{ salt['pillar.get']('databases:postgresql:mon_user', False) }}
 
@@ -54,7 +56,7 @@ postgresql-user-{{ user }}:
       {%- endif %}
         - encrypted: False
         - require:
-            - pkg: postgresql-9.1
+            - pkg: postgresql-{{ postgresql.version }}
 
 postgresql-db-{{ user }}:
     postgres_database:
