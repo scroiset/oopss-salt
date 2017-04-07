@@ -15,7 +15,7 @@ oopss_salt_minion_config:
         - source: salt://oopss/salt/files/minion
         - template: jinja
         - context:
-            salt_master: {{ salt['pillar.get']('oopss:sysutils:salt:salt_master', 'salt') }}
+            salt_master: {{ salt['pillar.get']('oopss:salt:master_hostname', 'salt') }}
         - user: root
         - group: root
         - mode: 400
