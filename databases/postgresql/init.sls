@@ -6,9 +6,10 @@
 # Copyright 2013-2016 Oopss.org <team@oopss.org>
 ##############################################################################
 
-postgresql-client-9.1:
+{% from "oopss/databases/postgresql/map.jinja" import postgresql with context %}
+postgresql-client-{{ postgresql.version }}:
     pkg.installed
 
-postgresql-server-dev-9.1:
+postgresql-server-dev-{{ postgresql.version }}:
     pkg.installed
 

@@ -1,0 +1,10 @@
+
+{% set postgresql = salt['grains.filter_by']({
+  'jessie': {
+    'version': '9.4',
+  },
+  'wheezy': {
+    'version': '9.1',
+  },
+
+}, grain='oscodename') %}
