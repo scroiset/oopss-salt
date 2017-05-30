@@ -14,14 +14,14 @@ server {
         deny all;
     }
 
-    {% if phpmyadmin_ssl_server %}
+    {%- if phpmyadmin_ssl_server %}
     location /phpmyadmin {
         return 301 https://$host$request_uri;
     }
-    {% endif %}
+    {%- endif %}
 }
 
-{% for ssl_server, ssl_serverinfo in ssl.iteritems() %}
+{%- for ssl_server, ssl_serverinfo in ssl.iteritems() %}
 server {
     listen {{ ssl_serverinfo['ipaddr'] }}:{{ ssl_serverinfo['port']|default('443') }} default_server ssl;
 
@@ -34,7 +34,7 @@ server {
 
     {% include "oopss/nginx/files/ssl_config" %}
 
-    {% if ssl_server == phpmyadmin_ssl_server %}
+    {%- if ssl_server == phpmyadmin_ssl_server %}
     location /phpmyadmin {
         return 301 https://$host/phpmyadmin/;
     }
@@ -51,7 +51,7 @@ server {
     location ~* /phpmyadmin/(libraries|lib|setup) {
         deny all;
     }
-    {% endif %}
+    {%- endif %}
 }
-{% endfor %}
+{%- endfor %}
 

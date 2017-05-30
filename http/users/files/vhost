@@ -8,15 +8,15 @@ server {
     access_log {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-access.log;
     error_log {{ http_config['rootdir'] }}/{{ user }}/log/{{ root_path }}-error.log;
 
-{% if root_pathinfo['ssl'] is defined %}
+{%- if root_pathinfo['ssl'] is defined %}
     # Enable SSL if requested by pillar config.
     listen {{ root_pathinfo['ssl']['ipaddr'] }}:{{ root_pathinfo['ssl']['port']|default('443') }} ssl;
-    {% if not root_pathinfo['ssl'].get('redirect_http', True) %}
+    {%- if not root_pathinfo['ssl'].get('redirect_http', True) %}
     listen 80;
-    {% endif %}
+    {%- endif %}
 
     ssl_certificate     {{ root_pathinfo['ssl']['cert'] }};
-    ssl_certificate_key {{ root_pathinfo['ssl']['cert'] }};
+    ssl_certificate_key {{ root_pathinfo['ssl']['key']|default(root_pathinfo['ssl']['cert']) }};
 
     {% include "oopss/nginx/files/ssl_config" %}
 {% endif %}
@@ -29,22 +29,22 @@ server {
         auth_basic_user_file {{ http_auth_file }};
     }
 
-{% if root_pathinfo['expires_static'] is defined %}
+{%- if root_pathinfo['expires_static'] is defined %}
     location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
         expires {{ root_pathinfo['expires_static'] }};
     }
-{% endif %}
+{%- endif %}
 
-{% if root_pathinfo['denied_paths'] is defined %}
-{% for denied_path in root_pathinfo['denied_paths'] %}
+{%- if root_pathinfo['denied_paths'] is defined %}
+{%- for denied_path in root_pathinfo['denied_paths'] %}
     # Forbid access to paths defined in pillar denied_path.
     location ~ {{ denied_path }} {
         deny all;
     }
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endif %}
 
-{% if 'gunicorn' == root_pathinfo.get('type', '') or 'proxy' == root_pathinfo.get('type', '') %}
+{%- if 'gunicorn' == root_pathinfo.get('type', '') or 'proxy' == root_pathinfo.get('type', '') %}
     # Redirect request to HTTP proxy via UNIX socket, if no file matches.
     location @http_proxy {
         proxy_pass http://unix:{{ socket }};
@@ -52,9 +52,9 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
-{% endif %}
+{%- endif %}
 
-{% if 'php' == root_pathinfo.get('type', '') or 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
+{%- if 'php' == root_pathinfo.get('type', '') or 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
     # Redirect URL ending with .php to PHP-FPM.
     index index.html index.php;
     location ~* \.php$ {
@@ -69,52 +69,52 @@ server {
         {%- endfor %}
         deny all;
     }
-{% endif %}
+{%- endif %}
 
     location / {
 {% if 'gunicorn' == root_pathinfo.get('type', '') or 'proxy' == root_pathinfo.get('type', '') %}
         try_files $uri @http_proxy;
-{% elif 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
+{%- elif 'php_redirect_to_index' == root_pathinfo.get('type', '') %}
         # Redirect each request to index.php if no file matches.
         try_files $uri $uri/ /index.php?$args;
-{% endif %}
+{%- endif %}
 
-{% if root_pathinfo.get('http_auth', False) %}
+{%- if root_pathinfo.get('http_auth', False) %}
         # HTTP AUTH
         auth_basic "HTTP AUTH {{ root_pathinfo['server_names'][0] }}";
         auth_basic_user_file {{ http_auth_file }};
-{% endif %}
+{%- endif %}
 
-{% if root_pathinfo.get('autoindex', False) %}
+{%- if root_pathinfo.get('autoindex', False) %}
         autoindex on;
-{% endif %}
+{%- endif %}
 
-{% if root_pathinfo['rewrite'] is defined %}
-{% for rewrite_rule, rewrite_target in root_pathinfo['rewrite'].iteritems() %}
+{%- if root_pathinfo['rewrite'] is defined %}
+{%- for rewrite_rule, rewrite_target in root_pathinfo['rewrite'].iteritems() %}
         rewrite "{{ rewrite_rule }}" "{{ rewrite_target }}" last;
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endif %}
 
-{% if root_pathinfo['redirect_permanent'] is defined %}
-{% for redirect_permanent_rule, redirect_permanent_target in root_pathinfo['redirect_permanent'].iteritems() %}
+{%- if root_pathinfo['redirect_permanent'] is defined %}
+{%- for redirect_permanent_rule, redirect_permanent_target in root_pathinfo['redirect_permanent'].iteritems() %}
         rewrite "{{ redirect_permanent_rule }}" "{{ redirect_permanent_target }}" permanent;
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endif %}
 
-{% if root_pathinfo['error_pages'] is defined %}
-{% for error_code, error_target in root_pathinfo['error_pages'].iteritems() %}
+{%- if root_pathinfo['error_pages'] is defined %}
+{%- for error_code, error_target in root_pathinfo['error_pages'].iteritems() %}
         error_page {{ error_code }} = "{{ error_target }}";
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endif %}
 
-{% if root_pathinfo['nginx_internal'] is defined %}
-{% for src, target in root_pathinfo['nginx_internal'].iteritems() %}
+{%- if root_pathinfo['nginx_internal'] is defined %}
+{%- for src, target in root_pathinfo['nginx_internal'].iteritems() %}
         location {{ src }} {
             internal;
             alias {{ target }};
         }
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endif %}
 
         location = /favicon.ico {
             log_not_found off;
@@ -132,27 +132,27 @@ server {
     }
 }
 
-{% if root_pathinfo['redirect_from'] is defined %}
+{%- if root_pathinfo['redirect_from'] is defined %}
 # Redirect each server name specified in redirect_from (from pillar config) to
 # the main server name of the virtual server.
 server {
     server_name{% for redirect_from in root_pathinfo['redirect_from'] %} {{ redirect_from }}{% endfor %};
     return 301 http://{{ root_pathinfo['server_names'][0] }}$request_uri;
 }
-{% endif %}
+{%- endif %}
 
-{% if root_pathinfo['redirect_from_ssl'] is defined %}
+{%- if root_pathinfo['redirect_from_ssl'] is defined %}
 # Redirect each server name specified in redirect_from (from pillar config) to
 # the main server name of the virtual server (over SSL).
 server {
     server_name{% for redirect_from_ssl in root_pathinfo['redirect_from_ssl'] %} {{ redirect_from_ssl }}{% endfor %};
     listen {{ root_pathinfo['ssl']['ipaddr'] }}:{{ root_pathinfo['ssl']['port']|default('443') }} ssl;
     ssl_certificate     {{ root_pathinfo['ssl']['cert'] }};
-    ssl_certificate_key {{ root_pathinfo['ssl']['cert'] }};
+    ssl_certificate_key {{ root_pathinfo['ssl']['key']|default(root_pathinfo['ssl']['cert']) }};
     {% include "oopss/nginx/files/ssl_config" %}
     return 301 https://{{ root_pathinfo['server_names'][0] }}$request_uri;
 }
-{% endif %}
+{%- endif %}
 
 {% if root_pathinfo['ssl'] is defined %}
 {% if root_pathinfo['ssl'].get('redirect_http', True) %}
@@ -162,6 +162,6 @@ server {
     server_name{% for server_name in root_pathinfo['server_names'] %} {{ server_name }}{% endfor %};
     return 301 https://$host$request_uri;
 }
-{% endif %}
-{% endif %}
+{%- endif %}
+{%- endif %}
 
